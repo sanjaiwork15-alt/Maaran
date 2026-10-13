@@ -43,9 +43,10 @@ Never change his outfit within a series. Seasonal extras (e.g. a head towel for 
 
 ## Voice (locked)
 
-- Model: AI4Bharat Indic-TTS, Tamil, `male` speaker (open-source, free).
-- Post-processing: see `tools/voice_settings.json` (deep "thatha" preset, pace adjusted).
-- Same settings for every episode. Never change them mid-series.
+- Reference: `assets/voice/thatha_ref.wav`, one 12-second clip the owner made in Google AI Studio (Gemini TTS, "Charon" voice; prompt in `assets/voice/README.md`). Approved in round 8 (`voice-tests/round8-gemini-ref/`).
+- Engine: AI4Bharat IndicF5 (MIT, free), which speaks every new line in the reference voice: `tools/f5_voice.py`. No post-processing.
+- The same reference for every episode. Never change it mid-series.
+- Expression comes from the reference clip and punctuation: "..." gives a pause, "?" and "!" lift the line. Stage directions like *(chuckles)* are not spoken by the engine; for real chuckles or whispers, use a short extra reference clip in the same Charon voice for that line.
 - The animation is driven from the voice track, so the mouth and beard move only while he is speaking.
 
 ## Golden rules

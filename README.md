@@ -20,13 +20,14 @@ Channel: https://www.youtube.com/@MaaranThatha
 | `assets/character/` | Reference image of the character (the look is locked to this) |
 | `series/NN-name/overview.md` | Series overview (step 1) |
 | `series/NN-name/epNN/` | Episode script, voice lines and final video |
+| `assets/voice/` | Thatha's locked voice reference clip |
 | `tools/` | Free, open-source production tools (voice now, animation next) |
 | `voice-tests/` | Voice samples used to choose Thatha's voice |
 
 ## Tools (all free)
 
-- **Voice:** [AI4Bharat Indic-TTS](https://github.com/AI4Bharat/Indic-TTS) (MIT license), Tamil male voice, with expressive pitch and a slightly older tone, each line generated in one continuous pass with soft fades. Settings: `tools/voice_settings.json`.
+- **Voice:** [AI4Bharat IndicF5](https://huggingface.co/ai4bharat/IndicF5) (MIT license) speaks each Tamil line in Thatha's locked voice, copied from one reference clip (`assets/voice/`). `tools/f5_voice.py LINES.json OUT_DIR`. (The older Indic-TTS tool `tools/tts.py` is kept for reference only.)
 - **Background sound:** `tools/sound_bed.py` synthesises a soft village breeze, distant birds and a gentle plucked-string folk tune (Mohanam raga) in code, so it's royalty-free. `tools/mix.py` lays it under the voice and dips it while Thatha talks.
 - **Video:** Python (Pillow/NumPy) + ffmpeg, rendering 1080×1920 vertical video.
 
-Fresh session setup: `bash tools/setup.sh`
+Fresh session setup: `bash tools/setup.sh` (needs `HF_TOKEN` with access to `ai4bharat/IndicF5`, and the HuggingFace download hosts allowed in the network settings).
