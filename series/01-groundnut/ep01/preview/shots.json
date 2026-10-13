@@ -1,0 +1,9 @@
+{
+ "scene": "scene.png", "voice": "voice.wav", "audio": "mix.wav", "fps": 25,
+ "shots": [
+  {"start": 0, "end": 5.48, "from": [918, 1085, 760], "to": [918, 1070, 660], "bg_blur": 7},
+  {"start": 5.48, "end": 13.4, "from": [905, 1520, 1500], "to": [880, 1650, 2300], "bg_blur": 1}
+ ],
+ "brows": [[1.5, 3.9]],
+ "blinks": [0.9, 4.2, 6.9, 9.6, 12.1]
+}
