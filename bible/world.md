@@ -19,4 +19,4 @@ The village never changes. Each **series** has its own fixed spot on Thatha's la
 
 | # | Series | Location | Status |
 |---|---|---|---|
-| 01 | Groundnut | Semman kaadu | Overview drafted, awaiting approval |
+| 01 | Groundnut | Semman kaadu | Overview approved; Episode 1 script in review |

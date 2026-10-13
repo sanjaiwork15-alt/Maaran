@@ -1,6 +1,6 @@
 # Series 01 – Groundnut (Verkadalai)
 
-**Status:** DRAFT – waiting for your approval
+**Status:** APPROVED
 **Location (whole series):** Semman kaadu, Thatha's red-soil field, with the neem tree, the old well and the motor shed. The final episode moves to the house front for cooking.
 **Season:** Margazhi pattam, irrigated groundnut sown in December–January (a real Tamil Nadu groundnut season).
 **Variety Thatha uses:** VRI 8, a TNAU variety that takes 105–110 days.
