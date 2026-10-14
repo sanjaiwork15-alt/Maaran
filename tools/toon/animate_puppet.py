@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import puppet  # noqa: E402
 
 CFG = CUES = RIG = STAGE = None
-MOVE = 0.45                # seconds an arm takes to move between gestures
+MOVE = 0.34                # seconds an arm takes to move between gestures
 
 
 def ease(x):
@@ -55,15 +55,25 @@ def pose_at(t):
     # arm changes: shoulder, elbow and wrist move smoothly from one gesture's angles to the
     # next; the hand changes shape halfway, while the arm is moving
     hand, angles = "rest", puppet.GESTURES["rest"]
+    fore_len, fore_front = 1.0, None
     for t0, name in CFG.get("hands", []):
         if t < t0:
             break
         p = ease((t - t0) / MOVE)
         new = puppet.GESTURES[name]
-        angles = tuple(o + (n - o) * p for o, n in zip(angles, new))
-        hand = name if p >= 0.5 else hand
+        old = angles
+        angles = tuple(o + (n - o) * p for o, n in zip(old, new))
+        # the hand opens/forms as the arm starts lifting, and relaxes only once it is down
+        lifting = abs(new[1]) > abs(old[1])
+        hand = name if p >= (0.2 if lifting else 0.8) else hand
         if p >= 1:
-            angles = new
+            angles, fore_len, fore_front = new, 1.0, None
+        elif abs(new[1] - old[1]) > 60:
+            # the forearm swings towards the camera: it looks shorter mid-move and stays
+            # in front of the sleeve, instead of sweeping out sideways at full length
+            fore_len = 1 - 0.4 * math.sin(math.pi * p)
+            fore_front = max(abs(new[1]), abs(old[1])) > 60
+    pose["fore_len"], pose["fore_front"] = fore_len, fore_front
     pose["hand"] = hand
     pose["shoulder"], pose["elbow"], pose["wrist"] = angles
     for t0, t1, amp, hz in CFG.get("waves", []):

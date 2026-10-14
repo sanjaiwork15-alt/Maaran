@@ -90,9 +90,19 @@ class Arm:
             img = img.resize((round(img.width * scale), round(img.height * scale)), Image.LANCZOS)
             self.parts[name] = (img, {k: (v[0] * scale, v[1] * scale) for k, v in j.items()}, width * scale / 2)
 
-    def _put(self, layer, name, joint, angle, at):
+        # pointing DOWN: the up-pointing hand flipped top-to-bottom (not rotated), so the
+        # thumb stays on the outside of his left hand, as on a real hand
+        img, j, r = self.parts["point"]
+        self.parts["point_down"] = (img.transpose(Image.FLIP_TOP_BOTTOM),
+                                    {"wrist": (j["wrist"][0], img.height - j["wrist"][1])}, r)
+
+    def _put(self, layer, name, joint, angle, at, length=1.0):
         img, j, _ = self.parts[name]
         jx, jy = j[joint]
+        if length != 1.0:   # foreshortening: squash along the part's length about its joint
+            h = max(1, round(img.height * length))
+            img = img.resize((img.width, h), Image.LANCZOS)
+            jy = jy * length
         pad = max(img.size)
         big = Image.new("RGBA", (img.width + 2 * pad, img.height + 2 * pad), (0, 0, 0, 0))
         big.alpha_composite(img, (pad, pad))
@@ -103,7 +113,8 @@ class Arm:
         if rr > l and bb > t:
             layer.alpha_composite(big.crop((l, t, rr, bb)), (x + l, y + t))
 
-    def draw(self, layer, shoulder_at, a1, a2, a3, hand="rest", sleeve=None, flip=None):
+    def draw(self, layer, shoulder_at, a1, a2, a3, hand="rest", sleeve=None, flip=None,
+             fore_len=1.0, fore_front=None):
         """Arm parts + the body's own sleeve (drawn over the upper arm's top). A raised
         forearm goes in front of the sleeve; a lowered one hangs below it."""
         up, up_j, _ = self.parts["upper"]
@@ -113,11 +124,11 @@ class Arm:
         e = rot(v, a1)
         elbow = (shoulder_at[0] + e[0], shoulder_at[1] + e[1])
         v = (fo_j["wrist"][0] - fo_j["elbow"][0], fo_j["wrist"][1] - fo_j["elbow"][1])
-        w = rot(v, a1 + a2)
+        w = rot((v[0] * fore_len, v[1] * fore_len), a1 + a2)
         wrist = (elbow[0] + w[0], elbow[1] + w[1])
         up_hand = hand in UP_HANDS if flip is None else flip
         hand_angle = a1 + a2 + a3 + (180 if up_hand else 0)
-        raised = abs(a2) > 60
+        raised = abs(a2) > 60 if fore_front is None else fore_front
         d = ImageDraw.Draw(layer)
         for (cx, cy), r in ((elbow, r_el + 2.5), (wrist, r_wr * 0.9 + 2.5)):
             d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=OUTLINE)
@@ -128,6 +139,6 @@ class Arm:
         if sleeve is not None:
             layer.alpha_composite(sleeve)
         if raised:
-            self._put(layer, "fore", "elbow", a1 + a2, elbow)
+            self._put(layer, "fore", "elbow", a1 + a2, elbow, fore_len)
             self._put(layer, hand, "wrist", hand_angle, wrist)
         return elbow, wrist

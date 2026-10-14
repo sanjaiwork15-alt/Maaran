@@ -221,9 +221,10 @@ class Rig:
         a1 = pose.get("shoulder", g[0]) + pose.get("arm", 0)
         a2 = pose.get("elbow", g[1])
         a3 = pose.get("wrist", g[2]) + pose.get("hand_rot", 0)
-        img = {"wave": "wave", "open": "wave", "point": "point", "point_down": "point", "palm": "palm"}.get(hand, "rest")
+        img = {"wave": "wave", "open": "wave", "point": "point", "point_down": "point_down", "palm": "palm"}.get(hand, "rest")
         self.arm_rig.draw(canvas, (ARM_SHOULDER[0] * k, ARM_SHOULDER[1] * k), a1, a2, a3, img,
-                          sleeve=self.sleeve, flip=False if hand == "point_down" else None)
+                          sleeve=self.sleeve, fore_len=pose.get("fore_len", 1.0),
+                          fore_front=pose.get("fore_front"))
         canvas.alpha_composite(self.towel)
         head = self.face(pose).rotate(pose.get("head", 0), resample=Image.BICUBIC, center=(NECK[0] * k, NECK[1] * k))
         canvas.alpha_composite(head)
