@@ -106,6 +106,13 @@ class Arm:
             d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=OUTLINE)
         hand_angle = a1 + a2 + a3 + (180 if hand in UP_HANDS else 0)
         self._put(layer, hand, "wrist", hand_angle, wrist)
-        self._put(layer, "fore", "elbow", a1 + a2, elbow)
-        self._put(layer, "upper", "shoulder", a1, shoulder_at)
+        if abs(a2) > 60:
+            # a raised forearm comes towards the viewer: it goes in front of the upper arm,
+            # its own round elbow end covering the joint
+            self._put(layer, "upper", "shoulder", a1, shoulder_at)
+            self._put(layer, "fore", "elbow", a1 + a2, elbow)
+            self._put(layer, hand, "wrist", hand_angle, wrist) if hand in UP_HANDS else None
+        else:
+            self._put(layer, "fore", "elbow", a1 + a2, elbow)
+            self._put(layer, "upper", "shoulder", a1, shoulder_at)
         return elbow, wrist

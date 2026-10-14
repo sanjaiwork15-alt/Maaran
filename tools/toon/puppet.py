@@ -116,7 +116,7 @@ class Rig:
         # his shirt side behind the sleeve (seen when the arm lifts): shirt colour + outline
         shirt = tuple(int(c) for c in np.median(rgbf[480 * k:560 * k, 520 * k:560 * k].reshape(-1, 3), axis=0))
         side = Image.new("RGBA", full.size, (0, 0, 0, 0))
-        poly = [(v[0] * k, v[1] * k) for v in [(690, 384), (724, 390), (738, 440), (744, 540), (742, 636), (690, 636)]]
+        poly = [(v[0] * k, v[1] * k) for v in [(690, 386), (718, 392), (726, 440), (728, 540), (724, 600), (690, 606)]]
         ds = ImageDraw.Draw(side)
         ds.polygon(poly, fill=tuple(int(c * 0.93) for c in shirt) + (255,))
         ds.line(poly[1:5], fill=(120, 80, 45, 255), width=3 * k)
