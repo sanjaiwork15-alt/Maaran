@@ -42,12 +42,20 @@ cat > "$WORK/kernel/kernel-metadata.json" <<EOF
  "kernel_sources": $KSRC, "model_sources": []}
 EOF
 kaggle kernels push -p "$WORK/kernel"
-
-# 3. Wait, then download outputs and the log
-sleep 30
-while kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED"; do sleep 60; done
-kaggle kernels status "$U/$SLUG"
 mkdir -p "$OUT"
+
+# 3. Follow the live log the whole run (Kaggle keeps only the tail of a finished run's
+#    log, and output files come from a host that may be blocked here), then wait
+sleep 20
+( for i in 1 2 3 4 5 6; do
+    kaggle kernels logs -f "$U/$SLUG" >> "$OUT/live_log.txt" 2>/dev/null
+    kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED" || break
+    sleep 10
+  done ) &
+FOLLOW=$!
+while kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED"; do sleep 60; done
+sleep 20; kill $FOLLOW 2>/dev/null || true
+kaggle kernels status "$U/$SLUG"
 kaggle kernels output "$U/$SLUG" -p "$OUT" -o -q 2>/dev/null || true
 # Output files are also printed into the run log (comfy_jobs.py emit()); decode them, so
 # results arrive even when Kaggle's output-file host is not reachable from here.
@@ -56,11 +64,15 @@ python3 - "$OUT" <<'PY'
 import base64, hashlib, json, sys
 from pathlib import Path
 out = Path(sys.argv[1])
+lines = []
+live = out / "live_log.txt"
+if live.exists():
+    lines += live.read_text(errors="replace").splitlines()
 try:
-    lines = "".join(e["data"] for e in json.loads((out / "run_log.json").read_text())
-                    if e.get("stream_name") == "stdout").splitlines()
+    lines += "".join(e["data"] for e in json.loads((out / "run_log.json").read_text())
+                     if e.get("stream_name") == "stdout").splitlines()
 except Exception as e:
-    sys.exit(f"could not read run log: {e}")
+    print(f"could not read run log: {e}")
 cur = None
 for l in lines:
     if l.startswith("@@FILE "):
@@ -71,9 +83,11 @@ for l in lines:
     elif l == "@@END" and cur:
         data = base64.b64decode("".join(parts))
         ok = len(data) == cur[1] and hashlib.sha256(data).hexdigest() == cur[2]
-        if ok:
+        if ok and not (out / cur[0]).exists():
             (out / cur[0]).write_bytes(data)
-        print("decoded" if ok else "CORRUPT", cur[0], len(data))
+            print("decoded", cur[0], len(data))
+        elif not ok:
+            print("incomplete copy skipped:", cur[0])
         cur = None
     elif l.startswith("[") and ("== done" in l or "ALL DONE" in l or "failed" in l):
         print(l)
