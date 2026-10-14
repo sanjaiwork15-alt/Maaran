@@ -162,6 +162,8 @@ def run_graph(name, graph):
 
 
 def stage(path):
+    if not Path(path).exists():          # an image made earlier in this same run
+        path = OUT / Path(path).name
     shutil.copy(path, COMFY / "input" / Path(path).name)
     return Path(path).name
 
