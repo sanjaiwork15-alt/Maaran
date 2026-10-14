@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Run one of our GPU kernels on Kaggle (free ~30 GPU h/week) and download its output.
 #
-#   tools/kaggle_run.sh wan_i2v  IN_DIR OUT_DIR   # IN_DIR has shots.json + start frames
-#   tools/kaggle_run.sh musetalk IN_DIR OUT_DIR   # IN_DIR has talk.json + voice WAVs
+#   tools/kaggle_run.sh comfy_jobs IN_DIR OUT_DIR  # IN_DIR has jobs.json + images/audio (main one)
+#   tools/kaggle_run.sh wan_i2v    IN_DIR OUT_DIR  # older: shots.json + start frames
+#   tools/kaggle_run.sh musetalk   IN_DIR OUT_DIR  # older: talk.json + voice WAVs
 #
 # Needs KAGGLE_USERNAME + KAGGLE_API_TOKEN and the kaggle CLI (uv tool install kaggle).
 # IN_DIR is uploaded as the private dataset <user>/maaran-<kernel>-in (a new version
@@ -47,6 +48,35 @@ sleep 30
 while kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED"; do sleep 60; done
 kaggle kernels status "$U/$SLUG"
 mkdir -p "$OUT"
-kaggle kernels output "$U/$SLUG" -p "$OUT" -o -q || true
+kaggle kernels output "$U/$SLUG" -p "$OUT" -o -q 2>/dev/null || true
+# Output files are also printed into the run log (comfy_jobs.py emit()); decode them, so
+# results arrive even when Kaggle's output-file host is not reachable from here.
+kaggle kernels logs "$U/$SLUG" > "$OUT/run_log.json" 2>/dev/null || true
+python3 - "$OUT" <<'PY'
+import base64, hashlib, json, sys
+from pathlib import Path
+out = Path(sys.argv[1])
+try:
+    lines = "".join(e["data"] for e in json.loads((out / "run_log.json").read_text())
+                    if e.get("stream_name") == "stdout").splitlines()
+except Exception as e:
+    sys.exit(f"could not read run log: {e}")
+cur = None
+for l in lines:
+    if l.startswith("@@FILE "):
+        _, name, size, sha = l.split()
+        cur, parts = (name, int(size), sha), []
+    elif l.startswith("@@B ") and cur:
+        parts.append(l[4:])
+    elif l == "@@END" and cur:
+        data = base64.b64decode("".join(parts))
+        ok = len(data) == cur[1] and hashlib.sha256(data).hexdigest() == cur[2]
+        if ok:
+            (out / cur[0]).write_bytes(data)
+        print("decoded" if ok else "CORRUPT", cur[0], len(data))
+        cur = None
+    elif l.startswith("[") and ("== done" in l or "ALL DONE" in l or "failed" in l):
+        print(l)
+PY
 ls -la "$OUT"
 rm -rf "$WORK"
