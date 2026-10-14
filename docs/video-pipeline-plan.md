@@ -16,12 +16,25 @@ One ~50-60 s Short in 1.5-2 hours, good quality (no glitches), fully automated b
 - Credentials: `KAGGLE_API_TOKEN` + `KAGGLE_USERNAME` environment variables (new-style API token, kaggle CLI >= 1.8). Network: www.kaggle.com, api.kaggle.com, storage.googleapis.com allowed.
 - Fallback if T4 is too slow: Modal ($30/month free credits, A100/L4), via its Python SDK.
 
-## Per-Short pipeline
+## Per-Short pipeline (updated 2026-10-14 after the Kaggle tests)
+All GPU steps run in one Kaggle kernel, `tools/kaggle/comfy_jobs.py` (headless ComfyUI on 2x T4), driven by
+`tools/kaggle_run.sh comfy_jobs IN_DIR OUT_DIR` with a `jobs.json` of `qwen_edit` / `i2v` / `s2v` jobs.
 1. Script (Tanglish + Tamil lines in `lines.json`): owner approves.
-2. Voice: IndicF5 with the locked Gemini "Charon" reference (`tools/f5_voice.py`), on the cloud session CPU (~25 min), in parallel with step 3.
-3. Action shots: Wan 2.2 I2V 14B + 4-step distill LoRA on Kaggle GPU, starting from Thatha's reference look; 8-10 clips of 5-8 s; Claude checks frames and regenerates glitchy clips.
-4. Talking shots: MuseTalk (MIT, commercial OK) lip-syncs Thatha's mouth to the Tamil voice, on Kaggle GPU.
-5. Upscale to 1080x1920, cut to the voice, add sound bed (`tools/sound_bed.py`, `tools/mix.py`), export.
+2. Voice: IndicF5 with the locked Gemini "Charon" reference (`tools/f5_voice.py`) on the session CPU, ~5 min per line.
+3. Scene frames: **Qwen-Image-Edit-2511** (+ 4-step Lightning LoRA) redraws the locked reference into a fully
+   3D-animated scene of the series location, so background and character share one style. ~4-5 min per image.
+4. Talking shots: **Wan 2.2 S2V 14B** (+ 4-step LoRA) animates a scene frame from the voice: lips, head, brows,
+   hand gestures. Keeps the face and moustache intact. ~33 min per 10 s on one T4.
+5. Action shots: Wan 2.2 I2V 14B (+ 4-step LoRA) from a scene frame. ~13 min per 5 s on one T4.
+6. Finish on the session CPU: ffmpeg motion interpolation 16 -> 32 fps, upscale to 1080x1920, voice + sound bed
+   (`tools/sound_bed.py`, `tools/mix.py`).
 
-## Next step
-Two-shot test (one action shot, one talking shot) to measure real Kaggle timing and quality before scaling up.
+## Test results (2026-10-14)
+- `series/01-groundnut/ep01/test-clips/thatha_10s_test.mp4`: 10 s talking shot (L02) in the animated field.
+- MuseTalk lip-sync was dropped: it redraws the lower face like a real human and erased Thatha's moustache.
+- Kaggle `NvidiaL4` is accepted by the API but ran CPU-only on the free tier; use `NvidiaTeslaT4`.
+- Kaggle output files are served from www.kaggleusercontent.com, blocked by this environment's network policy.
+  Workaround in place: the kernel prints outputs into the run log as base64 and `kaggle_run.sh` decodes them.
+  Adding that host to Allowed domains would make downloads direct.
+- Estimated GPU time for a 50 s Short (~35 s talking, ~15 s action, 4 scene frames): ~2.5-3 h on one T4.
+  Next speed-ups: run two jobs at once (one per T4), and reuse scene frames across episodes of a series.
