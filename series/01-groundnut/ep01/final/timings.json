@@ -1,0 +1,103 @@
+{
+ "lines": [
+  {
+   "id": "L1",
+   "group": "hook",
+   "start": 0.25,
+   "end": 9.02
+  },
+  {
+   "id": "L2",
+   "group": "intro",
+   "start": 9.47,
+   "end": 16.502
+  },
+  {
+   "id": "L3a",
+   "group": "science",
+   "start": 16.952,
+   "end": 21.439
+  },
+  {
+   "id": "L3b",
+   "group": "science",
+   "start": 21.739,
+   "end": 26.947
+  },
+  {
+   "id": "L3c",
+   "group": "science",
+   "start": 27.247,
+   "end": 29.169
+  },
+  {
+   "id": "L3d",
+   "group": "secret",
+   "start": 29.469,
+   "end": 30.453
+  },
+  {
+   "id": "L4a",
+   "group": "secret",
+   "start": 30.803,
+   "end": 33.608
+  },
+  {
+   "id": "L4b",
+   "group": "secret",
+   "start": 33.858,
+   "end": 37.841
+  },
+  {
+   "id": "L4c",
+   "group": "secret",
+   "start": 38.141,
+   "end": 39.455
+  },
+  {
+   "id": "L5a",
+   "group": "cliff",
+   "start": 39.905,
+   "end": 46.083
+  },
+  {
+   "id": "L5b",
+   "group": "cliff",
+   "start": 46.383,
+   "end": 49.228
+  },
+  {
+   "id": "L5c",
+   "group": "walk",
+   "start": 49.578,
+   "end": 51.77
+  }
+ ],
+ "groups": {
+  "hook": {
+   "start": 0.25,
+   "end": 9.47
+  },
+  "intro": {
+   "start": 9.47,
+   "end": 16.952
+  },
+  "science": {
+   "start": 16.952,
+   "end": 29.469
+  },
+  "secret": {
+   "start": 29.469,
+   "end": 39.905
+  },
+  "cliff": {
+   "start": 39.905,
+   "end": 49.578
+  },
+  "walk": {
+   "start": 49.578,
+   "end": 52.57
+  }
+ },
+ "total": 52.57
+}
