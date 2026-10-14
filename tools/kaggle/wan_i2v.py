@@ -12,6 +12,7 @@ Comfy-Org repackaged umt5-xxl text encoder, Wan 2.1 VAE and the lightx2v 4-step 
 import glob
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -63,7 +64,7 @@ def install():
     sh(f"git clone -q --depth 1 https://github.com/city96/ComfyUI-GGUF {COMFY}/custom_nodes/ComfyUI-GGUF")
     # Keep Kaggle's CUDA torch; install the rest.
     reqs = [l for l in (COMFY / "requirements.txt").read_text().splitlines()
-            if l.strip() and not l.startswith(("torch", "torchvision", "torchaudio"))]
+            if l.strip() and re.split(r"[<>=~!\[ ;]", l.strip())[0] not in ("torch", "torchvision", "torchaudio")]
     (COMFY / "req_notorch.txt").write_text("\n".join(reqs))
     sh(f"{sys.executable} -m pip install -q -r {COMFY}/req_notorch.txt gguf hf_transfer")
     step("install")
