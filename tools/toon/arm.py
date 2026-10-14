@@ -20,7 +20,7 @@ OUTLINE = (92, 46, 22, 255)
 
 # Part boxes and joints in 10_arm_parts.png px. Joint = centre of the drawn end-cap.
 PARTS = {
-    "upper": ((77, 61, 350, 623), {"shoulder": (196, 100), "elbow": (221, 590)}, 129),
+    "upper": ((77, 61, 350, 623), {"shoulder": (219, 452), "elbow": (221, 590)}, 129),
     "fore": ((419, 165, 573, 683), {"elbow": (484, 194), "wrist": (496, 652)}, 112),
     "rest": ((650, 325, 855, 688), {"wrist": (753, 347)}, 93),
     "wave": ((911, 223, 1220, 680), {"wrist": (1045, 653)}, 113),
@@ -66,6 +66,18 @@ class Arm:
             j = {k: (v[0] - x0 + pad, v[1] - y0 + pad) for k, v in joints.items()}
             r, cap = width / 2, width * 0.33
             if name == "upper":
+                # keep only the bare arm: the body's own sleeve is drawn over its top
+                px = rgba.astype(np.int16)
+                cream = (px[..., 0] > 190) & (px[..., 1] > 175) & (px[..., 2] > 130) & (px[..., 0] - px[..., 2] < 100)
+                ys = np.nonzero(cream.any(axis=1))[0]
+                hem_y = int(np.percentile(np.nonzero(cream)[0], 98))   # lowest sleeve rows
+                cut = np.zeros(cream.shape, bool)
+                cut[: hem_y + 4] = True
+                rgba[cut | cream, 3] = 0
+                # extend the arm upwards under the sleeve so a turned arm never shows its top
+                band = rgba[hem_y + 6:hem_y + 14].copy()
+                for yy in range(max(0, hem_y - 60), hem_y + 6):
+                    rgba[yy] = np.where(band[yy % len(band)][..., 3:4] > 0, band[yy % len(band)], rgba[yy])
                 rgba, j["elbow"] = round_end(rgba, j["elbow"], (0, -1), r, cap)
             elif name == "fore":
                 rgba, j["elbow"] = round_end(rgba, j["elbow"], (0, 1), r, cap)
@@ -91,7 +103,9 @@ class Arm:
         if rr > l and bb > t:
             layer.alpha_composite(big.crop((l, t, rr, bb)), (x + l, y + t))
 
-    def draw(self, layer, shoulder_at, a1, a2, a3, hand="rest"):
+    def draw(self, layer, shoulder_at, a1, a2, a3, hand="rest", sleeve=None, flip=None):
+        """Arm parts + the body's own sleeve (drawn over the upper arm's top). A raised
+        forearm goes in front of the sleeve; a lowered one hangs below it."""
         up, up_j, _ = self.parts["upper"]
         fo, fo_j, r_el = self.parts["fore"]
         _, h_j, r_wr = self.parts[hand]
@@ -101,18 +115,19 @@ class Arm:
         v = (fo_j["wrist"][0] - fo_j["elbow"][0], fo_j["wrist"][1] - fo_j["elbow"][1])
         w = rot(v, a1 + a2)
         wrist = (elbow[0] + w[0], elbow[1] + w[1])
+        up_hand = hand in UP_HANDS if flip is None else flip
+        hand_angle = a1 + a2 + a3 + (180 if up_hand else 0)
+        raised = abs(a2) > 60
         d = ImageDraw.Draw(layer)
         for (cx, cy), r in ((elbow, r_el + 2.5), (wrist, r_wr * 0.9 + 2.5)):
             d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=OUTLINE)
-        hand_angle = a1 + a2 + a3 + (180 if hand in UP_HANDS else 0)
-        self._put(layer, hand, "wrist", hand_angle, wrist)
-        if abs(a2) > 60:
-            # a raised forearm comes towards the viewer: it goes in front of the upper arm,
-            # its own round elbow end covering the joint
-            self._put(layer, "upper", "shoulder", a1, shoulder_at)
+        if not raised:
+            self._put(layer, hand, "wrist", hand_angle, wrist)
             self._put(layer, "fore", "elbow", a1 + a2, elbow)
-            self._put(layer, hand, "wrist", hand_angle, wrist) if hand in UP_HANDS else None
-        else:
+        self._put(layer, "upper", "shoulder", a1, shoulder_at)
+        if sleeve is not None:
+            layer.alpha_composite(sleeve)
+        if raised:
             self._put(layer, "fore", "elbow", a1 + a2, elbow)
-            self._put(layer, "upper", "shoulder", a1, shoulder_at)
+            self._put(layer, hand, "wrist", hand_angle, wrist)
         return elbow, wrist

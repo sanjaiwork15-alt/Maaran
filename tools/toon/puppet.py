@@ -35,10 +35,11 @@ HEM = (752, 598)                    # left-arm pivot at the sleeve hem (whole-ar
 ARM_POLY = [(714, 600), (735, 590), (800, 584), (836, 640), (840, 1050), (724, 1050), (724, 880), (716, 700)]
 SLEEVE_POLY = [(698, 380), (722, 388), (760, 450), (800, 520), (814, 582), (782, 614), (745, 622), (712, 628), (698, 600)]
 TOWEL_BOX = (560, 330, 720, 830)
-ARM_SHOULDER = (752, 395)           # where the rig arm's shoulder joint sits on the body
+ARM_SHOULDER = (760, 590)           # arm pivot just inside the sleeve hem           # where the rig arm's shoulder joint sits on the body
 ARM_SCALE = 0.5                     # 10_arm_parts.png px -> 01_front source px
 # arm angles (shoulder, elbow, wrist; deg counter-clockwise on screen) per gesture
-GESTURES = {"rest": (0, 0, 0), "wave": (6, 152, 0), "point": (5, 146, 0), "palm": (3, 72, -10), "open": (3, 150, -8)}
+GESTURES = {"rest": (0, 0, 0), "wave": (6, 150, 0), "point": (5, 145, 0), "palm": (3, 72, -10), "open": (3, 160, -6),
+            "point_down": (24, 14, 0)}
 FEET_Y = 1500                       # where the slippers touch the ground
 
 ELBOW = (777, 752)                  # left elbow: gesture forearms bend here
@@ -113,15 +114,10 @@ class Rig:
         rest = A.astype(np.int16) - limb
         rest[: 300 * k] -= hm[: 300 * k]
         self.body = full.copy(); self.body.putalpha(Image.fromarray(np.clip(rest, 0, 255).astype(np.uint8)))
-        # his shirt side behind the sleeve (seen when the arm lifts): shirt colour + outline
-        shirt = tuple(int(c) for c in np.median(rgbf[480 * k:560 * k, 520 * k:560 * k].reshape(-1, 3), axis=0))
-        side = Image.new("RGBA", full.size, (0, 0, 0, 0))
-        poly = [(v[0] * k, v[1] * k) for v in [(690, 386), (718, 392), (726, 440), (728, 540), (724, 600), (690, 606)]]
-        ds = ImageDraw.Draw(side)
-        ds.polygon(poly, fill=tuple(int(c * 0.93) for c in shirt) + (255,))
-        ds.line(poly[1:5], fill=(120, 80, 45, 255), width=3 * k)
-        side.alpha_composite(self.body)
-        self.body = side
+        sl = np.minimum(np.asarray(poly_mask(full.size, SLEEVE_POLY, k)), A)
+        sl = np.where(towel, 0, sl).astype(np.uint8)
+        self.sleeve = full.copy(); self.sleeve.putalpha(Image.fromarray(sl))
+        shirt = None
         self.arm_rig = Arm(ARM_SCALE * k)
         self.shirt = shirt
         # brows: lift them out and inpaint the forehead underneath
@@ -225,11 +221,9 @@ class Rig:
         a1 = pose.get("shoulder", g[0]) + pose.get("arm", 0)
         a2 = pose.get("elbow", g[1])
         a3 = pose.get("wrist", g[2]) + pose.get("hand_rot", 0)
-        sx, sy, r = ARM_SHOULDER[0] * k, ARM_SHOULDER[1] * k + 12 * k, 45 * k   # shoulder joint: shirt-coloured round end
-        ds = ImageDraw.Draw(canvas)
-        ds.ellipse([sx - r - 3 * k, sy - r - 3 * k + 18 * k, sx + r + 3 * k, sy + r + 3 * k + 18 * k], fill=(110, 70, 40, 255))
-        ds.ellipse([sx - r, sy - r + 18 * k, sx + r, sy + r + 18 * k], fill=self.shirt + (255,))
-        self.arm_rig.draw(canvas, (ARM_SHOULDER[0] * k, ARM_SHOULDER[1] * k), a1, a2, a3, {"wave": "wave", "open": "wave", "point": "point", "palm": "palm"}.get(hand, "rest"))
+        img = {"wave": "wave", "open": "wave", "point": "point", "point_down": "point", "palm": "palm"}.get(hand, "rest")
+        self.arm_rig.draw(canvas, (ARM_SHOULDER[0] * k, ARM_SHOULDER[1] * k), a1, a2, a3, img,
+                          sleeve=self.sleeve, flip=False if hand == "point_down" else None)
         canvas.alpha_composite(self.towel)
         head = self.face(pose).rotate(pose.get("head", 0), resample=Image.BICUBIC, center=(NECK[0] * k, NECK[1] * k))
         canvas.alpha_composite(head)
