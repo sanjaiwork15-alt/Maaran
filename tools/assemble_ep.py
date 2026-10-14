@@ -26,9 +26,13 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def piece(src, ss, dur, out):
-    vf = ("minterpolate=fps=25:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1,"
-          "scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920,"
-          f"tpad=stop_mode=clone:stop_duration={dur}")
+    fps = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v", "-show_entries", "stream=r_frame_rate",
+                          "-of", "csv=p=0", str(src)], capture_output=True, text=True).stdout.strip()
+    interp = "" if fps == "25/1" else "minterpolate=fps=25:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1,"
+    lead = max(0.0, -ss)                  # a negative start holds the first frame
+    ss = max(0.0, ss)
+    vf = (f"{interp}scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920,"
+          f"tpad=start_mode=clone:start_duration={lead}:stop_mode=clone:stop_duration={dur}")
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", f"{ss:.3f}", "-i", str(src), "-t", f"{dur + 0.5:.3f}",
                     "-vf", vf, "-t", f"{dur:.3f}", "-an", "-c:v", "libx264", "-crf", "16", "-preset", "medium",
                     "-pix_fmt", "yuv420p", "-r", "25", str(out)], check=True)
