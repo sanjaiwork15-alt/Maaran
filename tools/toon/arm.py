@@ -90,11 +90,35 @@ class Arm:
             img = img.resize((round(img.width * scale), round(img.height * scale)), Image.LANCZOS)
             self.parts[name] = (img, {k: (v[0] * scale, v[1] * scale) for k, v in j.items()}, width * scale / 2)
 
+        self._outline = {}
         # pointing DOWN: the up-pointing hand flipped top-to-bottom (not rotated), so the
         # thumb stays on the outside of his left hand, as on a real hand
         img, j, r = self.parts["point"]
         self.parts["point_down"] = (img.transpose(Image.FLIP_TOP_BOTTOM),
                                     {"wrist": (j["wrist"][0], img.height - j["wrist"][1])}, r)
+
+    def solve(self, shoulder_at, a1, a2, a3, hand="rest", fore_len=1.0):
+        """Elbow, wrist and the hand's bounding box (same px as shoulder_at), without drawing."""
+        _, up_j, _ = self.parts["upper"]
+        _, fo_j, _ = self.parts["fore"]
+        img, h_j, _ = self.parts[hand]
+        v = (up_j["elbow"][0] - up_j["shoulder"][0], up_j["elbow"][1] - up_j["shoulder"][1])
+        e = rot(v, a1)
+        elbow = (shoulder_at[0] + e[0], shoulder_at[1] + e[1])
+        v = (fo_j["wrist"][0] - fo_j["elbow"][0], fo_j["wrist"][1] - fo_j["elbow"][1])
+        w = rot((v[0] * fore_len, v[1] * fore_len), a1 + a2)
+        wrist = (elbow[0] + w[0], elbow[1] + w[1])
+        ang = a1 + a2 + a3 + (180 if hand in UP_HANDS else 0)
+        jx, jy = h_j["wrist"]
+        if hand not in self._outline:      # the hand's real outline, sampled
+            a = np.asarray(img.getchannel("A")) > 60
+            ys, xs = np.nonzero(a)
+            keep = np.linspace(0, len(xs) - 1, min(len(xs), 600)).astype(int)
+            self._outline[hand] = list(zip(xs[keep], ys[keep]))
+        pts = [rot((x - jx, y - jy), ang) for x, y in self._outline[hand]]
+        xs = [wrist[0] + p[0] for p in pts]
+        ys = [wrist[1] + p[1] for p in pts]
+        return elbow, wrist, (min(xs), min(ys), max(xs), max(ys))
 
     def _put(self, layer, name, joint, angle, at, length=1.0):
         img, j, _ = self.parts[name]

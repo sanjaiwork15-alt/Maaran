@@ -212,16 +212,31 @@ class Rig:
         return img
 
     # ------------------------------------------------------------- figure
-    def figure(self, pose):
-        """The posed character on a transparent canvas the size of 01_front (x k)."""
-        k = self.k
-        canvas = self.body.copy()
+    def arm_angles(self, pose):
         hand = pose.get("hand", "rest")
         g = GESTURES.get(hand, GESTURES["rest"])
         a1 = pose.get("shoulder", g[0]) + pose.get("arm", 0)
         a2 = pose.get("elbow", g[1])
         a3 = pose.get("wrist", g[2]) + pose.get("hand_rot", 0)
         img = {"wave": "wave", "open": "wave", "point": "point", "point_down": "point_down", "palm": "palm"}.get(hand, "rest")
+        return a1, a2, a3, img
+
+    def hand_box(self, pose):
+        """Bounding box of his moving hand in figure px (for framing and checks)."""
+        a1, a2, a3, img = self.arm_angles(pose)
+        k = self.k
+        return self.arm_rig.solve((ARM_SHOULDER[0] * k, ARM_SHOULDER[1] * k), a1, a2, a3, img,
+                                  pose.get("fore_len", 1.0))[2]
+
+    def head_box(self):
+        xs, ys = [x for x, _ in HEAD_POLY], [y for _, y in HEAD_POLY]
+        return tuple(v * self.k for v in (min(xs), min(ys), max(xs), max(ys)))
+
+    def figure(self, pose):
+        """The posed character on a transparent canvas the size of 01_front (x k)."""
+        k = self.k
+        canvas = self.body.copy()
+        a1, a2, a3, img = self.arm_angles(pose)
         self.arm_rig.draw(canvas, (ARM_SHOULDER[0] * k, ARM_SHOULDER[1] * k), a1, a2, a3, img,
                           sleeve=self.sleeve, fore_len=pose.get("fore_len", 1.0),
                           fore_front=pose.get("fore_front"))
@@ -241,6 +256,44 @@ class Stage:
         self.bg = self.bg.convert("RGB")
         self.feet = (feet[0] * self.bg.width, feet[1] * self.bg.height)
         self.char_h = height * self.bg.height
+
+    def to_video(self, rig, cam, box, out=(1080, 1920)):
+        """Figure px box -> video px box for camera cam."""
+        s = self.char_h / (FEET_Y * rig.k)
+        cx, cy, h = (v * self.kb for v in cam)
+        w = h * out[0] / out[1]
+        z = out[1] / h
+        ox = self.feet[0] - rig.body.width / 2 * s - (cx - w / 2)
+        oy = self.feet[1] - FEET_Y * rig.k * s - (cy - h / 2)
+        return tuple(((ox if i % 2 == 0 else oy) + v * s) * z for i, v in enumerate(box))
+
+    def clamp_cam(self, cam, out=(1080, 1920)):
+        """Keep the camera's view inside the background picture (background source px)."""
+        cx, cy, h = cam
+        bw, bh = self.bg.width / self.kb, self.bg.height / self.kb
+        h = min(h, bh, bw * out[1] / out[0])
+        w = h * out[0] / out[1]
+        return (min(max(cx, w / 2), bw - w / 2), min(max(cy, h / 2), bh - h / 2), h)
+
+    def cam_inside(self, cam, out=(1080, 1920)):
+        c = self.clamp_cam(cam, out)
+        return all(abs(a - b) < 0.5 for a, b in zip(c, cam))
+
+    def fit(self, rig, cam, box, margin=60, out=(1080, 1920)):
+        """Smallest camera change (shift, then zoom out) that keeps box (figure px) in shot."""
+        cx, cy, h = cam
+        for _ in range(40):
+            b = self.to_video(rig, (cx, cy, h), box, out)
+            dx = max(0, margin - b[0]) - max(0, b[2] - (out[0] - margin))
+            dy = max(0, margin - b[1]) - max(0, b[3] - (out[1] - margin))
+            if not dx and not dy:
+                break
+            z = out[1] / (h * self.kb)
+            ncx, ncy, nh = self.clamp_cam((cx - dx / z / self.kb * 0.6, cy - dy / z / self.kb * 0.6, h))
+            if abs(ncx - cx) < 0.5 and abs(ncy - cy) < 0.5:
+                nh = h * 1.03                      # can't shift further: zoom out instead
+            cx, cy, h = self.clamp_cam((ncx, ncy, nh))
+        return cx, cy, h
 
     def frame(self, rig, pose, cam, out=(1080, 1920)):
         fig = rig.figure(pose)
