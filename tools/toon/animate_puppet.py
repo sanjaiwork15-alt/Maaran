@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import puppet  # noqa: E402
 
 CFG = CUES = RIG = STAGE = None
-SWING_IN = 0.25
+LOWER, LIFT = 0.22, 0.32   # seconds to lower the old forearm / lift the new one
 
 
 def ease(x):
@@ -52,16 +52,24 @@ def mouth_at(t):
 
 def pose_at(t):
     pose = {k: track(v, t) for k, v in CFG.get("tracks", {}).items()}
-    hand, since = "rest", 99.0
-    for t0, name in CFG.get("hands", []):
-        if t >= t0:
-            hand, since = name, t - t0
+    # arm changes: the old gesture lowers at the elbow, then the new one lifts from hanging
+    hand = "rest"
+    switches = CFG.get("hands", [])
+    for i, (t0, name) in enumerate(switches):
+        prev = switches[i - 1][1] if i else "rest"
+        if t < t0:
+            break
+        dt = t - t0
+        lower = LOWER if prev != "rest" else 0.0
+        if dt < lower:                                   # old gesture swinging down
+            hand = prev
+            pose["hand_rot"] = puppet.SPRITES[prev][3] * ease(dt / lower)
+        elif name != "rest" and dt < lower + LIFT:       # new gesture lifting up
+            hand = name
+            pose["hand_rot"] = pose.get("hand_rot", 0) + puppet.SPRITES[name][3] * (1 - ease((dt - lower) / LIFT))
+        else:
+            hand = name
     pose["hand"] = hand
-    # a new arm swings into place instead of popping
-    if since < SWING_IN:
-        pose["hand_rot"] = pose.get("hand_rot", 0) + 22 * (1 - ease(since / SWING_IN))
-        if hand == "rest":
-            pose["arm"] = pose.get("arm", 0) + 10 * (1 - ease(since / SWING_IN))
     for t0, t1, amp, hz in CFG.get("waves", []):
         if t0 <= t <= t1:
             fade = min(1, (t - t0) / 0.2, (t1 - t) / 0.2)

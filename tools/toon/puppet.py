@@ -29,19 +29,20 @@ HEAD_POLY = [(320, 0), (710, 0), (710, 250), (650, 300), (610, 336), (565, 366),
 EYES = [(461, 190, 25, 17), (543, 186, 25, 17)]       # cx, cy, rx, ry
 BROWS = [(392, 128, 488, 166), (512, 122, 600, 158)]  # boxes holding the white brows
 MOUTH = (514, 272)                  # top centre of the lips, just under the moustache
-HEM = (752, 598)                    # left-arm pivot at the sleeve hem
+HEM = (752, 598)                    # left-arm pivot at the sleeve hem (whole-arm swing)
 ARM_POLY = [(714, 600), (735, 590), (800, 584), (836, 640), (840, 1050), (724, 1050), (724, 880), (716, 700)]
 FEET_Y = 1500                       # where the slippers touch the ground
 
-# Hand-sheet sprites (03_hands.png source px): crop box, and the sleeve-cuff centre inside
-# the crop, which is pinned to the body's sleeve hem.
+ELBOW = (777, 752)                  # left elbow: gesture forearms bend here
+# Hand-sheet gesture forearms (03_hands.png source px): crop box, elbow point inside the crop,
+# scale to the body, angle (deg, PIL) that swings the forearm down to hang from the elbow,
+# and whether the sprite's own upper arm (above the elbow) must be cut away.
 SPRITES = {
-    "wave": ((40, 20, 420, 650), (90, 450)),
-    "point": ((420, 15, 730, 660), (80, 455)),
-    "palm": ((1285, 30, 1770, 570), (115, 120)),
-    "thumb": ((1775, 30, 2150, 550), (115, 140)),
+    "wave": ((40, 20, 420, 650), (125, 565), 0.40, -170, False),
+    "point": ((420, 15, 730, 660), (110, 580), 0.40, -170, False),
+    "palm": ((1285, 30, 1770, 570), (60, 350), 0.47, -80, True),
+    "thumb": ((1775, 30, 2150, 550), (65, 380), 0.47, -80, True),
 }
-CUFF_SCALE = 0.48                   # sheet cuffs are ~210 px wide, the body's sleeve hem ~100 px
 MOUTHS = {"X": (0, 0), "A": (0, 0), "B": (26, 8), "C": (30, 15), "D": (34, 24), "E": (24, 17),
           "F": (16, 12), "G": (28, 9), "H": (30, 16)}
 LIP, MOUTH_IN, TEETH, TONGUE, LASH = (186, 92, 52), (74, 24, 20), (250, 244, 232), (196, 84, 76), (52, 26, 14)
@@ -90,6 +91,10 @@ class Rig:
         am = Image.fromarray(np.minimum(np.asarray(poly_mask(full.size, ARM_POLY, k)), np.asarray(a)))
         self.head = full.copy(); self.head.putalpha(hm)
         self.arm = full.copy(); self.arm.putalpha(am)
+        split = np.zeros((full.height, full.width), np.uint8)
+        split[: ELBOW[1] * k] = 255
+        self.upper_arm = full.copy()
+        self.upper_arm.putalpha(Image.fromarray(np.minimum(np.asarray(am), split)))
         rest = np.asarray(a).astype(np.int16) - np.asarray(hm) - np.asarray(am)
         self.body = full.copy(); self.body.putalpha(Image.fromarray(np.clip(rest, 0, 255).astype(np.uint8)))
         # a dark neck patch under the head so a small tilt never shows a gap
@@ -125,14 +130,27 @@ class Rig:
         self.lip = tuple(int(c) for c in np.median(rgb[(MOUTH[1] + 10) * k:(MOUTH[1] + 16) * k, (MOUTH[0] - 20) * k:(MOUTH[0] + 20) * k]
                                                    .reshape(-1, 3), axis=0))
         self._mouths = {}
-        # hand-sheet sprites
+        # gesture forearms from the hand sheet: drop the sheet's shirt cuff (and, for the
+        # sideways arms, its upper arm) so only forearm + hand remain, pinned at the elbow
         sheet, ks = load("03_hands")
         sheet = cut_white(sheet)
         self.sprites = {}
-        for name, (box, hem) in SPRITES.items():
+        for name, (box, elbow, scale, down, cut_upper) in SPRITES.items():
             crop = sheet.crop(tuple(v * ks for v in box))
-            self.sprites[name] = (crop, (hem[0] * ks, hem[1] * ks))
-        self.sprite_scale = CUFF_SCALE * k / ks
+            px = np.asarray(crop).astype(np.int16)
+            r, g, b_, al = px[..., 0], px[..., 1], px[..., 2], px[..., 3]
+            cream = (r > 195) & (g > 180) & (b_ > 135) & (r - b_ < 95)
+            skin = (r - b_ > 110) & (al > 0)
+            near_cream = cv2.dilate(cream.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=5 * ks) > 0
+            near_skin = cv2.dilate(skin.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=2 * ks) > 0
+            drop = cream | (near_cream & ~near_skin)
+            if cut_upper:
+                drop[: (elbow[1] - 30) * ks] = True
+            alpha = np.where(drop, 0, al).astype(np.uint8)
+            crop.putalpha(Image.fromarray(cv2.GaussianBlur(alpha, (3, 3), 0)))
+            f = scale * k / ks
+            crop = crop.resize((round(crop.width * f), round(crop.height * f)), Image.LANCZOS)
+            self.sprites[name] = (crop, (elbow[0] * ks * f, elbow[1] * ks * f), down)
 
     # ------------------------------------------------------------- face
     def face(self, pose):
@@ -207,16 +225,13 @@ class Rig:
             arm = self.arm.rotate(pose.get("arm", 0), resample=Image.BICUBIC, center=(HEM[0] * k, HEM[1] * k))
             canvas.alpha_composite(arm)
         else:
-            sp, (hx, hy) = self.sprites[hand]
-            s = self.sprite_scale
-            sp = sp.resize((round(sp.width * s), round(sp.height * s)), Image.LANCZOS)
-            hx, hy = hx * s, hy * s
-            rot = pose.get("hand_rot", 0)
+            canvas.alpha_composite(self.upper_arm)
+            sp, (hx, hy), _ = self.sprites[hand]
             pad = max(sp.size)
             big = Image.new("RGBA", (sp.width + 2 * pad, sp.height + 2 * pad), (0, 0, 0, 0))
             big.alpha_composite(sp, (pad, pad))
-            big = big.rotate(rot, resample=Image.BICUBIC, center=(hx + pad, hy + pad))
-            place(canvas, big, HEM[0] * k - hx - pad, HEM[1] * k - hy - pad)
+            big = big.rotate(pose.get("hand_rot", 0), resample=Image.BICUBIC, center=(hx + pad, hy + pad))
+            place(canvas, big, ELBOW[0] * k - hx - pad, ELBOW[1] * k - hy - pad)
         head = self.face(pose).rotate(pose.get("head", 0), resample=Image.BICUBIC, center=(NECK[0] * k, NECK[1] * k))
         canvas.alpha_composite(head)
         if pose.get("body"):
