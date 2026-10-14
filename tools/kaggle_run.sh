@@ -7,13 +7,13 @@
 # Needs KAGGLE_USERNAME + KAGGLE_API_TOKEN and the kaggle CLI (uv tool install kaggle).
 # IN_DIR is uploaded as the private dataset <user>/maaran-<kernel>-in (a new version
 # each run); the kernel is <user>/maaran-<kernel>. musetalk also mounts the latest
-# wan_i2v output, so it can lip-sync a Wan clip. MACHINE=NvidiaTeslaT4 to use 2x T4
-# instead of the L4.
+# wan_i2v output, so it can lip-sync a Wan clip. Runs on 2x T4; MACHINE=... to change
+# (NvidiaL4 is listed by the API but was not granted on the free tier: it ran CPU-only).
 set -euo pipefail
 
 KERNEL="$1"; IN="$2"; OUT="$3"
 U="${KAGGLE_USERNAME:?set KAGGLE_USERNAME}"
-MACHINE="${MACHINE:-NvidiaL4}"
+MACHINE="${MACHINE:-NvidiaTeslaT4}"
 SLUG="maaran-${KERNEL//_/-}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 WORK="$(mktemp -d)"

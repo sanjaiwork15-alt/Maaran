@@ -56,7 +56,9 @@ NEGATIVE = ("blurry, low quality, distorted face, deformed hands, extra fingers,
 
 
 def install():
-    sh("nvidia-smi; free -g; df -h /tmp /kaggle/working")
+    if subprocess.run("nvidia-smi", shell=True).returncode:
+        raise SystemExit("No GPU attached: this machine_shape is not available to the account")
+    sh("free -g; df -h /tmp /kaggle/working")
     sh(f"git clone -q --depth 1 https://github.com/comfyanonymous/ComfyUI {COMFY}")
     sh(f"git clone -q --depth 1 https://github.com/city96/ComfyUI-GGUF {COMFY}/custom_nodes/ComfyUI-GGUF")
     # Keep Kaggle's CUDA torch; install the rest.

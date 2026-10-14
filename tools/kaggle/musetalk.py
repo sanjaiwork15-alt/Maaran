@@ -47,7 +47,9 @@ def find(name):
 
 
 def install():
-    sh("nvidia-smi; free -g")
+    if subprocess.run("nvidia-smi", shell=True).returncode:
+        raise SystemExit("No GPU attached: this machine_shape is not available to the account")
+    sh("free -g")
     sh(f"git clone -q --depth 1 https://github.com/TMElyralab/MuseTalk {MT}")
     sh(f"{sys.executable} -m pip install -q uv")
     uv = f"VIRTUAL_ENV={VENV} UV_LINK_MODE=copy {sys.executable} -m uv"
