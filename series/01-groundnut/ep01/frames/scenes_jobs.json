@@ -1,0 +1,26 @@
+[
+ {
+  "name": "talk_bg",
+  "type": "qwen_edit",
+  "image": "thatha_ref.png",
+  "width": 720,
+  "height": 1280,
+  "seeds": [
+   11,
+   22
+  ],
+  "prompt": "Keep the old man exactly the same: the same face, thick white hair combed back, bushy white eyebrows, full white beard and curled white moustache, cream half-sleeve cotton shirt with one chest pocket, green cotton towel with white stripes and fringe on his left shoulder, white veshti with a thin green border, brown leather slippers, and the wooden walking stick in his right hand. Show him in a medium shot from the waist up, centred, facing the camera with a warm smile, as if about to speak to the viewer. He stands in a freshly ploughed red-soil farm field in rural Tamil Nadu, India, in soft golden early-morning light. Behind him: neat furrows of crumbly red soil, a big leafy neem tree at the left edge, an old round stone well with a small motor shed on the right, a few coconut palms, and a hazy blue hill on the far horizon under a clear sky with a warm sunrise glow. Render the whole image, the man and the entire background, as one frame from a high-quality 3D animated feature film (Pixar style): stylised but detailed, soft global illumination, gentle depth of field, warm colours. Vertical 9:16 frame."
+ },
+ {
+  "name": "wide_bg",
+  "type": "qwen_edit",
+  "image": "thatha_ref.png",
+  "width": 720,
+  "height": 1280,
+  "seeds": [
+   11,
+   22
+  ],
+  "prompt": "Keep the old man exactly the same: the same face, thick white hair combed back, bushy white eyebrows, full white beard and curled white moustache, cream half-sleeve cotton shirt with one chest pocket, green cotton towel with white stripes and fringe on his left shoulder, white veshti with a thin green border, brown leather slippers, and the wooden walking stick in his right hand. Show his full body, head to slippers, standing in the lower-middle of the frame with plenty of field around him. He stands in a freshly ploughed red-soil farm field in rural Tamil Nadu, India, in soft golden early-morning light. Behind him: neat furrows of crumbly red soil, a big leafy neem tree at the left edge, an old round stone well with a small motor shed on the right, a few coconut palms, and a hazy blue hill on the far horizon under a clear sky with a warm sunrise glow. Render the whole image, the man and the entire background, as one frame from a high-quality 3D animated feature film (Pixar style): stylised but detailed, soft global illumination, gentle depth of field, warm colours. Vertical 9:16 frame."
+ }
+]

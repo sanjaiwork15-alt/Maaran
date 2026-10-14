@@ -1,0 +1,13 @@
+[
+ {
+  "name": "talk10",
+  "type": "s2v",
+  "image": "talk_frame.png",
+  "audio": "voice10.wav",
+  "width": 480,
+  "height": 848,
+  "chunks": 2,
+  "seed": 7,
+  "prompt": "3D animated film, Pixar style. A cheerful 70-year-old Tamil farmer with white hair, a full white beard and a curled white moustache, cream shirt and a green towel on his left shoulder, stands in a ploughed red-soil field at sunrise. He talks warmly to the camera like a grandfather welcoming his grandchildren: natural lip movements, gentle head nods, friendly eyes blinking, eyebrows lifting, a small welcoming gesture with his free hand, the other hand resting on his wooden walking stick. Neem leaves sway softly in the morning breeze. Static camera, steady framing, consistent face and clothes."
+ }
+]
