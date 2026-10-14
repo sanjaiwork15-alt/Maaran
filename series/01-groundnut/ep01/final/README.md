@@ -1,6 +1,8 @@
 # Groundnut Episode 1 – Why Do Groundnuts Grow Underground?
 
-Final video: `groundnut_ep01.mp4` (54.6 s, 1080x1920, 25 fps, -15 LUFS).
+Final video: `groundnut_ep01.mp4` (49.6 s, 1080x1920, 25 fps, -15 LUFS), played 10% faster than the edit
+(`setpts=PTS/1.1`, `atempo=1.1`: lip sync and voice pitch unchanged) for a livelier pace.
+Scene times below are from the edit (before the speed-up).
 
 | Time | Scene | Made with |
 |---|---|---|
