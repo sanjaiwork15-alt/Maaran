@@ -15,7 +15,7 @@ set -euo pipefail
 KERNEL="$1"; IN="$2"; OUT="$3"
 U="${KAGGLE_USERNAME:?set KAGGLE_USERNAME}"
 MACHINE="${MACHINE:-NvidiaTeslaT4}"
-SLUG="maaran-${KERNEL//_/-}"
+SLUG="${SLUG:-maaran-${KERNEL//_/-}}"   # SLUG=... runs a second copy in parallel
 HERE="$(cd "$(dirname "$0")" && pwd)"
 WORK="$(mktemp -d)"
 
