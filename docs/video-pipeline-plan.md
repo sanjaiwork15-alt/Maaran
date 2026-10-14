@@ -38,3 +38,16 @@ All GPU steps run in one Kaggle kernel, `tools/kaggle/comfy_jobs.py` (headless C
   Adding that host to Allowed domains would make downloads direct.
 - Estimated GPU time for a 50 s Short (~35 s talking, ~15 s action, 4 scene frames): ~2.5-3 h on one T4.
   Next speed-ups: run two jobs at once (one per T4), and reuse scene frames across episodes of a series.
+
+## Method used for Groundnut Episode 1 (2026-10-14) – the default from now on
+- Start frames: Qwen-Image-Edit-2511 from the owner's 2D art (`assets/2d`), one per scene, with the props
+  and pose the script asks for. Check every frame for anatomy (one left + one right hand) before use.
+- Talking scenes: Wan 2.2 S2V on Kaggle from each start frame + that scene's voice clip.
+- Action scenes: Wan 2.2 I2V on Kaggle. Explanations (how a crop grows): code animations (`tools/toon/`).
+- Two Kaggle sessions in parallel (`SLUG=maaran-comfy-jobs-b`); the runner follows the live log so all
+  outputs arrive. Ep 1 took ~2.5 h end to end and 6 GPU hours.
+- Assembly: `tools/assemble_ep.py` cuts on the voice timings and adds the nature bed (`tools/ambience.py`).
+- Pace: the owner wants it brisk. Final export runs 10% faster (`setpts=PTS/1.1`, `atempo=1.1`); for the
+  next episodes generate the voice ~10% faster at the source (`f5_voice.py --speed 1.1`) and keep pauses short.
+- Keep a share copy under 30 MB for chat (`-crf 21`); post the full-quality file.
+- Description must credit the CC BY nature sounds (see `assets/sound/nature/CREDITS.md`).
