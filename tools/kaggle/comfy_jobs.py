@@ -11,6 +11,8 @@ Job types (all models free, Apache-2.0, 4-step Lightning/lightx2v LoRAs):
              {"image", "prompt", "width", "height", "frames": 81, "seed"} -> <name>.mp4 (16 fps)
   s2v        Wan 2.2 S2V 14B makes Thatha talk from his voice, in 77-frame chunks.
              {"image", "audio", "prompt", "width", "height", "chunks": 2, "seed"} -> <name>.mp4 (16 fps, silent)
+  "upscale": true on an i2v/s2v job also writes <name>_up.mp4: every frame through Real-ESRGAN x4plus
+             on the second T4 (in the background, while the next job runs), scaled to 1088x1920.
 
 Outputs go to /kaggle/working. Each output is also printed into the run log as base64
 (between "@@FILE" and "@@END" lines), because Kaggle's output-file host may not be
@@ -34,6 +36,7 @@ T0 = time.time()
 COMFY = Path("/tmp/ComfyUI")
 OUT = Path("/kaggle/working")
 timing = {}
+EMIT_LOCK = threading.Lock()     # background upscales emit too; keep each file's lines together
 
 WAN = "Comfy-Org/Wan_2.2_ComfyUI_Repackaged"
 MODELS = {  # key: (repo, file in repo, ComfyUI models folder)
@@ -50,6 +53,7 @@ MODELS = {  # key: (repo, file in repo, ComfyUI models folder)
     "qwen_lora": ("lightx2v/Qwen-Image-Edit-2511-Lightning", "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors", "loras"),
     "qwen_vl": ("Comfy-Org/Qwen-Image_ComfyUI", "split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors", "text_encoders"),
     "qwen_vae": ("Comfy-Org/Qwen-Image_ComfyUI", "split_files/vae/qwen_image_vae.safetensors", "vae"),
+    "esrgan": ("Comfy-Org/Real-ESRGAN_repackaged", "RealESRGAN_x4plus.safetensors", "upscale_models"),
 }
 NEEDS = {
     "qwen_edit": ["qwen_edit", "qwen_lora", "qwen_vl", "qwen_vae"],
@@ -82,6 +86,11 @@ def emit(path):
     """Print a file into the log as base64 so it can be fetched through the logs API."""
     data = Path(path).read_bytes()
     b = base64.b64encode(data).decode()
+    with EMIT_LOCK:
+        _emit(path, data, b)
+
+
+def _emit(path, data, b):
     print(f"@@FILE {Path(path).name} {len(data)} {hashlib.sha256(data).hexdigest()}", flush=True)
     for i in range(0, len(b), 8000):
         print("@@B " + b[i:i + 8000], flush=True)
@@ -173,6 +182,55 @@ def to_mp4(prefix, out):
        f"-c:v libx264 -crf 16 -pix_fmt yuv420p {out}")
 
 
+UPSCALERS = []
+
+
+def upscale_frames(prefix, out, size=(1088, 1920)):
+    """Real-ESRGAN x4plus on every frame (fp16, last GPU), resized to `size`, piped to ffmpeg."""
+    import numpy as np
+    import torch
+    import torch.nn.functional as F
+    from PIL import Image
+    from spandrel import ModelLoader
+    dev = f"cuda:{torch.cuda.device_count() - 1}"
+    model = ModelLoader().load_from_file(str(COMFY / "models/upscale_models" / M("esrgan"))).model.eval().half().to(dev)
+    frames = sorted((COMFY / "output").glob(f"{prefix}_*.png"))
+    enc = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
+                            "-s", f"{size[0]}x{size[1]}", "-r", "16", "-i", "-", "-c:v", "libx264", "-crf", "17",
+                            "-preset", "slow", "-pix_fmt", "yuv420p", str(out)], stdin=subprocess.PIPE)
+    with torch.inference_mode():
+        for f in frames:
+            x = torch.from_numpy(np.asarray(Image.open(f).convert("RGB"))).to(dev).permute(2, 0, 1)[None].half() / 255
+            y = model(x).float()
+            y = F.interpolate(y, size=(size[1], size[0]), mode="bicubic", antialias=True, align_corners=False)
+            enc.stdin.write((y[0].clamp(0, 1).permute(1, 2, 0) * 255).round().byte().cpu().numpy().tobytes())
+    enc.stdin.close()
+    enc.wait()
+    del model
+    torch.cuda.empty_cache()
+    log("upscaled", out.name, len(frames), "frames")
+    emit(out)
+
+
+def finish_video(job):
+    """Write <name>.mp4, then (optionally) the upscaled copy in the background."""
+    to_mp4(job["name"], OUT / f"{job['name']}.mp4")
+    emit(OUT / f"{job['name']}.mp4")
+    if job.get("upscale"):
+        prev = UPSCALERS[-1] if UPSCALERS else None
+
+        def run():
+            if prev:
+                prev.join()          # one upscale at a time on the spare GPU
+            try:
+                upscale_frames(job["name"], OUT / f"{job['name']}_up.mp4")
+            except Exception as e:
+                log("upscale failed:", job["name"], repr(e))
+        t = threading.Thread(target=run)
+        t.start()
+        UPSCALERS.append(t)
+
+
 # ---------------------------------------------------------------- jobs
 
 def qwen_edit(job, base):
@@ -234,8 +292,7 @@ def i2v(job, base):
         "16": {"class_type": "SaveImage", "inputs": {"images": ["15", 0], "filename_prefix": job["name"]}},
     }
     run_graph(job["name"], g)
-    to_mp4(job["name"], OUT / f"{job['name']}.mp4")
-    emit(OUT / f"{job['name']}.mp4")
+    finish_video(job)
 
 
 def s2v(job, base):
@@ -278,8 +335,7 @@ def s2v(job, base):
         "94": {"class_type": "SaveImage", "inputs": {"images": ["93", 0], "filename_prefix": job["name"]}},
     })
     run_graph(job["name"], g)
-    to_mp4(job["name"], OUT / f"{job['name']}.mp4")
-    emit(OUT / f"{job['name']}.mp4")
+    finish_video(job)
 
 
 JOBS = {"qwen_edit": qwen_edit, "i2v": i2v, "s2v": s2v}
@@ -291,12 +347,14 @@ def main():
         jobs += [(j, Path(f).parent) for j in json.loads(Path(f).read_text())]
     log("jobs:", [(j["name"], j["type"]) for j, _ in jobs])
     install()
-    download(sorted({k for j, _ in jobs for k in NEEDS[j["type"]]}))
+    download(sorted({k for j, _ in jobs for k in NEEDS[j["type"]]} | ({"esrgan"} if any(j.get("upscale") for j, _ in jobs) else set())))
     proc = start_server()
     try:
         for j, base in jobs:
             JOBS[j["type"]](j, base)
             step(f"job {j['name']}")
+        for t in UPSCALERS:
+            t.join()
     finally:
         shutil.copy("/tmp/comfy.log", OUT / "comfy.log")
         (OUT / "timing.json").write_text(json.dumps(timing, indent=1))

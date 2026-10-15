@@ -1,0 +1,115 @@
+{
+ "lines": [
+  {
+   "id": "L1a",
+   "start": 0.3,
+   "end": 2.206,
+   "group": "hook"
+  },
+  {
+   "id": "L1b",
+   "start": 2.406,
+   "end": 6.318,
+   "group": "hook2"
+  },
+  {
+   "id": "L2a",
+   "start": 6.618,
+   "end": 11.307,
+   "group": "soil"
+  },
+  {
+   "id": "L2b",
+   "start": 11.507,
+   "end": 15.178,
+   "group": "clear"
+  },
+  {
+   "id": "L3a",
+   "start": 15.478,
+   "end": 20.176,
+   "group": "roots"
+  },
+  {
+   "id": "L3b",
+   "start": 20.376,
+   "end": 25.338,
+   "group": "wisdom"
+  },
+  {
+   "id": "L4a",
+   "start": 25.638,
+   "end": 29.735,
+   "group": "humour"
+  },
+  {
+   "id": "L4b",
+   "start": 29.985,
+   "end": 33.476,
+   "group": "humour"
+  },
+  {
+   "id": "L5a",
+   "start": 33.776,
+   "end": 36.026,
+   "group": "cliff"
+  },
+  {
+   "id": "L5b",
+   "start": 36.226,
+   "end": 39.074,
+   "group": "cliff"
+  },
+  {
+   "id": "L5c",
+   "start": 39.324,
+   "end": 43.874,
+   "group": "seed"
+  },
+  {
+   "id": "L5d",
+   "start": 44.074,
+   "end": 46.002,
+   "group": "seed"
+  }
+ ],
+ "groups": {
+  "hook": {
+   "start": 0.3,
+   "end": 2.406
+  },
+  "hook2": {
+   "start": 2.406,
+   "end": 6.618
+  },
+  "soil": {
+   "start": 6.618,
+   "end": 11.507
+  },
+  "clear": {
+   "start": 11.507,
+   "end": 15.478
+  },
+  "roots": {
+   "start": 15.478,
+   "end": 20.376
+  },
+  "wisdom": {
+   "start": 20.376,
+   "end": 25.638
+  },
+  "humour": {
+   "start": 25.638,
+   "end": 33.776
+  },
+  "cliff": {
+   "start": 33.776,
+   "end": 39.324
+  },
+  "seed": {
+   "start": 39.324,
+   "end": 46.602000000000004
+  }
+ },
+ "total": 46.602
+}

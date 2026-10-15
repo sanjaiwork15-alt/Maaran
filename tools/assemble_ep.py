@@ -8,9 +8,13 @@ EDIT.json (paths relative to the file):
   "voice": "voice.wav", "ambience_seed": 3,
   "shots": [
     {"video": "hook.mp4", "start": 0.0, "end": 6.1, "src_start": 0.0},   # a piece of a clip
+    {"video": "hook.mp4", "start": 6.1, "end": 9.0, "src_start": 6.1,
+     "zoom": [1.0, 1.15], "focus": [0.5, 0.35]},                         # slow push-in / punch-in
     ...
   ]
 }
+"zoom" is a punch-in factor (1.3 = 30% closer) or [from, to] for a smooth push over the shot;
+"focus" is the point to zoom on, as fractions of the frame (default: his face, [0.5, 0.35]).
 Each shot shows its clip from src_start for (end - start) seconds; the pieces butt together
 on the voice timeline. AI clips (16 fps, 480x848) are motion-interpolated to 25 fps and
 upscaled to 1080x1920; code clips are already 1080x1920. The last shot is held on its final
@@ -23,6 +27,38 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+
+def zoom_piece(src, out, dur, zoom, focus):
+    """Re-frame a 1080x1920 piece with a (possibly animated) zoom, sub-pixel smooth (no zoompan jitter)."""
+    import numpy as np
+    from PIL import Image
+    W, H = 1080, 1920
+    z0, z1 = (zoom, zoom) if isinstance(zoom, (int, float)) else zoom
+    fx, fy = focus
+    n = round(dur * 25)
+    dec = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-i", str(src), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                           stdout=subprocess.PIPE)
+    enc = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
+                            "-r", "25", "-i", "-", "-c:v", "libx264", "-crf", "16", "-preset", "medium",
+                            "-pix_fmt", "yuv420p", str(out)], stdin=subprocess.PIPE)
+    for i in range(n):
+        buf = dec.stdout.read(W * H * 3)
+        if len(buf) < W * H * 3:
+            break
+        u = i / max(1, n - 1)
+        u = u * u * (3 - 2 * u)                       # ease in/out
+        z = z0 + (z1 - z0) * u
+        w, h = W / z, H / z
+        x0 = min(max(fx * W - w / 2, 0), W - w)
+        y0 = min(max(fy * H - h / 2, 0), H - h)
+        img = Image.frombuffer("RGB", (W, H), buf).transform((W, H), Image.EXTENT, (x0, y0, x0 + w, y0 + h),
+                                                             Image.BICUBIC)
+        enc.stdin.write(img.tobytes())
+    dec.stdout.close()
+    dec.wait()
+    enc.stdin.close()
+    enc.wait()
 
 
 def piece(src, ss, dur, out):
@@ -48,6 +84,10 @@ def main():
     for i, s in enumerate(cfg["shots"]):
         p = tmp / f"p{i:02d}.mp4"
         piece(base / s["video"], s.get("src_start", 0.0), s["end"] - s["start"], p)
+        if s.get("zoom"):
+            zp = tmp / f"p{i:02d}z.mp4"
+            zoom_piece(p, zp, s["end"] - s["start"], s["zoom"], s.get("focus", [0.5, 0.35]))
+            p = zp
         lst.append(f"file '{p}'")
         print("piece", i, s["video"], round(s["end"] - s["start"], 2), flush=True)
     (tmp / "list.txt").write_text("\n".join(lst))
