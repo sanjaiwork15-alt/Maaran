@@ -53,6 +53,11 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   same". It also mirrors the towel to the wrong shoulder on some seeds (check: towel on the image's RIGHT side
   when he faces the camera). Make 2 seeds per frame and pick.
 - Wan S2V runs ~19 min per 4.8 s chunk on the T4 now (Ep 1 noted ~12); a 2-run episode takes ~2.5 h of GPU each.
+- Don't mix all three model families (qwen_edit + s2v + i2v) in one Kaggle run: Ep 2's run B went silent in its
+  i2v job after a qwen_edit and an s2v job (likely RAM thrash). Keep start frames in their own runs; s2v + i2v
+  together is fine (run A did 3 s2v + 2 i2v).
+- `assemble_ep.py` now cuts pieces on the exact 25 fps frame grid (before: each piece lost up to a frame, so the
+  picture ran ~0.2 s ahead of the voice by the end of Ep 2's first render).
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`).
 
@@ -62,8 +67,10 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 `tools/check_shot.py`; thumbnail; `description.md`.
 1. Real chuckles: the script's "(chuckles)" are not voiced by IndicF5. Make a short laugh/chuckle reference clip in
    the same Gemini "Charon" voice and splice it in (see `bible/character.md`, Voice).
-2. S2V smears hands during fast arm swings (Ep 2 hook2, frames 68–70). Prompt "slow, small gestures" and cut
-   around any smear (the checker does not catch motion blur yet – add a sharpness-drop check).
+2. S2V smears hands (with a pink tint) during fast arm swings and pats (Ep 2 hook2 frames 68–70; the first humour
+   take patted twice and smeared both times, so it was redone with "one slow, small rub, no fast patting").
+   Prompt slow, small gestures and cut around any smear. The checker does not catch motion blur yet – add a
+   hand-sharpness-drop check.
 3. Real-ESRGAN takes ~2.7 s/frame on the T4 (~40 min per episode on the spare GPU). Try batching frames or a
    lighter model (realesr-animevideov3) if it starts to hold up the run.
 4. Assembly takes ~10 min because motion interpolation now runs at 1088x1920; interpolate at 480x848 *before*
@@ -72,4 +79,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 
 ## Status
 - Groundnut Ep 1: done, approved for posting (`series/01-groundnut/ep01/final/groundnut_ep01.mp4`, 49.6 s; script in `final/script.md`).
-- Next: Groundnut Ep 2 (soil preparation) – see `series/01-groundnut/overview.md`.
+- Groundnut Ep 2: done, waiting for the owner's review (`series/01-groundnut/ep02/final/groundnut_ep02.mp4`, 49.4 s,
+  thumbnail + description in the same folder).
+- Next: Groundnut Ep 3 (sowing; the seed choice/treatment from the old Ep 2 plan goes here) – see `series/01-groundnut/overview.md`.

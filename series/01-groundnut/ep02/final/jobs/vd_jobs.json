@@ -1,0 +1,14 @@
+[
+ {
+  "name": "humour3",
+  "type": "s2v",
+  "image": "f_humour2_s8.png",
+  "audio": "voice_humour.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 11,
+  "upscale": true,
+  "prompt": "A funny, warm old Indian farmer talks to the camera with a cheeky smile. His hand rests on his stomach and slowly rubs it in one small, gentle circle, as if he is hungry, and he chuckles. Later he lifts that hand slowly to chest height, palm down, in a calm 'patience' gesture, and gives the camera a knowing look. Slow, small, relaxed hand movements, no fast patting. His other hand keeps holding his wooden walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ }
+]

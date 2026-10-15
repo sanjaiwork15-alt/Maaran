@@ -44,10 +44,11 @@ mkdir -p "$OUT"
 # 3. Follow the live log the whole run (Kaggle keeps only the tail of a finished run's
 #    log, and output files come from a host that may be blocked here), then wait
 sleep 20
-( for i in 1 2 3 4 5 6; do
-    kaggle kernels logs -f "$U/$SLUG" >> "$OUT/live_log.txt" 2>/dev/null
+# The stream sometimes stalls without closing (Ep 2): restart it every 10 min until the run ends.
+( while true; do
+    timeout 600 kaggle kernels logs -f "$U/$SLUG" >> "$OUT/live_log.txt" 2>/dev/null
     kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED" || break
-    sleep 10
+    sleep 5
   done ) &
 FOLLOW=$!
 while kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED"; do sleep 60; done

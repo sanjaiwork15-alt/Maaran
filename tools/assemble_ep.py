@@ -61,7 +61,9 @@ def zoom_piece(src, out, dur, zoom, focus):
     enc.wait()
 
 
-def piece(src, ss, dur, out):
+def piece(src, ss, n, out):
+    """n frames (25 fps) of src from ss on, upscaled/cropped to 1080x1920."""
+    dur = n / 25
     fps = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v", "-show_entries", "stream=r_frame_rate",
                           "-of", "csv=p=0", str(src)], capture_output=True, text=True).stdout.strip()
     interp = "" if fps == "25/1" else "minterpolate=fps=25:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1,"
@@ -70,7 +72,7 @@ def piece(src, ss, dur, out):
     vf = (f"{interp}scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920,"
           f"tpad=start_mode=clone:start_duration={lead}:stop_mode=clone:stop_duration={dur}")
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", f"{ss:.3f}", "-i", str(src), "-t", f"{dur + 0.5:.3f}",
-                    "-vf", vf, "-t", f"{dur:.3f}", "-an", "-c:v", "libx264", "-crf", "16", "-preset", "medium",
+                    "-vf", vf, "-frames:v", str(n), "-an", "-c:v", "libx264", "-crf", "16", "-preset", "medium",
                     "-pix_fmt", "yuv420p", "-r", "25", str(out)], check=True)
 
 
@@ -83,13 +85,15 @@ def main():
     lst = []
     for i, s in enumerate(cfg["shots"]):
         p = tmp / f"p{i:02d}.mp4"
-        piece(base / s["video"], s.get("src_start", 0.0), s["end"] - s["start"], p)
+        # frame counts from the cumulative 25 fps grid, so cuts never drift from the voice
+        n = round(s["end"] * 25) - round(s["start"] * 25)
+        piece(base / s["video"], s.get("src_start", 0.0), n, p)
         if s.get("zoom"):
             zp = tmp / f"p{i:02d}z.mp4"
-            zoom_piece(p, zp, s["end"] - s["start"], s["zoom"], s.get("focus", [0.5, 0.35]))
+            zoom_piece(p, zp, n / 25, s["zoom"], s.get("focus", [0.5, 0.35]))
             p = zp
         lst.append(f"file '{p}'")
-        print("piece", i, s["video"], round(s["end"] - s["start"], 2), flush=True)
+        print("piece", i, s["video"], n, "frames", flush=True)
     (tmp / "list.txt").write_text("\n".join(lst))
     video = tmp / "video.mp4"
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(tmp / "list.txt"),
