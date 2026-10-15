@@ -5,7 +5,7 @@ Usage:
 
 Trims silence from each line, adds the line's "pause_after" gap, then writes
 OUT_DIR/voice.wav (44.1 kHz mono, loudness-normalised) and OUT_DIR/timings.json,
-which tools/animate.py uses for lip sync and shot changes.
+which tools/assemble_ep.py uses to cut shots on the voice.
 """
 import argparse
 import json

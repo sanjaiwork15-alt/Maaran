@@ -21,7 +21,8 @@ Read `bible/character.md`, `bible/world.md`, `docs/video-pipeline-plan.md` and t
 | Part | Tool |
 |---|---|
 | Voice | IndicF5 + locked reference `assets/voice/thatha_ref.wav`: `tools/f5_voice.py lines.json OUT` (Tamil script; CPU, slow – start it first) |
-| Scene start frames | Qwen-Image-Edit-2511 on Kaggle (`qwen_edit` job) from the owner's art + pose/prop prompt |
+| Base frame | `tools/base_frame.py OUT.png --shot medium|wide` – the owner's Thatha art on the series background |
+| Scene start frames | Qwen-Image-Edit-2511 on Kaggle (`qwen_edit` job) from the base frame + pose/prop prompt |
 | Talking scenes | Wan 2.2 S2V on Kaggle (`s2v` job): start frame + that scene's voice clip; 77 frames (4.8 s) per chunk |
 | Full-body actions | Wan 2.2 I2V on Kaggle (`i2v` job), 81 frames |
 | Explanations (crop biology) | Code animations, e.g. `tools/toon/cutaway.py` – must be botanically exact (check TNAU) |
@@ -31,8 +32,8 @@ Read `bible/character.md`, `bible/world.md`, `docs/video-pipeline-plan.md` and t
 Worked example with every file: `series/01-groundnut/ep01/final/` (`lines.json`, `timings.json`, `edit.json`,
 `shots/`, `frames/`, `README.md`). Copy its structure for the next episode.
 
-The code puppet (`tools/toon/puppet.py`, `arm.py`, `human.py`, `animate_puppet.py`) is a fallback for quick
-talking shots; it enforces human-movement rules automatically. Wan S2V gave more natural results for Ep 1.
+Rejected approaches (3D look, code-drawn Thatha, code puppet, MuseTalk, music bed, other voices…) were removed
+from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not retry them.
 
 ## Gotchas learned the hard way
 - Fresh session: `bash tools/setup.sh` (needs `HF_TOKEN`; Kaggle needs `KAGGLE_USERNAME`, `KAGGLE_API_TOKEN`).
@@ -61,5 +62,5 @@ talking shots; it enforces human-movement rules automatically. Wan S2V gave more
 7. Write the video description (with sound credits) into the episode folder.
 
 ## Status
-- Groundnut Ep 1: done, approved for posting (`series/01-groundnut/ep01/final/groundnut_ep01.mp4`, 49.6 s).
+- Groundnut Ep 1: done, approved for posting (`series/01-groundnut/ep01/final/groundnut_ep01.mp4`, 49.6 s; script in `final/script.md`).
 - Next: Groundnut Ep 2 (soil preparation) – see `series/01-groundnut/overview.md`.

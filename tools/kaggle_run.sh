@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 # Run one of our GPU kernels on Kaggle (free ~30 GPU h/week) and download its output.
 #
-#   tools/kaggle_run.sh comfy_jobs IN_DIR OUT_DIR  # IN_DIR has jobs.json + images/audio (main one)
-#   tools/kaggle_run.sh wan_i2v    IN_DIR OUT_DIR  # older: shots.json + start frames
-#   tools/kaggle_run.sh musetalk   IN_DIR OUT_DIR  # older: talk.json + voice WAVs
+#   tools/kaggle_run.sh comfy_jobs IN_DIR OUT_DIR  # IN_DIR has jobs.json + images/audio
 #
 # Needs KAGGLE_USERNAME + KAGGLE_API_TOKEN and the kaggle CLI (uv tool install kaggle).
 # IN_DIR is uploaded as the private dataset <user>/maaran-<kernel>-in (a new version
-# each run); the kernel is <user>/maaran-<kernel>. musetalk also mounts the latest
-# wan_i2v output, so it can lip-sync a Wan clip. Runs on 2x T4; MACHINE=... to change
+# each run); the kernel is <user>/maaran-<kernel>. Runs on 2x T4; MACHINE=... to change
 # (NvidiaL4 is listed by the API but was not granted on the free tier: it ran CPU-only).
 set -euo pipefail
 
@@ -34,7 +31,7 @@ until [ "$(kaggle datasets status "$U/$SLUG-in")" = "ready" ]; do sleep 10; done
 # 2. Push the kernel (this starts a run)
 mkdir "$WORK/kernel"
 cp "$HERE/kaggle/$KERNEL.py" "$WORK/kernel/"
-KSRC="[]"; [ "$KERNEL" = musetalk ] && KSRC="[\"$U/maaran-wan-i2v\"]"
+KSRC="[]"
 cat > "$WORK/kernel/kernel-metadata.json" <<EOF
 {"id": "$U/$SLUG", "title": "$SLUG", "code_file": "$KERNEL.py", "language": "python",
  "kernel_type": "script", "is_private": "true", "enable_gpu": "true", "enable_internet": "true",
