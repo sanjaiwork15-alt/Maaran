@@ -1,0 +1,54 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 3,
+ "shots": [
+  {
+   "video": "shots/hook.mp4",
+   "start": 0,
+   "end": 9.47,
+   "src_start": -0.15
+  },
+  {
+   "video": "shots/intro.mp4",
+   "start": 9.47,
+   "end": 16.952,
+   "src_start": 0.1
+  },
+  {
+   "video": "cutaway_science.mp4",
+   "start": 16.952,
+   "end": 29.469,
+   "src_start": 0
+  },
+  {
+   "video": "shots/secret.mp4",
+   "start": 29.469,
+   "end": 30.803,
+   "src_start": 0.1
+  },
+  {
+   "video": "cutaway_insert.mp4",
+   "start": 30.803,
+   "end": 38.041,
+   "src_start": 0
+  },
+  {
+   "video": "shots/secret.mp4",
+   "start": 38.041,
+   "end": 39.905,
+   "src_start": 8.672
+  },
+  {
+   "video": "shots/cliff.mp4",
+   "start": 39.905,
+   "end": 49.578,
+   "src_start": 0.1
+  },
+  {
+   "video": "shots/walk.mp4",
+   "start": 49.578,
+   "end": 54.578,
+   "src_start": 0
+  }
+ ]
+}
