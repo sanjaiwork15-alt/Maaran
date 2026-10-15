@@ -46,7 +46,7 @@ mkdir -p "$OUT"
 sleep 20
 # The stream sometimes stalls without closing (Ep 2): restart it every 10 min until the run ends.
 ( while true; do
-    timeout 600 kaggle kernels logs -f "$U/$SLUG" >> "$OUT/live_log.txt" 2>/dev/null
+    PYTHONUNBUFFERED=1 timeout 600 kaggle kernels logs -f "$U/$SLUG" >> "$OUT/live_log.txt" 2>/dev/null
     kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED" || break
     sleep 5
   done ) &
