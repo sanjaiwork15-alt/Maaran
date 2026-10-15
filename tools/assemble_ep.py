@@ -84,7 +84,7 @@ def main():
     edit = Path(sys.argv[1])
     out = sys.argv[2]
     cfg = json.loads(edit.read_text())
-    base = edit.parent
+    base = edit.resolve().parent
     tmp = Path(tempfile.mkdtemp())
     cache = base / ".pieces"                  # finished pieces, reused when a shot is unchanged
     cache.mkdir(exist_ok=True)

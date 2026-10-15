@@ -1,0 +1,49 @@
+[
+ {
+  "name": "seed",
+  "type": "s2v",
+  "image": "f_cliff_s3.png",
+  "audio": "voice_seed.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A warm old Indian farmer holds up a single groundnut seed between his thumb and forefinger, looks at it fondly, then at the camera, and talks. He keeps the seed in his fingers. His other hand rests on his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "question",
+  "type": "s2v",
+  "image": "f_cliff_s8.png",
+  "audio": "voice_question.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A thoughtful old Indian farmer holds a groundnut seed between his fingers and talks, wondering aloud; he tilts his head, glances to the side at the field, then back at the camera with a curious, questioning look. He keeps the seed in his fingers. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "outro",
+  "type": "s2v",
+  "image": "base_medium.png",
+  "audio": "voice_outro.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A proud, happy old Indian farmer stands in his freshly sown field and talks to the camera with a warm smile, nodding gently, one hand on his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "plant",
+  "type": "i2v",
+  "image": "f_kneel_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Kneeling on the soil, the old farmer places the groundnut seed in the small hole, then gently pushes soil over it with his fingers to cover it and pats the soil softly. Slow, careful, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

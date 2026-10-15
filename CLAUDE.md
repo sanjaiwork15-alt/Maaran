@@ -58,6 +58,14 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   together is fine (run A did 3 s2v + 2 i2v).
 - `assemble_ep.py` now cuts pieces on the exact 25 fps frame grid (before: each piece lost up to a frame, so the
   picture ran ~0.2 s ahead of the voice by the end of Ep 2's first render).
+- **Speed rules (owner: 5.5 h for Ep 2 was too long; use tokens sparingly):** reuse approved start frames from
+  earlier episodes; launch the first Kaggle run as soon as its voice lines exist (voice in priority order);
+  prefer code cut-aways and voice-over on action shots over extra S2V chunks; review all shots in one sheet;
+  no drafts; `assemble_ep.py` renders pieces in parallel and caches them in `final/.pieces/`.
+- **The Kaggle log stream drops chunks** (Ep 3 lost a whole run once and the patience shot twice). Run a second
+  follower (`kaggle kernels logs -f` in a restart loop) next to `kaggle_run.sh`, decode from both, and check
+  in the first 5 min that the logs are growing. The kernel now prints every file twice (2 min apart).
+  Open item: a sturdier output channel (e.g. split files into smaller numbered parts and re-request missing ones).
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`).
 
@@ -79,6 +87,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 
 ## Status
 - Groundnut Ep 1: done, approved for posting (`series/01-groundnut/ep01/final/groundnut_ep01.mp4`, 49.6 s; script in `final/script.md`).
-- Groundnut Ep 2: done, waiting for the owner's review (`series/01-groundnut/ep02/final/groundnut_ep02.mp4`, 49.4 s,
-  thumbnail + description in the same folder).
-- Next: Groundnut Ep 3 (sowing; the seed choice/treatment from the old Ep 2 plan goes here) – see `series/01-groundnut/overview.md`.
+- Groundnut Ep 2: approved by the owner.
+- Groundnut Ep 3: done, waiting for review (`series/01-groundnut/ep03/final/groundnut_ep03.mp4`, 44.6 s).
+- Next: Groundnut Ep 4 (first sprouts) – see `series/01-groundnut/overview.md`.

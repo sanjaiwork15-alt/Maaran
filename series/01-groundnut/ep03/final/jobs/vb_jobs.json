@@ -1,0 +1,26 @@
+[
+ {
+  "name": "intro",
+  "type": "s2v",
+  "image": "f_bowl_s3.png",
+  "audio": "voice_intro.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A warm, cheerful old Indian farmer holds a small clay bowl of groundnut seeds and talks to the camera. He glances down at the prepared soil, then back at the camera with a smile, ready to plant. He keeps holding the bowl and his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "patience",
+  "type": "s2v",
+  "image": "f_hook2_s3.png",
+  "audio": "voice_patience.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A wise, kind old Indian farmer talks to the camera like a grandfather giving advice. He slowly raises his free hand to chest height with one finger pointing up, as if sharing an important lesson, shaking his head gently with a knowing smile. His other hand keeps holding his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]
