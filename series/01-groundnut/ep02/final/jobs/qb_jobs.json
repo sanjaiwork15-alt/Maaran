@@ -1,0 +1,50 @@
+[
+ {
+  "name": "f_hoe",
+  "image": "base_wide.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. He works the soil with a traditional South Indian hoe (mammatti: a short wooden handle with a wide flat iron blade), holding the handle with both hands, his RIGHT hand lower and LEFT hand higher, the blade digging into the red soil and turning it into fine loose crumbs. He leans forward slightly. Full body visible, no walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_humour",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. He pats his round belly with his LEFT hand (the hand on the right side of the image, below the green towel), with a funny, cheeky smile and half-closed laughing eyes, looking at the camera. His RIGHT hand (left side of the image) holds his wooden walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_cliff",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. The red soil behind him is now freshly prepared: fine, smooth and loose, with neat rows, no clods or stones. He holds up one single pink-red groundnut kernel between the thumb and forefinger of his LEFT hand (the hand on the right side of the image) at the height of his face, smiling warmly at the camera. His RIGHT hand (left side of the image) holds his wooden walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_kneel",
+  "image": "base_wide.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. He kneels on one knee at the edge of freshly prepared fine, smooth, loose red soil with neat rows. In the fingertips of his RIGHT hand (left side of the image) he holds one pink-red groundnut kernel just above the soil, about to plant it, smiling. His LEFT hand rests on his raised knee. His walking stick lies on the ground. Full body visible. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]

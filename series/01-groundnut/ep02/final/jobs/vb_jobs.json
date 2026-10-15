@@ -1,0 +1,49 @@
+[
+ {
+  "name": "f_humour2",
+  "type": "qwen_edit",
+  "image": "base_medium.png",
+  "width": 720,
+  "height": 1280,
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. His body shape stays exactly the same as before: a normal, slim old man, the shirt hanging the same way, not fat. He simply rests his LEFT hand (the hand on the right side of the image, below the green towel) flat on his stomach over the buttoned shirt, as if he is hungry, with a funny cheeky smile and laughing eyes, looking at the camera. His RIGHT hand (left side of the image) holds his wooden walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct."
+ },
+ {
+  "name": "cliff",
+  "type": "s2v",
+  "image": "f_cliff_s3.png",
+  "audio": "voice_cliff.wav",
+  "chunks": 3,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A warm, cheerful old Indian farmer talks to the camera with a gentle smile. He holds up a single groundnut seed between the thumb and forefinger of his raised hand and keeps it there, glancing at the seed and back at the camera, nodding kindly. His other hand rests on his wooden walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ },
+ {
+  "name": "hoe",
+  "type": "i2v",
+  "image": "f_hoe_s8.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "The old farmer loosens the red soil with his spade in slow, steady strokes: he pushes the blade into the soil, lifts a little soil and turns it over so it breaks into fine loose crumbs, then does it again a little further along. His body leans naturally with each stroke; his face stays calm and content. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ },
+ {
+  "name": "humour",
+  "type": "s2v",
+  "image": "f_humour2_s3.png",
+  "audio": "voice_humour.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A funny, warm old Indian farmer talks to the camera. First he pats his stomach twice with his hand and chuckles, as if he is hungry; then he lifts that hand calmly in a patient 'wait, wait' gesture and gives the camera a knowing look and a soft laugh. His other hand keeps holding his wooden walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ }
+]

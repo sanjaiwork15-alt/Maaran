@@ -6,26 +6,37 @@ with human-looking movement and no glitches.
 ## Steps for every episode
 1. **Script** – Tanglish voice-over + scene notes, written or approved by the owner. Save it as
    `series/NN-name/epNN/final/script.md`.
-2. **Voice (start first, ~50 min on CPU)** – write each line in Tamil script in `lines.json` (with `group` =
-   scene and `pause_after`), then `tools/f5_voice.py lines.json OUT --speed 1.1` (brisk pace, owner's request).
-   Join with short pauses into `voice.wav`, one `voice_<scene>.wav` per scene and `timings.json`
-   (see Ep 1 for the exact join step; `tools/join_voice.py` has the trim helper).
+2. **Voice (start first, ~40 min on CPU)** – write each line in Tamil script in `lines.json` (with `group` =
+   scene and `pause_after` 0.2–0.3 s), then `tools/f5_voice.py lines.json OUT --speed 1.1` (brisk pace at the
+   source; no speed-up of the finished video). `tools/join_voice.py lines.json OUT .` → `voice.wav` + `timings.json`;
+   then cut one `voice_<shot>.wav` per talking shot (44.1 kHz mono). Check for long pauses inside a line
+   (`silencedetect`) and shorten them, cutting the shot at that pause (Ep 2 did this for the hook).
+   **Hook:** the first line must end by ~3 s – split the hook over two shots (Ep 2: 2.2 s).
 3. **Base frames** – `tools/base_frame.py OUT.png --shot medium|wide` places Thatha on the series background.
 4. **Scene start frames (Kaggle, Qwen-Image-Edit-2511, ~4–5 min each)** – one per scene, pose + props from
    the script ("holding groundnuts in his palm", "carrying a hoe"). Name the hand explicitly. **Inspect every
    frame**: one left + one right hand, stick in his right hand, face and outfit unchanged. Regenerate bad ones.
-5. **Talking scenes (Kaggle, Wan 2.2 S2V, ~12 min per 4.8 s chunk)** – start frame + that scene's voice clip;
-   the prompt describes his acting. Natural lip sync and whole-body movement.
+5. **Talking scenes (Kaggle, Wan 2.2 S2V, ~12–19 min per 4.8 s chunk)** – start frame + that scene's voice clip;
+   the prompt describes his acting. Natural lip sync and whole-body movement. Add `"upscale": true` to every
+   i2v/s2v job: Real-ESRGAN x4plus runs on the second T4 in the background (~2.7 s/frame) and returns
+   `<name>_up.mp4` (1088x1920) – use that as `shots/<name>.mp4`. Much crisper than Lanczos.
 6. **Action scenes (Kaggle, Wan 2.2 I2V, ~20 min per 5 s)** – walking, bending, picking, sowing, etc.
-7. **Explanations (code)** – crop biology as code animations (`tools/toon/cutaway.py` is the template);
+7. **Explanations (code)** – crop biology as code animations (`tools/toon/cutaway.py`, `tools/toon/soil_prep.py`);
    must be botanically exact and checked against TNAU.
-8. **Check every AI shot** before assembly (sample frames: hands, face, outfit, glitches/smudges).
+8. **Check every AI shot** before assembly: `tools/check_shot.py SHOT.mp4 --start FRAME.png` writes a contact
+   sheet and flags jumps and shirt/veshti smudges (it catches the Ep 1 intro smudge). Then look at the sheet
+   yourself for hands (one left, one right, stick in his right hand) and face.
 9. **Assemble** – `edit.json` (shot list on the voice timeline) → `tools/assemble_ep.py edit.json OUT.mp4`
-   (upscales AI clips to 1080x1920 25 fps, adds the nature bed from `tools/ambience.py`, -15 LUFS).
-10. **Deliver** – full file in the repo, a `-crf 21` share copy under 30 MB for chat, and the description with
-    the CC BY sound credits (`assets/sound/nature/CREDITS.md`).
+   (AI clips to 1080x1920 25 fps, nature bed from `tools/ambience.py`, -15 LUFS). Cut every ~3–5 s; use
+   `"zoom": 1.3` punch-ins for punchlines and `"zoom": [1.0, 1.2]` slow pushes (smooth, sub-pixel).
+10. **Deliver** – full file in the repo, a `-crf 21` share copy under 30 MB for chat, `thumbnail.png`
+    (Qwen-Image-Edit `thumb` job + `tools/upscale.py --scale 1.5`) and `description.md` with the CC BY sound
+    credits (`assets/sound/nature/CREDITS.md`).
 
 Run Kaggle work as two parallel sessions (`SLUG=maaran-comfy-jobs-b`). Budget: 30 GPU h/week; Ep 1 used ~6 h.
+Start frames: put 2 seeds of every frame in one run (~4.5 min per image); decode them from the live log while the
+run continues (the `@@FILE` blocks) to inspect early. A start frame needed by a later job in the same run can be
+referenced by its output name (e.g. `"image": "f_humour2_s3.png"`).
 Full worked example: `series/01-groundnut/ep01/final/`.
 
 ## Rejected (removed from the repo – do not retry)

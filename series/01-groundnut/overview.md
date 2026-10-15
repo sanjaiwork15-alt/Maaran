@@ -18,7 +18,12 @@ Thatha opens with a mystery that most people don't know: **groundnut flowers abo
 - **Story:** He introduces himself and his red-soil field. Groundnut likes loose, well-drained red or sandy-loam soil, because the pods have to grow inside it. He says this season he'll grow it in front of us, from start to finish.
 - **Cliffhanger:** "Aana first, vidhai… yella vidhaiyum vidhai illa! Edhai edukkanum? Naalaiku solren."
 
-### Episode 2 – Choosing the Right Seed
+### Episode 2 – Before the Seeds Go In (made 2026-10-15, owner's script)
+- Soil preparation: check the soil, remove stones and weeds, loosen it so roots can spread and seeds sprout.
+  Cliffhanger: "Oru chinna vidhaiyilirundhu evlo verkadalai kidaikkum-nu paakkalaama?" → Episode 3 (sowing).
+  Script and video: `ep02/final/`. The seed-choice/seed-treatment plan below moves into Episode 3.
+
+### (Planned earlier) Choosing the Right Seed
 - **Hook:** He drops two kernels in his palm, one plump and one shrivelled: "Indha rendula onnu thaan mulaikum. Edhu?"
 - **Story:** Ploughing the field to make the soil fine. He shells pods by hand and keeps only plump, unbroken kernels. Seed treatment the TNAU way: Trichoderma (a friendly fungus that protects the seed) and Rhizobium (friendly bacteria that help the plant take nitrogen from the air), mixed with cooled rice kanji so it sticks.
 - **Cliffhanger:** "Ellaam ready. Naalaiku kaalaila, vidhaipu!"

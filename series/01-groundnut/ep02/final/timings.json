@@ -9,67 +9,67 @@
   {
    "id": "L1b",
    "start": 2.406,
-   "end": 6.318,
+   "end": 5.778,
    "group": "hook2"
   },
   {
    "id": "L2a",
-   "start": 6.618,
-   "end": 11.307,
+   "start": 6.078,
+   "end": 10.767,
    "group": "soil"
   },
   {
    "id": "L2b",
-   "start": 11.507,
-   "end": 15.178,
+   "start": 10.967,
+   "end": 14.638,
    "group": "clear"
   },
   {
    "id": "L3a",
-   "start": 15.478,
-   "end": 20.176,
+   "start": 14.938,
+   "end": 19.636,
    "group": "roots"
   },
   {
    "id": "L3b",
-   "start": 20.376,
-   "end": 25.338,
+   "start": 19.836,
+   "end": 24.798,
    "group": "wisdom"
   },
   {
    "id": "L4a",
-   "start": 25.638,
-   "end": 29.735,
+   "start": 25.098,
+   "end": 29.195,
    "group": "humour"
   },
   {
    "id": "L4b",
-   "start": 29.985,
-   "end": 33.476,
+   "start": 29.445,
+   "end": 32.936,
    "group": "humour"
   },
   {
    "id": "L5a",
-   "start": 33.776,
-   "end": 36.026,
+   "start": 33.236,
+   "end": 35.486,
    "group": "cliff"
   },
   {
    "id": "L5b",
-   "start": 36.226,
-   "end": 39.074,
+   "start": 35.686,
+   "end": 38.534,
    "group": "cliff"
   },
   {
    "id": "L5c",
-   "start": 39.324,
-   "end": 43.874,
+   "start": 38.784,
+   "end": 43.334,
    "group": "seed"
   },
   {
    "id": "L5d",
-   "start": 44.074,
-   "end": 46.002,
+   "start": 43.534,
+   "end": 45.462,
    "group": "seed"
   }
  ],
@@ -80,36 +80,45 @@
   },
   "hook2": {
    "start": 2.406,
-   "end": 6.618
+   "end": 6.078
   },
   "soil": {
-   "start": 6.618,
-   "end": 11.507
+   "start": 6.078,
+   "end": 10.967
   },
   "clear": {
-   "start": 11.507,
-   "end": 15.478
+   "start": 10.967,
+   "end": 14.938
   },
   "roots": {
-   "start": 15.478,
-   "end": 20.376
+   "start": 14.938,
+   "end": 19.836
   },
   "wisdom": {
-   "start": 20.376,
-   "end": 25.638
+   "start": 19.836,
+   "end": 25.098
   },
   "humour": {
-   "start": 25.638,
-   "end": 33.776
+   "start": 25.098,
+   "end": 33.236
   },
   "cliff": {
-   "start": 33.776,
-   "end": 39.324
+   "start": 33.236,
+   "end": 38.784
   },
   "seed": {
-   "start": 39.324,
-   "end": 46.602000000000004
+   "start": 38.784,
+   "end": 46.062
   }
  },
- "total": 46.602
+ "total": 46.062,
+ "cuts": [
+  {
+   "removed": [
+    3.8,
+    4.34
+   ],
+   "why": "shorter pause inside L1b"
+  }
+ ]
 }

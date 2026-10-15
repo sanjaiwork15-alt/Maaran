@@ -1,0 +1,60 @@
+[
+ {
+  "name": "hook",
+  "type": "s2v",
+  "image": "f_hook_s3.png",
+  "audio": "voice_hook.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A playful old Indian farmer talks to the camera. He glances at the groundnut seeds in his open palm, then looks at the camera and shakes his head gently with a teasing smile. He keeps holding the seeds in his palm and his walking stick in his other hand. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ },
+ {
+  "name": "hook2",
+  "type": "s2v",
+  "image": "f_hook2_s3.png",
+  "audio": "voice_hook2.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A cheeky old Indian farmer talks to the camera with a teasing grin, shaking his head playfully as if saying 'no, no', and points down at the red soil with his index finger, tapping the air twice. His other hand keeps holding his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ },
+ {
+  "name": "soil",
+  "type": "s2v",
+  "image": "f_soil_s3.png",
+  "audio": "voice_soil.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "An old Indian farmer squats on the red soil and talks while slowly rubbing a lump of crumbly soil between his fingers, letting small crumbs fall, glancing from the soil up to the camera and back. Calm, natural, thoughtful. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ },
+ {
+  "name": "clear",
+  "type": "i2v",
+  "image": "f_clear_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "The old farmer picks the small stone up from the soil and tosses it gently onto the pile of stones beside his feet, then bends a little again and pulls a small dry weed out of the soil and drops it on the pile. Slow, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ },
+ {
+  "name": "kneel",
+  "type": "i2v",
+  "image": "f_kneel_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Kneeling on the soil, the old farmer slowly lowers the groundnut seed in his fingertips into the small hole in the soil and gently places it there, then looks up at the camera with a warm, happy smile. Slow, gentle, natural movement. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement."
+ }
+]

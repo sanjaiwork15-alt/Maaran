@@ -1,0 +1,62 @@
+[
+ {
+  "name": "f_hook",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. He holds a small heap of shelled groundnut kernels (small pink-red peanut seeds) in the open palm of his LEFT hand (the hand on the right side of the image, below the green towel), raised to chest height. He looks down at the seeds with one eyebrow raised and a playful smile. His RIGHT hand (on the left side of the image) holds his wooden walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_hook2",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. Closer view of his face and chest. He looks straight at the camera with a cheeky, teasing grin and raised eyebrows, head tilted slightly, as if saying 'no no no'. His LEFT hand (right side of the image) points one finger down toward the red soil. His RIGHT hand (left side of the image) holds his wooden walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_soil",
+  "image": "base_wide.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. He squats down low on the red soil field, knees bent, and holds a small lump of crumbly red soil in his open LEFT palm (the hand on the right side of the image), rubbing it between the thumb and fingers of his RIGHT hand, looking at it closely with a thoughtful face. His wooden walking stick lies on the ground beside him. Full body visible. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_clear",
+  "image": "base_wide.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. He bends forward at the waist and picks a small grey stone out of the red soil with his RIGHT hand (left side of the image). Beside his feet lies a small pile of grey stones and pulled-up dry grass weeds. His LEFT hand rests on his knee. His walking stick lies on the ground. Full body visible. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "thumb",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style with clean dark outlines, same red-soil farm background. Close-up portrait. He holds out a handful of fine, loose red soil in his cupped LEFT hand toward the camera (the hand on the right side of the image), and between the fingertips of his RIGHT hand he holds up one pink-red groundnut kernel. Big excited smile, wide bright eyes, eyebrows raised, looking at the camera. Bright, colourful, eye-catching. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]
