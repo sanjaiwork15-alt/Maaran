@@ -37,6 +37,7 @@ COMFY = Path("/tmp/ComfyUI")
 OUT = Path("/kaggle/working")
 timing = {}
 EMIT_LOCK = threading.Lock()     # background upscales emit too; keep each file's lines together
+REEMITS = []
 
 WAN = "Comfy-Org/Wan_2.2_ComfyUI_Repackaged"
 MODELS = {  # key: (repo, file in repo, ComfyUI models folder)
@@ -82,12 +83,16 @@ def step(name):
     log("== done:", name)
 
 
-def emit(path):
+def emit(path, again=True):
     """Print a file into the log as base64 so it can be fetched through the logs API."""
     data = Path(path).read_bytes()
     b = base64.b64encode(data).decode()
     with EMIT_LOCK:
         _emit(path, data, b)
+    if again:                       # a second copy 2 min later: the log stream drops chunks when it reconnects
+        t = threading.Timer(120, emit, args=(path, False))
+        t.start()
+        REEMITS.append(t)
 
 
 def _emit(path, data, b):
@@ -354,6 +359,8 @@ def main():
             JOBS[j["type"]](j, base)
             step(f"job {j['name']}")
         for t in UPSCALERS:
+            t.join()
+        for t in REEMITS:
             t.join()
     finally:
         shutil.copy("/tmp/comfy.log", OUT / "comfy.log")

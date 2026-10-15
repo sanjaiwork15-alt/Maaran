@@ -1,0 +1,21 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 7,
+ "shots": [
+  {"video": "shots/intro.mp4",    "start": 0,      "end": 4.495,  "src_start": -0.15},
+  {"video": "shots/intro.mp4",    "start": 4.495,  "end": 9.312,  "src_start": 4.345, "zoom": [1.0, 1.15], "focus": [0.5, 0.42]},
+  {"video": "shots/seed.mp4",     "start": 9.312,  "end": 10.952, "src_start": 0.15,  "zoom": 1.3, "focus": [0.6, 0.3]},
+  {"video": "shots/plant.mp4",    "start": 10.952, "end": 13.3,   "src_start": 0},
+  {"video": "cutaway_plant.mp4",  "start": 13.3,   "end": 15.184, "src_start": 0},
+  {"video": "shots/patience.mp4", "start": 15.184, "end": 17.6,   "src_start": 0.15},
+  {"video": "shots/patience.mp4", "start": 17.6,   "end": 19.967, "src_start": 2.566, "zoom": 1.3, "focus": [0.5, 0.3]},
+  {"video": "cutaway_time.mp4",   "start": 19.967, "end": 23.965, "src_start": 0},
+  {"video": "shots/question.mp4", "start": 23.965, "end": 28.1,   "src_start": 0.15, "zoom": [1.0, 1.15], "focus": [0.55, 0.3]},
+  {"video": "../../ep01/final/cutaway_science.mp4", "start": 28.1, "end": 30.947, "src_start": 9.6},
+  {"video": "shots/outro.mp4",    "start": 30.947, "end": 33.918, "src_start": 0.15},
+  {"video": "shots/plant.mp4",    "start": 33.918, "end": 35.6,   "src_start": 2.6, "zoom": 1.3, "focus": [0.3, 0.55]},
+  {"video": "../../ep02/final/cutaway_soil.mp4", "start": 35.6, "end": 39.257, "src_start": 4.5},
+  {"video": "shots/outro.mp4",    "start": 39.257, "end": 41.0,   "src_start": 3.0, "zoom": 1.2, "focus": [0.5, 0.3]},
+  {"video": "../../ep02/final/cutaway_soil.mp4", "start": 41.0, "end": 44.6, "src_start": 6.6, "zoom": [1.0, 1.25], "focus": [0.5, 0.35]}
+ ]
+}
