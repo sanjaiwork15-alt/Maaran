@@ -20,10 +20,14 @@ on the voice timeline. AI clips (16 fps, 480x848) are motion-interpolated to 25 
 upscaled to 1080x1920; code clips are already 1080x1920. The last shot is held on its final
 frame if the clip is shorter than its slot.
 """
+import hashlib
 import json
+import os
+import shutil
 import subprocess
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -82,18 +86,30 @@ def main():
     cfg = json.loads(edit.read_text())
     base = edit.parent
     tmp = Path(tempfile.mkdtemp())
-    lst = []
-    for i, s in enumerate(cfg["shots"]):
-        p = tmp / f"p{i:02d}.mp4"
-        # frame counts from the cumulative 25 fps grid, so cuts never drift from the voice
-        n = round(s["end"] * 25) - round(s["start"] * 25)
-        piece(base / s["video"], s.get("src_start", 0.0), n, p)
-        if s.get("zoom"):
-            zp = tmp / f"p{i:02d}z.mp4"
-            zoom_piece(p, zp, n / 25, s["zoom"], s.get("focus", [0.5, 0.35]))
-            p = zp
-        lst.append(f"file '{p}'")
+    cache = base / ".pieces"                  # finished pieces, reused when a shot is unchanged
+    cache.mkdir(exist_ok=True)
+
+    def make(i, s):
+        n = round(s["end"] * 25) - round(s["start"] * 25)   # cumulative 25 fps grid: cuts never drift
+        src = base / s["video"]
+        key = hashlib.sha1(json.dumps([str(src), src.stat().st_mtime, s.get("src_start", 0.0), n,
+                                       s.get("zoom"), s.get("focus")]).encode()).hexdigest()[:16]
+        done = cache / f"{key}.mp4"
+        if not done.exists():
+            p = tmp / f"p{i:02d}.mp4"
+            piece(src, s.get("src_start", 0.0), n, p)
+            if s.get("zoom"):
+                zp = tmp / f"p{i:02d}z.mp4"
+                zoom_piece(p, zp, n / 25, s["zoom"], s.get("focus", [0.5, 0.35]))
+                p = zp
+            shutil.move(str(p), done)
         print("piece", i, s["video"], n, "frames", flush=True)
+        return done
+
+    # minterpolate is single-threaded: render the pieces side by side, one per core
+    with ThreadPoolExecutor(os.cpu_count() or 1) as ex:
+        pieces = list(ex.map(lambda a: make(*a), enumerate(cfg["shots"])))
+    lst = [f"file '{p}'" for p in pieces]
     (tmp / "list.txt").write_text("\n".join(lst))
     video = tmp / "video.mp4"
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(tmp / "list.txt"),

@@ -179,6 +179,29 @@ def side_roots(frac):
     return "".join(g)
 
 
+def water_and_days(t, cfg):
+    """Optional: "water": [t0, t1] rain-can drops soak the soil darker; "days": [t0, t1, n] n day/night cycles."""
+    g = []
+    if "water" in cfg:
+        w = phase(t, cfg["water"])
+        if 0 < w < 1:
+            rng = np.random.default_rng(int(t * 25))
+            for _ in range(55):
+                x, y = rng.uniform(0, W), rng.uniform(SOIL - 500, SOIL)
+                g.append(f'<path d="M {x:.0f},{y:.0f} q -11,26 0,40 q 11,-14 0,-40 Z" fill="#8fd0ff" stroke="#2f6f9f" stroke-width="3"/>')
+        if w > 0:
+            g.append(f'<rect x="0" y="{SOIL}" width="{W}" height="{H - SOIL}" fill="#3a1408" fill-opacity="{0.3 * w:.3f}"/>')
+    if "days" in cfg:
+        t0, t1, n = cfg["days"]
+        if t0 < t < t1:
+            u = (t - t0) / (t1 - t0) * n
+            dark = 0.5 - 0.5 * math.cos(2 * math.pi * u)          # 0 = day, 1 = night
+            g.append(f'<rect x="0" y="0" width="{W}" height="{H}" fill="#0b1a3a" fill-opacity="{0.6 * dark:.3f}"/>')
+            if dark > 0.4:
+                g.append(f'<circle cx="{820}" cy="{SOIL - 330}" r="44" fill="#f4f1d0" fill-opacity="{(dark - 0.4) / 0.6:.3f}"/>')
+    return "".join(g)
+
+
 class SoilPrep:
     def __init__(self):
         sky = sky_png()
@@ -219,6 +242,7 @@ class SoilPrep:
         for x, y, r in CLODS:                 # surface: big clods give way to fine crumbs
             p.append(clod(x, y, r, 1 - ease(L * 1.2)))
         p.append(crumbs(ease((L - 0.2) / 0.8)))
+        p.append(water_and_days(t, cfg))
         return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
                 f'viewBox="{W / 2 - w / 2:.1f} {cy - h / 2:.1f} {w:.1f} {h:.1f}">{"".join(p)}</svg>')
 
