@@ -1,0 +1,37 @@
+[
+ {
+  "name": "f_stand",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. The field now has rows of knee-high, bushy groundnut plants with small oval leaflets in groups of four and a few small bright yellow pea-like flowers near the base of the plants. He stands among the plants, looking at the camera with a proud, delighted smile. His RIGHT hand (left side of the image) holds his wooden walking stick; his LEFT hand rests at his side. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_point",
+  "image": "base_wide.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. The field now has rows of knee-high, bushy groundnut plants with small oval leaflets in groups of four and a few small bright yellow pea-like flowers near the base of the plants. He kneels on one knee beside a groundnut plant and gently points with the index finger of his LEFT hand (the hand on the right side of the image) at one small yellow flower without touching it, looking at the camera with a playful, knowing smile. His walking stick lies on the ground. Full body visible. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "thumb",
+  "image": "base_medium.png",
+  "seeds": [
+   5
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Close-up: he crouches beside a bushy groundnut plant with small bright yellow flowers, raises one finger to his lips as if keeping a secret, eyebrows raised, a mischievous smile at the camera. Bright, colourful, eye-catching. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]

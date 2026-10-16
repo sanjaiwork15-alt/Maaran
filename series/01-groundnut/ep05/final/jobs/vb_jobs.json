@@ -1,0 +1,26 @@
+[
+ {
+  "name": "strange",
+  "type": "s2v",
+  "image": "base_medium.png",
+  "audio": "voice_strange.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "An amused old Indian farmer talks to the camera, shaking his head slowly in playful wonder with a big grin and a soft laugh, as if saying 'what a strange plant!'. His hands stay low and still. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "cliff",
+  "type": "s2v",
+  "image": "f_hook2_s3.png",
+  "audio": "voice_cliff.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A cheerful old Indian farmer points down at the soil with one finger and talks to the camera with a warm, knowing smile, promising to show a secret next time. His other hand keeps holding his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

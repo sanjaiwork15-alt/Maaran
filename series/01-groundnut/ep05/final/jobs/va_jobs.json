@@ -1,0 +1,37 @@
+[
+ {
+  "name": "flowers",
+  "type": "s2v",
+  "image": "f_stand_s8.png",
+  "audio": "voice_flowers.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A proud, happy old Indian farmer stands among his flowering groundnut plants and talks to the camera, glancing down at the plants with a big smile. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "guess",
+  "type": "s2v",
+  "image": "f_point_s3.png",
+  "audio": "voice_guess.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Kneeling by a groundnut plant, a playful old Indian farmer keeps pointing gently at a small yellow flower without touching it and asks the camera a teasing question, eyebrows raised, a knowing smile. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "search",
+  "type": "i2v",
+  "image": "f_point_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Kneeling by the groundnut plant, the old farmer playfully looks among the leaves as if searching for nuts hanging there, gently lifting a few leaves with one hand, finds nothing, then grins and points down at the soil. Slow, playful, natural. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]
