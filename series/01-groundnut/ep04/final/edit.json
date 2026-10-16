@@ -1,0 +1,156 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 11,
+ "shots": [
+  {
+   "video": "cutaway_sprout.mp4",
+   "start": 0,
+   "end": 2.014,
+   "src_start": 0
+  },
+  {
+   "video": "shots/sprout.mp4",
+   "start": 2.014,
+   "end": 5.812,
+   "src_start": 1.269
+  },
+  {
+   "video": "shots/sprout.mp4",
+   "start": 5.812,
+   "end": 9.238,
+   "src_start": 5.067,
+   "zoom": [
+    1.0,
+    1.15
+   ],
+   "focus": [
+    0.45,
+    0.4
+   ]
+  },
+  {
+   "video": "shots/happy.mp4",
+   "start": 9.238,
+   "end": 11.096,
+   "src_start": 0.15
+  },
+  {
+   "video": "shots/happy.mp4",
+   "start": 11.096,
+   "end": 14.395,
+   "src_start": 2.708,
+   "zoom": [
+    1.0,
+    1.12
+   ],
+   "focus": [
+    0.45,
+    0.45
+   ]
+  },
+  {
+   "video": "shots/happy.mp4",
+   "start": 14.395,
+   "end": 17.578,
+   "src_start": 6.007,
+   "zoom": 1.3,
+   "focus": [
+    0.45,
+    0.3
+   ]
+  },
+  {
+   "video": "shots/water.mp4",
+   "start": 17.578,
+   "end": 22.578,
+   "src_start": 0
+  },
+  {
+   "video": "../../ep03/final/cutaway_time.mp4",
+   "start": 22.578,
+   "end": 24.684,
+   "src_start": 0.9
+  },
+  {
+   "video": "../../ep03/final/cutaway_time.mp4",
+   "start": 24.684,
+   "end": 26.82,
+   "src_start": 3.006
+  },
+  {
+   "video": "../../ep03/final/cutaway_time.mp4",
+   "start": 26.82,
+   "end": 28.092,
+   "src_start": 5.142
+  },
+  {
+   "video": "shots/funny.mp4",
+   "start": 28.092,
+   "end": 29.942,
+   "src_start": 0
+  },
+  {
+   "video": "shots/funny.mp4",
+   "start": 29.942,
+   "end": 33.137,
+   "src_start": 1.85
+  },
+  {
+   "video": "cutaway_sprout.mp4",
+   "start": 33.137,
+   "end": 35.261,
+   "src_start": 1.1,
+   "zoom": [
+    1.0,
+    1.2
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ]
+  },
+  {
+   "video": "shots/next.mp4",
+   "start": 35.261,
+   "end": 36.635,
+   "src_start": 0.15
+  },
+  {
+   "video": "shots/next.mp4",
+   "start": 36.635,
+   "end": 39.354,
+   "src_start": 2.183,
+   "zoom": [
+    1.0,
+    1.12
+   ],
+   "focus": [
+    0.5,
+    0.35
+   ]
+  },
+  {
+   "video": "../../ep01/final/cutaway_science.mp4",
+   "start": 39.354,
+   "end": 43.542,
+   "src_start": 2.9
+  },
+  {
+   "video": "shots/cliff.mp4",
+   "start": 43.542,
+   "end": 45.793,
+   "src_start": 0.15
+  },
+  {
+   "video": "shots/cliff.mp4",
+   "start": 45.793,
+   "end": 47.516,
+   "src_start": 3.233,
+   "zoom": 1.3,
+   "focus": [
+    0.45,
+    0.3
+   ]
+  }
+ ]
+}
