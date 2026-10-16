@@ -1,0 +1,22 @@
+[
+ {"id": "L1a", "group": "sprout",  "tanglish": "Enna pa... namma vidhai potta idathula pachai pachaiyaa thalir vandhirukku!",
+  "tamil": "என்ன பா... நம்ம விதை போட்ட இடத்துல பச்சை பச்சையா தளிர் வந்திருக்கு!", "pause_after": 0.2},
+ {"id": "L1b", "group": "sprout",  "tanglish": "Ahaa... namma uzhaippukku mudhal palan vandhuduchu pa!",
+  "tamil": "ஆஹா... நம்ம உழைப்புக்கு முதல் பலன் வந்துடுச்சு பா!", "pause_after": 0.25},
+ {"id": "L2",  "group": "happy",   "tanglish": "Chinna vidhai mannukkulla irundhu... ippadi thalira veliya varradha paakkumbodhu manasukku evlo sandhoshama irukku theriyuma pa?",
+  "tamil": "சின்ன விதை மண்ணுக்குள்ள இருந்து... இப்படி தளிரா வெளிய வர்றத பாக்கும்போது மனசுக்கு எவ்ளோ சந்தோஷமா இருக்கு தெரியுமா பா?", "pause_after": 0.25},
+ {"id": "L3a", "group": "water",   "tanglish": "Ippo indha chinna chedikku sariyana eerappadhamum, gavanippum mukkiyam pa!",
+  "tamil": "இப்போ இந்த சின்ன செடிக்கு சரியான ஈரப்பதமும், கவனிப்பும் முக்கியம் பா!", "pause_after": 0.2},
+ {"id": "L3b", "group": "water",   "tanglish": "Thanni romba adhigama irundhaalum sari, romba kammiya irundhaalum sari... chedi kashtappadum!",
+  "tamil": "தண்ணி ரொம்ப அதிகமா இருந்தாலும் சரி, ரொம்ப கம்மியா இருந்தாலும் சரி... செடி கஷ்டப்படும்!", "pause_after": 0.25},
+ {"id": "L4a", "group": "funny",   "tanglish": "Indha chinna chediya paathadhum, naalaikke verkadalai pudungidalaam-nu nenachidaadha pa!",
+  "tamil": "இந்த சின்ன செடிய பாத்ததும், நாளைக்கே வேர்க்கடலை புடுங்கிடலாம்னு நெனச்சிடாத பா!", "pause_after": 0.2},
+ {"id": "L4b", "group": "funny",   "tanglish": "Innum neriya valaranum!",
+  "tamil": "இன்னும் நெறைய வளரணும்!", "pause_after": 0.25},
+ {"id": "L5a", "group": "next",    "tanglish": "Ippo thalir vandhaachu... aduthu indha chedi eppadi valarudhu-nu paappom!",
+  "tamil": "இப்போ தளிர் வந்தாச்சு... அடுத்து இந்த செடி எப்படி வளருதுன்னு பாப்போம்!", "pause_after": 0.2},
+ {"id": "L5b", "group": "flowers", "tanglish": "Konja naal-la indha chediyila azhagaana manjal poogkal varum pa!",
+  "tamil": "கொஞ்ச நாள்ல இந்த செடியில அழகான மஞ்சள் பூக்கள் வரும் பா!", "pause_after": 0.2},
+ {"id": "L5c", "group": "cliff",   "tanglish": "Adhula oru suvaarsyamaana ragasiyam irukku... adutha episode-la solren!",
+  "tamil": "அதுல ஒரு சுவாரஸ்யமான ரகசியம் இருக்கு... அடுத்த எபிசோட்ல சொல்றேன்!", "pause_after": 0.6}
+]
