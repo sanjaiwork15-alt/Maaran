@@ -1,0 +1,13 @@
+[
+ {"id": "L1a", "tanglish": "Pona episode-la namma chinna chinna thalir vandhadha paathom la pa?", "tamil": "போன எபிசோட்ல நம்ம சின்ன சின்ன தளிர் வந்தத பாத்தோம் ல பா?", "pause_after": 0.2},
+ {"id": "L1b", "tanglish": "Ippo paaru... andha chedi-la azhagaana manjal poo vandhirukku!", "tamil": "இப்போ பாரு... அந்த செடில அழகான மஞ்சள் பூ வந்திருக்கு!", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Paakka romba chinna poo dhaan... aana indha poovukku oru mukkiyamaana velai irukku pa!", "tamil": "பாக்க ரொம்ப சின்ன பூ தான்... ஆனா இந்த பூவுக்கு ஒரு முக்கியமான வேலை இருக்கு பா!", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Enna velai-nu yosikkireengala?", "tamil": "என்ன வேலைன்னு யோசிக்கிறீங்களா?", "pause_after": 0.3},
+ {"id": "L3a", "tanglish": "Indha poo-la magarantha serkkai nadandha piragu, adiyila irukkura karuvarai pagudhiyilirundhu oru chinna paguthi valara aarambikkum!", "tamil": "இந்த பூல மகரந்தச் சேர்க்கை நடந்த பிறகு, அடியில இருக்குற கருவறை பகுதியிலிருந்து ஒரு சின்ன பகுதி வளர ஆரம்பிக்கும்!", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Adhukku peru peg pa... adhu mannai nokki keezha pogum!", "tamil": "அதுக்கு பேரு பெக் பா... அது மண்ண நோக்கி கீழ போகும்!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Matha chedi-la kaai mela thongum... aana namma verkadalai mattum mannukkulla olinjikkum pa!", "tamil": "மத்த செடில காய் மேல தொங்கும்... ஆனா நம்ம வேர்க்கடலை மட்டும் மண்ணுக்குள்ள ஒளிஞ்சிக்கும் பா!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Idhu enna vithiyasamaana chedi pa!", "tamil": "இது என்ன வித்தியாசமான செடி பா!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Aana indha chinna peg mannukkulla ponaa enna aagum theriyuma pa?", "tamil": "ஆனா இந்த சின்ன பெக் மண்ணுக்குள்ள போனா என்ன ஆகும் தெரியுமா பா?", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Adhula dhaan namma verkadalai uruvaaga pogudhu!", "tamil": "அதுல தான் நம்ம வேர்க்கடலை உருவாக போகுது!", "pause_after": 0.2},
+ {"id": "L5c", "tanglish": "Adutha episode-la andha ragasiyatha theliva paappom!", "tamil": "அடுத்த எபிசோட்ல அந்த ரகசியத்த தெளிவா பாப்போம்!", "pause_after": 0.6}
+]
