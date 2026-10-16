@@ -1,0 +1,13 @@
+[
+ {
+  "name": "funny",
+  "type": "i2v",
+  "image": "f_patience_s8.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "The old farmer slowly reaches his hand toward a tiny seedling as if he might pull it out, stops halfway, pulls his hand back, shakes his head and laughs, then points gently at the young plants. Slow, playful, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

@@ -1,0 +1,37 @@
+[
+ {
+  "name": "next",
+  "type": "s2v",
+  "image": "base_medium.png",
+  "audio": "voice_next.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A cheerful old Indian farmer stands in his field and talks to the camera, slowly gesturing with his free hand toward the field beside him, then smiling at the camera. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "cliff",
+  "type": "s2v",
+  "image": "thumb_s5.png",
+  "audio": "voice_cliff.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "An old Indian farmer crouches by a tiny seedling and talks to the camera in a mysterious, teasing way, as if telling a secret, eyebrows raised, a cheeky smile, leaning slightly toward the camera. His hands stay open and still beside the seedling. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "water",
+  "type": "i2v",
+  "image": "f_water_s8.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Kneeling by the tiny seedlings, the old farmer gently sprinkles a little water from the watering can onto the soil near them, slowly moving along the row; a light, thin sprinkle, no puddles. Calm, caring expression. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

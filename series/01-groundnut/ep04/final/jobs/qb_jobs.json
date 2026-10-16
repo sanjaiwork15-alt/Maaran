@@ -1,0 +1,25 @@
+[
+ {
+  "name": "f_water",
+  "image": "f_patience_s8.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines, same field background with the rows of tiny green seedlings. He kneels beside the row of tiny groundnut seedlings and holds a small metal watering can in his RIGHT hand (the hand on the left side of the image), tilted gently so a thin, light sprinkle of water falls on the soil near the seedlings. No puddles. His LEFT hand rests on his knee. Calm, caring smile. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "thumb",
+  "image": "base_medium.png",
+  "seeds": [
+   5
+  ],
+  "prompt": "Keep the same cartoon old man exactly (face, white hair and beard, cream shirt, green towel on his left shoulder, white veshti), same 2D cartoon style. Close-up: he crouches and looks with a big surprised, delighted expression at a tiny bright-green groundnut seedling with two small leaves pushing out of red soil in the front of the picture, one hand open in amazement. Bright, colourful, eye-catching. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]

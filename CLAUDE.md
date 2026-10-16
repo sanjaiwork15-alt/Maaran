@@ -64,8 +64,10 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   no drafts; `assemble_ep.py` renders pieces in parallel and caches them in `final/.pieces/`.
 - **The Kaggle log stream drops chunks** (Ep 3 lost a whole run once and the patience shot twice). Run a second
   follower (`kaggle kernels logs -f` in a restart loop) next to `kaggle_run.sh`, decode from both, and check
-  in the first 5 min that the logs are growing. The kernel now prints every file twice (2 min apart).
-  Open item: a sturdier output channel (e.g. split files into smaller numbered parts and re-request missing ones).
+  in the first 5 min that the logs are growing. The kernel prints every file 3 times (0, +2, +5 min) and
+  **once more at the very end** (upscaled copies last): Kaggle keeps the last ~7 MB of a finished run's log, so
+  the newest outputs can always be decoded from `run_log.json` (this recovered Ep 4's funny shot).
+  Lost shots so far came from runs with 3+ jobs; keep runs to 2–3 jobs.
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`).
 
@@ -88,5 +90,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 ## Status
 - Groundnut Ep 1: done, approved for posting (`series/01-groundnut/ep01/final/groundnut_ep01.mp4`, 49.6 s; script in `final/script.md`).
 - Groundnut Ep 2: approved by the owner.
-- Groundnut Ep 3: done, waiting for review (`series/01-groundnut/ep03/final/groundnut_ep03.mp4`, 44.6 s).
-- Next: Groundnut Ep 4 (first sprouts) – see `series/01-groundnut/overview.md`.
+- Groundnut Ep 3: done (`series/01-groundnut/ep03/final/groundnut_ep03.mp4`, 44.6 s).
+- Groundnut Ep 4: done, waiting for review (`series/01-groundnut/ep04/final/groundnut_ep04.mp4`, 47.5 s).
+- Next: Groundnut Ep 5 (the flower that goes underground – the peg) – see `series/01-groundnut/overview.md`.

@@ -1,0 +1,37 @@
+[
+ {
+  "name": "sprout",
+  "type": "s2v",
+  "image": "f_patience_s8.png",
+  "audio": "voice_sprout.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A delighted old Indian farmer kneels beside tiny green seedlings that have just come up and talks excitedly to the camera, eyes wide with joy, glancing down at the little sprouts and back at the camera with a big happy smile. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "happy",
+  "type": "s2v",
+  "image": "f_patience_s3.png",
+  "audio": "voice_happy.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A proud, emotional old Indian farmer kneels by the tiny seedlings and talks warmly to the camera; he slowly points toward a small sprout without touching it, then looks back at the camera with a proud, gentle smile and a soft chuckle. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "funny",
+  "type": "i2v",
+  "image": "f_patience_s8.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "The old farmer slowly reaches his hand toward a tiny seedling as if he might pull it out, stops halfway, pulls his hand back, shakes his head and laughs, then points gently at the young plants. Slow, playful, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]
