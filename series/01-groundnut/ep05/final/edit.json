@@ -1,0 +1,127 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 13,
+ "shots": [
+  {
+   "video": "../../ep04/final/cutaway_sprout.mp4",
+   "start": 0,
+   "end": 3.2,
+   "src_start": 0
+  },
+  {
+   "video": "cutaway_flower.mp4",
+   "start": 3.2,
+   "end": 5.557,
+   "src_start": 0
+  },
+  {
+   "video": "shots/flowers.mp4",
+   "start": 5.557,
+   "end": 6.35,
+   "src_start": 0.15,
+   "zoom": 1.2,
+   "focus": [
+    0.5,
+    0.33
+   ]
+  },
+  {
+   "video": "shots/flowers.mp4",
+   "start": 6.35,
+   "end": 9.022,
+   "src_start": 1.323,
+   "zoom": [
+    1.2,
+    1.35
+   ],
+   "focus": [
+    0.5,
+    0.3
+   ]
+  },
+  {
+   "video": "cutaway_flower.mp4",
+   "start": 9.022,
+   "end": 10.69,
+   "src_start": 2.0
+  },
+  {
+   "video": "cutaway_peg.mp4",
+   "start": 10.69,
+   "end": 14.041,
+   "src_start": -0.85
+  },
+  {
+   "video": "shots/guess.mp4",
+   "start": 14.041,
+   "end": 15.973,
+   "src_start": 0.15,
+   "zoom": [
+    1.0,
+    1.15
+   ],
+   "focus": [
+    0.45,
+    0.45
+   ]
+  },
+  {
+   "video": "cutaway_peg.mp4",
+   "start": 15.973,
+   "end": 18.8,
+   "src_start": 1.5
+  },
+  {
+   "video": "cutaway_peg.mp4",
+   "start": 18.8,
+   "end": 27.511,
+   "src_start": 4.33
+  },
+  {
+   "video": "shots/search.mp4",
+   "start": 27.511,
+   "end": 29.69,
+   "src_start": 0
+  },
+  {
+   "video": "shots/search.mp4",
+   "start": 29.69,
+   "end": 31.82,
+   "src_start": 2.18
+  },
+  {
+   "video": "shots/guess.mp4",
+   "start": 31.82,
+   "end": 33.784,
+   "src_start": 2.4,
+   "zoom": 1.3,
+   "focus": [
+    0.45,
+    0.35
+   ]
+  },
+  {
+   "video": "shots/strange.mp4",
+   "start": 33.784,
+   "end": 35.939,
+   "src_start": 0.15,
+   "zoom": 1.3,
+   "focus": [
+    0.5,
+    0.3
+   ]
+  },
+  {
+   "video": "cutaway_pod.mp4",
+   "start": 35.939,
+   "end": 42.519,
+   "src_start": 0
+  },
+  {
+   "video": "shots/cliff.mp4",
+   "start": 42.519,
+   "end": 45.82,
+   "src_start": 0.15
+  }
+ ]
+}
