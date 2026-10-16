@@ -368,6 +368,12 @@ def main():
         (OUT / "timing.json").write_text(json.dumps(timing, indent=1))
         proc.terminate()
     log("ALL DONE", timing)
+    # Last: every video again, upscaled copies last. Kaggle keeps only the tail (~7 MB) of a finished run's log,
+    # so the newest outputs can always be recovered from run_log.json even if the live stream dropped them.
+    vids = sorted(OUT.glob("*.mp4"), key=lambda f: (f.stem.endswith("_up"), f.stat().st_size))
+    for f in vids:
+        emit(f, again=False)
+    log("FINAL EMIT DONE")
 
 
 if __name__ == "__main__":
