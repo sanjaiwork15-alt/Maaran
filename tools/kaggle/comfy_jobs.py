@@ -89,10 +89,11 @@ def emit(path, again=True):
     b = base64.b64encode(data).decode()
     with EMIT_LOCK:
         _emit(path, data, b)
-    if again:                       # a second copy 2 min later: the log stream drops chunks when it reconnects
-        t = threading.Timer(120, emit, args=(path, False))
-        t.start()
-        REEMITS.append(t)
+    if again:                       # more copies 2 and 5 min later: the log stream drops minutes at a time
+        for delay in (120, 300):
+            t = threading.Timer(delay, emit, args=(path, False))
+            t.start()
+            REEMITS.append(t)
 
 
 def _emit(path, data, b):

@@ -17,7 +17,7 @@
   {
    "video": "shots/sprout.mp4",
    "start": 5.812,
-   "end": 9.238,
+   "end": 8.645,
    "src_start": 5.067,
    "zoom": [
     1.0,
@@ -30,9 +30,9 @@
   },
   {
    "video": "shots/happy.mp4",
-   "start": 9.238,
+   "start": 8.645,
    "end": 11.096,
-   "src_start": 0.15
+   "src_start": -0.443
   },
   {
    "video": "shots/happy.mp4",
@@ -62,26 +62,39 @@
   {
    "video": "shots/water.mp4",
    "start": 17.578,
-   "end": 22.578,
+   "end": 20.195,
    "src_start": 0
   },
   {
    "video": "../../ep03/final/cutaway_time.mp4",
-   "start": 22.578,
+   "start": 20.195,
    "end": 24.684,
-   "src_start": 0.9
+   "src_start": 0.6
   },
   {
-   "video": "../../ep03/final/cutaway_time.mp4",
+   "video": "cutaway_sprout.mp4",
    "start": 24.684,
    "end": 26.82,
-   "src_start": 3.006
+   "src_start": 0.9,
+   "zoom": [
+    1.0,
+    1.15
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ]
   },
   {
-   "video": "../../ep03/final/cutaway_time.mp4",
+   "video": "cutaway_sprout.mp4",
    "start": 26.82,
    "end": 28.092,
-   "src_start": 5.142
+   "src_start": 2.4,
+   "zoom": 1.2,
+   "focus": [
+    0.5,
+    0.6
+   ]
   },
   {
    "video": "shots/funny.mp4",
