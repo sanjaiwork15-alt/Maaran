@@ -1,0 +1,37 @@
+[
+ {
+  "name": "thumb",
+  "type": "qwen_edit",
+  "image": "base_medium.png",
+  "width": 720,
+  "height": 1280,
+  "seeds": [
+   5
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, same flat 2D cartoon style. Close-up: he crouches by a low bushy groundnut plant with small yellow flowers and points down at the soil with a shocked, delighted expression, mouth open, eyebrows raised. Bright, colourful, eye-catching. He has exactly one left hand and one right hand."
+ },
+ {
+  "name": "fun",
+  "type": "s2v",
+  "image": "f_hook2_s3.png",
+  "audio": "voice_fun.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A playful old Indian farmer talks to the camera, pointing down at the soil with one finger, then gives a knowing smile and a soft laugh, shaking his head in wonder. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "outro",
+  "type": "s2v",
+  "image": "f_stand_s8.png",
+  "audio": "voice_outro.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Standing among his groundnut plants, a thoughtful old Indian farmer talks to the camera and slowly gestures toward the field with his free hand, then smiles. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

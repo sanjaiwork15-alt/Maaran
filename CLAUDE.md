@@ -62,6 +62,9 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   earlier episodes; launch the first Kaggle run as soon as its voice lines exist (voice in priority order);
   prefer code cut-aways and voice-over on action shots over extra S2V chunks; review all shots in one sheet;
   no drafts; `assemble_ep.py` renders pieces in parallel and caches them in `final/.pieces/`.
+- **Kaggle results now come back as a private dataset** (`<user>/<slug>-out`, uploaded by the kernel with the owner's
+  token from the private input dataset – owner approved, Ep 6). `kaggle_run.sh` waits until a version holds every
+  expected file, then downloads it into OUT. The log channel below is only a fallback now.
 - **The Kaggle log stream drops chunks** (Ep 3 lost a whole run once and the patience shot twice). Run a second
   follower (`kaggle kernels logs -f` in a restart loop) next to `kaggle_run.sh`, decode from both, and check
   in the first 5 min that the logs are growing. The kernel prints every file 3 times (0, +2, +5 min) and
@@ -94,5 +97,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut Ep 2: approved by the owner.
 - Groundnut Ep 3: done (`series/01-groundnut/ep03/final/groundnut_ep03.mp4`, 44.6 s).
 - Groundnut Ep 4: done (`series/01-groundnut/ep04/final/groundnut_ep04.mp4`, 47.5 s).
-- Groundnut Ep 5: done, waiting for review (`series/01-groundnut/ep05/final/groundnut_ep05.mp4`, 45.8 s).
-- Next: Groundnut Ep 6 (the pod forms underground) – see `series/01-groundnut/overview.md`.
+- Groundnut Ep 5: done (`series/01-groundnut/ep05/final/groundnut_ep05.mp4`, 45.8 s).
+- Groundnut Ep 6: done, waiting for review (`series/01-groundnut/ep06/final/groundnut_ep06.mp4`, 48.0 s).
+- Next: Groundnut Ep 7 (harvest day – how to know the pods are ready) – see `series/01-groundnut/overview.md`.

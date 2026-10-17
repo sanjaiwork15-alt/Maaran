@@ -61,7 +61,7 @@ kaggle kernels output "$U/$SLUG" -p "$OUT" -o -q 2>/dev/null || true
 # ready (it must be newer than this run's start), then download it.
 for i in $(seq 1 30); do
   if [ "$(kaggle datasets status "$U/$SLUG-out" 2>/dev/null)" = "ready" ]; then
-    rm -rf "$OUT/ds" && mkdir -p "$OUT/ds" && kaggle datasets download "$U/$SLUG-out" -p "$OUT/ds" --unzip -q 2>/dev/null
+    rm -rf "$OUT/ds" && mkdir -p "$OUT/ds" && { kaggle datasets download "$U/$SLUG-out" -p "$OUT/ds" --unzip -q 2>/dev/null || true; }
     if python3 - "$IN/jobs.json" "$OUT/ds" <<'PY'
 import json, sys
 from pathlib import Path
