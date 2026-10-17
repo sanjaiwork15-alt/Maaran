@@ -1,0 +1,14 @@
+[
+ {"id": "L1a", "tanglish": "Pona episode-la namma verkadalai chediyila manjal poo vandhadha paathom la?", "tamil": "போன எபிசோட்ல நம்ம வேர்க்கடலை செடியில மஞ்சள் பூ வந்தத பாத்தோம் ல?", "pause_after": 0.25},
+ {"id": "L1b", "tanglish": "Aana andha poo-va thaandi, ippo oru aachariyamaana vishayam nadakka pogudhu!", "tamil": "ஆனா அந்த பூவ தாண்டி, இப்போ ஒரு ஆச்சரியமான விஷயம் நடக்க போகுது!", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Indha poovula magarantha serkkai nadandha piragu, adhan adippagudhiyilirundhu oru chinna paguthi valara aarambikkum pa!", "tamil": "இந்த பூவுல மகரந்தச் சேர்க்கை நடந்த பிறகு, அதன் அடிப்பகுதியிலிருந்து ஒரு சின்ன பகுதி வளர ஆரம்பிக்கும் பா!", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Adhukku peru peg!", "tamil": "அதுக்கு பேரு பெக்!", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Indha peg enna pannum theriyuma pa?", "tamil": "இந்த பெக் என்ன பண்ணும் தெரியுமா பா?", "pause_after": 0.3},
+ {"id": "L3b", "tanglish": "Mela valaraama, mannai nokki keezha valarum! Mannukkulla pona piragudhaan verkadalai kaai uruvaaga aarambikkum!", "tamil": "மேல வளராம, மண்ண நோக்கி கீழ வளரும்! மண்ணுக்குள்ள போன பிறகுதான் வேர்க்கடலை காய் உருவாக ஆரம்பிக்கும்!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Adhaan pa... mela ninnaa poo dhaan theriyum!", "tamil": "அதான் பா... மேல நின்னா பூ தான் தெரியும்!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Aana namma verkadalai kaai ellaam mannukkulla ragasiyamaa valarudhu!", "tamil": "ஆனா நம்ம வேர்க்கடலை காய் எல்லாம் மண்ணுக்குள்ள ரகசியமா வளருது!", "pause_after": 0.2},
+ {"id": "L4c", "tanglish": "Enna oru thandhiram!", "tamil": "என்ன ஒரு தந்திரம்!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Ippo mannukkulla kaai uruvaaga aarambichiruchu pa!", "tamil": "இப்போ மண்ணுக்குள்ள காய் உருவாக ஆரம்பிச்சிருச்சு பா!", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Aana adhu eppo parikkura alavukku valarum? Adha eppadi kandupidikkuradhu?", "tamil": "ஆனா அது எப்போ பறிக்கற அளவுக்கு வளரும்? அத எப்படி கண்டுபிடிக்கறது?", "pause_after": 0.2},
+ {"id": "L5c", "tanglish": "Adutha episode-la adha paappom pa!", "tamil": "அடுத்த எபிசோட்ல அத பாப்போம் பா!", "pause_after": 0.6}
+]
