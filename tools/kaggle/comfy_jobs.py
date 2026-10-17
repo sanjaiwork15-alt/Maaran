@@ -347,6 +347,30 @@ def s2v(job, base):
 JOBS = {"qwen_edit": qwen_edit, "i2v": i2v, "s2v": s2v}
 
 
+def upload_outputs():
+    """Upload all outputs as a private dataset version (<user>/<slug>-out). The runner downloads it: unlike the log
+    stream, this never drops files. Credentials come from .kaggle_cred.json in the (private) input dataset."""
+    creds = glob.glob("/kaggle/input/**/.kaggle_cred.json", recursive=True)
+    if not creds:
+        log("no credentials: skipping dataset upload")
+        return
+    c = json.loads(Path(creds[0]).read_text())
+    env = dict(os.environ, KAGGLE_USERNAME=c["username"], KAGGLE_API_TOKEN=c["key"], KAGGLE_KEY=c["key"])
+    d = Path("/tmp/outds")
+    shutil.rmtree(d, ignore_errors=True)
+    d.mkdir()
+    for f in list(OUT.glob("*.mp4")) + list(OUT.glob("*.png")):
+        shutil.copy(f, d / f.name)
+    (d / "dataset-metadata.json").write_text(json.dumps(
+        {"title": c["out"].split("/")[1], "id": c["out"], "licenses": [{"name": "CC0-1.0"}]}))
+    subprocess.run(f"{sys.executable} -m pip install -q -U kaggle", shell=True)
+    exists = subprocess.run(["kaggle", "datasets", "status", c["out"]], env=env, capture_output=True).returncode == 0
+    cmd = (["kaggle", "datasets", "version", "-p", str(d), "-m", "run", "-q"] if exists
+           else ["kaggle", "datasets", "create", "-p", str(d), "-q"])
+    r = subprocess.run(cmd, env=env, capture_output=True, text=True)
+    log("dataset upload:", r.returncode, (r.stdout + r.stderr)[-300:].replace(c["key"], "***"))
+
+
 def main():
     jobs = []
     for f in glob.glob("/kaggle/input/**/jobs.json", recursive=True):
@@ -364,6 +388,10 @@ def main():
         for t in REEMITS:
             t.join()
     finally:
+        try:
+            upload_outputs()
+        except Exception as e:
+            log("dataset upload failed:", repr(e))
         shutil.copy("/tmp/comfy.log", OUT / "comfy.log")
         (OUT / "timing.json").write_text(json.dumps(timing, indent=1))
         proc.terminate()

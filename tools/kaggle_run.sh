@@ -18,6 +18,8 @@ WORK="$(mktemp -d)"
 
 # 1. Inputs -> private dataset
 cp -r "$IN"/. "$WORK/data"
+# Credentials for the kernel's result upload (private dataset, owner's own account): see upload_outputs()
+python3 -c 'import json,os,sys; json.dump({"username": os.environ["KAGGLE_USERNAME"], "key": os.environ["KAGGLE_API_TOKEN"], "out": sys.argv[1]}, open(sys.argv[2], "w"))' "$U/$SLUG-out" "$WORK/data/.kaggle_cred.json"
 cat > "$WORK/data/dataset-metadata.json" <<EOF
 {"title": "$SLUG-in", "id": "$U/$SLUG-in", "licenses": [{"name": "CC0-1.0"}]}
 EOF
@@ -55,6 +57,25 @@ while kaggle kernels status "$U/$SLUG" | grep -qE "RUNNING|QUEUED"; do sleep 60;
 sleep 20; kill $FOLLOW 2>/dev/null || true
 kaggle kernels status "$U/$SLUG"
 kaggle kernels output "$U/$SLUG" -p "$OUT" -o -q 2>/dev/null || true
+# Main channel: the kernel uploads its outputs as the private dataset $SLUG-out; wait until the new version is
+# ready (it must be newer than this run's start), then download it.
+for i in $(seq 1 30); do
+  if [ "$(kaggle datasets status "$U/$SLUG-out" 2>/dev/null)" = "ready" ]; then
+    rm -rf "$OUT/ds" && mkdir -p "$OUT/ds" && kaggle datasets download "$U/$SLUG-out" -p "$OUT/ds" --unzip -q 2>/dev/null
+    if python3 - "$IN/jobs.json" "$OUT/ds" <<'PY'
+import json, sys
+from pathlib import Path
+want = []
+for j in json.loads(Path(sys.argv[1]).read_text()):
+    want += ([f"{j['name']}_s{s}.png" for s in j.get("seeds", [7])] if j["type"] == "qwen_edit" else [f"{j['name']}.mp4"])
+sys.exit(0 if all((Path(sys.argv[2]) / w).exists() for w in want) else 1)   # a stale older version lacks them
+PY
+    then
+      cp -n "$OUT/ds"/* "$OUT"/ 2>/dev/null; echo "downloaded results dataset: $(ls "$OUT/ds" | tr '\n' ' ')"; break
+    fi
+  fi
+  sleep 20
+done
 # Output files are also printed into the run log (comfy_jobs.py emit()); decode them, so
 # results arrive even when Kaggle's output-file host is not reachable from here.
 kaggle kernels logs "$U/$SLUG" > "$OUT/run_log.json" 2>/dev/null || true
