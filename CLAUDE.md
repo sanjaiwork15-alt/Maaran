@@ -73,6 +73,8 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   Lost shots so far came from runs with 3+ jobs; keep runs to 2–3 jobs.
 - Qwen frames with a NEW background (flowering field) drift in style and dropped his slippers (Ep 5) – frame those
   shots knees-up, or ask for "brown leather slippers" explicitly.
+- If the voice runs long, trim pauses first, then speed the FINISHED video (setpts + atempo together keeps lip sync);
+  Ep 7 used 1.06x. Make each S2V clip fit its chunks (4.8 s each) or plan a cut-away over the uncovered tail.
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`).
 
@@ -98,5 +100,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut Ep 3: done (`series/01-groundnut/ep03/final/groundnut_ep03.mp4`, 44.6 s).
 - Groundnut Ep 4: done (`series/01-groundnut/ep04/final/groundnut_ep04.mp4`, 47.5 s).
 - Groundnut Ep 5: done (`series/01-groundnut/ep05/final/groundnut_ep05.mp4`, 45.8 s).
-- Groundnut Ep 6: done, waiting for review (`series/01-groundnut/ep06/final/groundnut_ep06.mp4`, 48.0 s).
-- Next: Groundnut Ep 7 (harvest day – how to know the pods are ready) – see `series/01-groundnut/overview.md`.
+- Groundnut Ep 6: done (`series/01-groundnut/ep06/final/groundnut_ep06.mp4`, 48.0 s).
+- Groundnut Ep 7: done, waiting for review (`series/01-groundnut/ep07/final/groundnut_ep07.mp4`, 50.3 s).
+- Next: Groundnut Ep 8 (the big harvest reveal / field to plate) – see `series/01-groundnut/overview.md`.

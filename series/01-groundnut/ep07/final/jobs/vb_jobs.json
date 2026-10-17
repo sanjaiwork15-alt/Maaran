@@ -1,0 +1,36 @@
+[
+ {
+  "name": "check",
+  "type": "i2v",
+  "image": "thumb_s5.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "The old farmer holds up the freshly pulled groundnut plant and gently shakes it so a little dry soil falls off the pods, then brings the pods closer and looks at them carefully with a pleased, curious expression. Slow, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "lift",
+  "type": "i2v",
+  "image": "f_grip_s8.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Kneeling, the old farmer grips the groundnut plant's stem and slowly, steadily pulls the whole plant up out of the soil; the roots come up with a few light-brown pods just starting to show, and he looks at them with an excited, delighted face. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "outro",
+  "type": "s2v",
+  "image": "thumb_s5.png",
+  "audio": "voice_outro.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "An excited old Indian farmer holds up a freshly pulled groundnut plant with pods hanging from the roots and talks to the camera with wide, curious eyes and a big smile, as if teasing a surprise. He keeps holding the plant steady. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

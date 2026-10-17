@@ -1,0 +1,37 @@
+[
+ {
+  "name": "intro",
+  "type": "s2v",
+  "image": "f_stand_s8.png",
+  "audio": "voice_intro.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Standing among his tall groundnut plants, a thoughtful old Indian farmer asks the camera an important question, glancing down at the soil and back, stroking his chin slowly with his free hand. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "humour",
+  "type": "s2v",
+  "image": "f_humour2_s8.png",
+  "audio": "voice_humour.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A funny, warm old Indian farmer talks to the camera with a cheeky smile; his hand rests on his stomach and rubs it in one slow, small circle and he chuckles; later he lifts that hand slowly in a calm 'be patient' gesture toward the field. No fast patting. His other hand keeps holding his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "rush",
+  "type": "i2v",
+  "image": "f_point_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Kneeling by the groundnut plant, the old farmer playfully grabs the plant's stem as if to pull it out too early, stops, lets go, shakes his head and laughs with a humorous smile, then points down at the soil. Slow, playful, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

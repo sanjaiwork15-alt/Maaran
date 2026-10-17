@@ -1,0 +1,37 @@
+[
+ {
+  "name": "f_sample",
+  "image": "f_point_s3.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines, same groundnut field. He kneels and holds up, with both hands on the stem, a whole groundnut plant he has just pulled out of the soil: below the leaves, the roots hang down with a cluster of light-brown, netted groundnut pods attached, a little red soil falling off. He looks at the pods closely with a pleased, curious smile. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_grip",
+  "image": "f_point_s3.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines, same groundnut field. He kneels beside a bushy groundnut plant and grips its stem near the soil firmly with both hands, ready to pull it out, looking at the camera with an excited, eager expression. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "thumb",
+  "image": "base_medium.png",
+  "seeds": [
+   5
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines, same groundnut field. Close-up: he holds up a freshly pulled groundnut plant with a cluster of light-brown groundnut pods hanging from its roots and looks at the camera with a big excited, questioning expression, eyebrows raised. Bright, colourful, eye-catching. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]

@@ -129,8 +129,22 @@
   {
    "video": "shots/lift.mp4",
    "start": 44.867,
-   "end": 47.999,
+   "end": 47.26,
    "src_start": 0
+  },
+  {
+   "video": "shots/check.mp4",
+   "start": 47.26,
+   "end": 47.999,
+   "src_start": 0.6,
+   "zoom": [
+    1.2,
+    1.4
+   ],
+   "focus": [
+    0.3,
+    0.55
+   ]
   },
   {
    "video": "shots/outro.mp4",
@@ -147,14 +161,17 @@
    ]
   },
   {
-   "video": "shots/lift.mp4",
+   "video": "shots/check.mp4",
    "start": 51.26,
    "end": 53.26,
-   "src_start": 3.06,
-   "zoom": 1.2,
+   "src_start": 0.0,
+   "zoom": [
+    1.0,
+    1.25
+   ],
    "focus": [
     0.45,
-    0.45
+    0.35
    ]
   }
  ]
