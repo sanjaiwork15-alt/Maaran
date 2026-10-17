@@ -1,0 +1,13 @@
+[
+ {"id": "L1a", "tanglish": "Pona episode-la namma verkadalai kaai mannukkulla eppadi uruvaagudhunu paathom la pa?", "tamil": "போன எபிசோட்ல நம்ம வேர்க்கடலை காய் மண்ணுக்குள்ள எப்படி உருவாகுதுன்னு பாத்தோம் ல பா?", "pause_after": 0.25},
+ {"id": "L1b", "tanglish": "Aana ippo oru mukkiyamaana kelvi... indha kaaiya eppo dhaan parikkanum?", "tamil": "ஆனா இப்போ ஒரு முக்கியமான கேள்வி... இந்த காய எப்போ தான் பறிக்கணும்?", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Chedi perusa valandhutta udaney pudungida koodadhu pa!", "tamil": "செடி பெருசா வளந்துட்டா உடனே புடுங்கிட கூடாது பா!", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Verum mela irukkura chediya mattum paathaa podhaadhu... mannukkulla irukkura kaaiyum nalla valandhirukkanum!", "tamil": "வெறும் மேல இருக்குற செடிய மட்டும் பாத்தா போதாது... மண்ணுக்குள்ள இருக்குற காயும் நல்லா வளந்திருக்கணும்!", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Adhaan pa, vivasaayinga oru chediya maadhiri eduthu paarthu, kaai nalla uruvaayirukkaa-nu sothichu paarpaanga!", "tamil": "அதான் பா, விவசாயிங்க ஒரு செடிய மாதிரி எடுத்து பாத்து, காய் நல்லா உருவாயிருக்கான்னு சோதிச்சு பாப்பாங்க!", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Kaaiyum vidhaiyum nalla valarndhirukkuradhu mukkiyam pa!", "tamil": "காயும் விதையும் நல்லா வளர்ந்திருக்கறது முக்கியம் பா!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Saapida mattum avasaram kaattura namakku... vivasaayathula konjam porumai romba mukkiyam pa!", "tamil": "சாப்பிட மட்டும் அவசரம் காட்டுற நமக்கு... விவசாயத்துல கொஞ்சம் பொறுமை ரொம்ப முக்கியம் பா!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Nalla vilaichal venumna, nalla neram vara varaikkum kaathirukkanum!", "tamil": "நல்ல விளைச்சல் வேணும்னா, நல்ல நேரம் வர வரைக்கும் காத்திருக்கணும்!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Sari pa... ippo oru chediya pudungi paarthachu!", "tamil": "சரி பா... இப்போ ஒரு செடிய புடுங்கி பாத்தாச்சு!", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Adhula evlo verkadalai irukkunnu therinjukkanumaa?", "tamil": "அதுல எவ்ளோ வேர்க்கடலை இருக்குன்னு தெரிஞ்சுக்கணுமா?", "pause_after": 0.2},
+ {"id": "L5c", "tanglish": "Adutha episode-la mannukkulla olinjirukkura aachariyatha nerla paappom!", "tamil": "அடுத்த எபிசோட்ல மண்ணுக்குள்ள ஒளிஞ்சிருக்கற ஆச்சரியத்த நேர்ல பாப்போம்!", "pause_after": 0.6}
+]
