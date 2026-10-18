@@ -1,0 +1,14 @@
+[
+ {"id": "L1a", "tanglish": "Seri makkaley! Mannula irundhu verkadalaiya eduthuttaachu...", "tamil": "சரி மக்களே! மண்ணுல இருந்து வேர்க்கடலைய எடுத்துட்டாச்சு...", "pause_after": 0.2},
+ {"id": "L1b", "tanglish": "Appo udane saapidalamaa? Konjam porunga!", "tamil": "அப்போ உடனே சாப்பிடலாமா? கொஞ்சம் பொறுங்க!", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Ippo dhaan mannula irundhu eduthirukkom.", "tamil": "இப்போ தான் மண்ணுல இருந்து எடுத்திருக்கோம்.", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Idhula mann ottirukkum, kaayum eeramaa irukkum.", "tamil": "இதுல மண் ஒட்டியிருக்கும், காயும் ஈரமா இருக்கும்.", "pause_after": 0.2},
+ {"id": "L2c", "tanglish": "Mudhalla nallaa sutham pannanum!", "tamil": "முதல்ல நல்லா சுத்தம் பண்ணணும்!", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Saemichu vaikka poromnaa, sariyaa ularavaikkaradhu romba mukkiyam!", "tamil": "சேமிச்சு வைக்க போறோம்னா, சரியா உலரவைக்கறது ரொம்ப முக்கியம்!", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Eeram adhigamaa irundhaa poonjai valaralaam... verkadalaiyum kettupogalaam!", "tamil": "ஈரம் அதிகமா இருந்தா பூஞ்சை வளரலாம்... வேர்க்கடலையும் கெட்டுப்போகலாம்!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Avvalavu avasaramaa irukkaadheenga!", "tamil": "அவ்வளவு அவசரமா இருக்காதீங்க!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Nalla saapidanumna konjam porumai venum.", "tamil": "நல்லா சாப்பிடணும்னா கொஞ்சம் பொறுமை வேணும்.", "pause_after": 0.2},
+ {"id": "L4c", "tanglish": "Ularndha verkadalaiya varuthaa... semma suvai dhaan!", "tamil": "உலர்ந்த வேர்க்கடலைய வறுத்தா... செம்ம சுவை தான்!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Idhu varaikkum oru chinna vidhai eppadi verkadalaiyaa valarudhunnu paathom!", "tamil": "இது வரைக்கும் ஒரு சின்ன விதை எப்படி வேர்க்கடலையா வளருதுன்னு பாத்தோம்!", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Adutha episode-la, indha verkadalai namma tea-time snack-aa eppadi maarudhunnu paakkalaam!", "tamil": "அடுத்த எபிசோட்ல, இந்த வேர்க்கடலை நம்ம டீ டைம் ஸ்நாக்கா எப்படி மாறுதுன்னு பாக்கலாம்!", "pause_after": 0.6}
+]
