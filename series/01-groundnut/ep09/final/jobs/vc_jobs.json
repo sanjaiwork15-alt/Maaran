@@ -1,0 +1,24 @@
+[
+ {
+  "name": "bowl7",
+  "type": "i2v",
+  "image": "f_roast_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "The proud old farmer keeps holding the small clay bowl of roasted groundnuts firmly in his hand at chest height the whole time, the bowl and the groundnuts stay clearly visible; he smiles warmly at the camera and nods slowly. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "bowl21",
+  "type": "i2v",
+  "image": "f_roast_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 21,
+  "upscale": true,
+  "prompt": "The proud old farmer keeps holding the small clay bowl of roasted groundnuts firmly in his hand at chest height the whole time, the bowl and the groundnuts stay clearly visible; he smiles warmly at the camera and nods slowly. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

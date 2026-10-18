@@ -1,0 +1,25 @@
+[
+ {
+  "name": "dry",
+  "type": "i2v",
+  "image": "f_dry_s8.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Crouching beside the groundnut pods drying on the woven mat in the sun, the old farmer looks closely at the pod in his hand, gently shakes it near his ear to check it, puts it back and slowly spreads the pods with his hand into a thin even layer. Calm, careful, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "outro",
+  "type": "s2v",
+  "image": "f_roast_s3.png",
+  "audio": "voice_outro.wav",
+  "chunks": 3,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A proud, happy old Indian farmer holds a small bowl of roasted groundnuts and talks warmly to the camera, smiling, nodding gently. He keeps holding the bowl steady; his other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

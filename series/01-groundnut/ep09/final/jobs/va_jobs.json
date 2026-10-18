@@ -1,0 +1,26 @@
+[
+ {
+  "name": "intro",
+  "type": "s2v",
+  "image": "f_pod_s3.png",
+  "audio": "voice_intro.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "An old Indian farmer holds up a freshly harvested groundnut pod, looks at it curiously as if about to open and eat it, then pauses and turns to the camera with a playful 'wait!' expression. He keeps holding the pod up steadily. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "funny",
+  "type": "s2v",
+  "image": "f_hook2_s3.png",
+  "audio": "voice_funny.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A playful old Indian farmer talks to the camera with a warm grin, gently wagging one finger as if saying 'don't hurry', then smiles dreamily as if imagining tasty roasted groundnuts. His other hand keeps holding his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

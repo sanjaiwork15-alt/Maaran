@@ -1,0 +1,37 @@
+[
+ {
+  "name": "f_dry",
+  "image": "base_wide.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Bright sunny day at the edge of his red-soil farm. In front of him a large clean woven mat is spread on the ground with a thin single layer of light-brown groundnut pods (peanuts in their shells) drying in the sun. He crouches beside the mat and picks up one pod with his RIGHT hand (left side of the image) to check it, looking at it carefully. His LEFT hand rests on his knee. His walking stick lies beside him. Full body visible. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_roast",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Same farm background. He proudly holds a small brown clay bowl full of golden-brown roasted shelled groundnuts in his LEFT hand (the hand on the right side of the image) at chest height, smiling happily at the camera. His RIGHT hand (left side of the image) holds his wooden walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "thumb",
+  "image": "base_medium.png",
+  "seeds": [
+   5
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Close-up: he holds a groundnut pod near his open mouth as if about to eat it, then stops with a funny, wide-eyed 'wait!' expression, raising one finger of his other hand. Bright, colourful, eye-catching farm background. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]
