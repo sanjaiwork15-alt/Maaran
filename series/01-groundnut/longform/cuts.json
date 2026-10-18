@@ -1,0 +1,19 @@
+{
+ "_note": "Ranges are seconds in each episode's final mp4 (epNN/final/groundnut_epNN.mp4). Dropped: repeated 'Pona episode-la' recaps, next-episode teasers, Ep 10's greeting and subscribe/goodbye (replaced by the new closing), leading silences.",
+ "hook": {"voice": ["H1", "H2"], "video": [["ep10", 22.1, 24.5], ["ep10", 26.9, 28.7], ["ep10", 39.9, 43.4]]},
+ "title": {"duration": 3.2},
+ "episodes": [
+  ["ep01", 0.00, 42.03], ["ep01", 44.93, 47.30],
+  ["ep02", 0.10, 38.70],
+  ["ep03", 4.38, 33.86],
+  ["ep04", 1.12, 43.48],
+  ["ep05", 5.42, 42.46],
+  ["ep06", 6.02, 41.03],
+  ["ep07", 7.16, 45.22],
+  ["ep08", 2.56, 42.20],
+  ["ep09", 1.16, 36.70],
+  ["ep10", 2.25, 33.08]
+ ],
+ "closing": {"voice": ["C1", "C2"], "video": [], "still": "../ep10/final/farm_view.mp4"},
+ "end": {"duration": 6.0}
+}
