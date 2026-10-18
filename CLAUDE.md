@@ -75,6 +75,8 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   shots knees-up, or ask for "brown leather slippers" explicitly.
 - If the voice runs long, trim pauses first, then speed the FINISHED video (setpts + atempo together keeps lip sync);
   Ep 7 used 1.06x. Make each S2V clip fit its chunks (4.8 s each) or plan a cut-away over the uncovered tail.
+- `tools/mix.py` hangs (ffmpeg at ~0% CPU) when the edit runs longer than voice.wav (its apad tail). Pad voice.wav
+  with silence to the edit's full length first (Ep 8). Run long renders detached with `< /dev/null`.
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`).
 
@@ -101,5 +103,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut Ep 4: done (`series/01-groundnut/ep04/final/groundnut_ep04.mp4`, 47.5 s).
 - Groundnut Ep 5: done (`series/01-groundnut/ep05/final/groundnut_ep05.mp4`, 45.8 s).
 - Groundnut Ep 6: done (`series/01-groundnut/ep06/final/groundnut_ep06.mp4`, 48.0 s).
-- Groundnut Ep 7: done, waiting for review (`series/01-groundnut/ep07/final/groundnut_ep07.mp4`, 50.3 s).
-- Next: Groundnut Ep 8 (the big harvest reveal / field to plate) – see `series/01-groundnut/overview.md`.
+- Groundnut Ep 7: done (`series/01-groundnut/ep07/final/groundnut_ep07.mp4`, 50.3 s).
+- Groundnut Ep 8: done, waiting for review (`series/01-groundnut/ep08/final/groundnut_ep08.mp4`, 46.0 s).
+- Next: Groundnut Ep 9 (drying the pods before eating/storing – the owner extended the series) – see `series/01-groundnut/overview.md`.
