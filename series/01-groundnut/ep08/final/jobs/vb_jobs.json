@@ -1,0 +1,26 @@
+[
+ {
+  "name": "funny",
+  "type": "s2v",
+  "image": "f_pod_s3.png",
+  "audio": "voice_funny.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A mischievous old Indian farmer holds up one groundnut pod like a prize and talks to the camera with a cheeky grin, chuckles, then gives a warm, knowing nod. He keeps holding the pod up steadily; his other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "outro",
+  "type": "s2v",
+  "image": "f_pod_s3.png",
+  "audio": "voice_outro.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A playful old Indian farmer holds up a freshly harvested groundnut pod and asks the camera a teasing question with a curious, playful expression, eyebrows raised, then smiles. He keeps holding the pod up steadily. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

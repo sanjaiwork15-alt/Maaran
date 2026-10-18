@@ -1,0 +1,25 @@
+[
+ {
+  "name": "f_pod",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines, same red-soil farm. He proudly holds up ONE single light-brown netted groundnut pod (peanut in its shell) between the thumb and forefinger of his LEFT hand (the hand on the right side of the image) at face height, like showing off a prize, with a mischievous, proud grin at the camera. His RIGHT hand (left side of the image) holds his wooden walking stick. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "thumb",
+  "image": "base_medium.png",
+  "seeds": [
+   5
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, brown leather slippers, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines, same red-soil farm. Close-up: he holds up a freshly pulled groundnut plant with a big cluster of many light-brown groundnut pods hanging from its roots, eyes wide open and mouth open in big surprise, very excited. Bright, colourful, eye-catching. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]

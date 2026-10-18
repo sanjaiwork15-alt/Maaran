@@ -1,0 +1,26 @@
+[
+ {
+  "name": "reveal",
+  "type": "s2v",
+  "image": "f_plant.png",
+  "audio": "voice_reveal.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "An old Indian farmer holds up a freshly pulled groundnut plant with pods hanging from the roots; his eyes widen in big surprise as he talks, then he breaks into a proud smile. He keeps holding the plant steady. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "treasure",
+  "type": "s2v",
+  "image": "f_plant.png",
+  "audio": "voice_treasure.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A happy old Indian farmer holds the pulled groundnut plant toward the camera and talks warmly, glancing at the pods hanging from the roots and back at the camera, showing them off proudly. He keeps holding the plant steady. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

@@ -11,12 +11,12 @@
   {
    "video": "shots/reveal.mp4",
    "start": 2.4,
-   "end": 7.35,
+   "end": 7.0,
    "src_start": -0.15
   },
   {
    "video": "cutaway_pods.mp4",
-   "start": 7.35,
+   "start": 7.0,
    "end": 8.484,
    "src_start": 0
   },
