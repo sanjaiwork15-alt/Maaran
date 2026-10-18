@@ -1,0 +1,36 @@
+[
+ {
+  "name": "stir",
+  "type": "i2v",
+  "image": "f_kitchen_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Standing safely beside the clay stove, the old farmer slowly and carefully stirs the groundnuts in the iron kadai with the long wooden ladle, a little steam rising, watching them closely with a happy face. Slow, careful, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "taste",
+  "type": "i2v",
+  "image": "f_sit_s3.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Sitting on the verandah, the old farmer puts the roasted groundnut in his mouth, chews slowly and smiles with deep satisfaction, nodding; he keeps holding the bowl steady on his lap. Slow, natural movements. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "bite",
+  "type": "s2v",
+  "image": "f_sit_s3.png",
+  "audio": "voice_bite.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A content old Indian farmer sits on his verandah holding a bowl of roasted groundnuts on his lap and talks warmly and proudly to the camera, gently gesturing toward the bowl. He keeps holding the bowl steady. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

@@ -1,0 +1,37 @@
+[
+ {
+  "name": "f_kitchen",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. New background: a simple traditional South Indian village kitchen with a clay wall, a small window and a low wood-fire clay stove. On the stove sits a black iron kadai full of groundnut kernels. He stands safely beside the stove and stirs the groundnuts with a long wooden ladle held in his RIGHT hand (the hand on the left side of the image), carefully, with a happy, attentive face. His LEFT hand rests at his side. Medium shot from the waist up. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "f_sit",
+  "image": "sitting_src.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. He sits comfortably on the thinnai (raised stone verandah) in front of his village house with a tiled roof and a wooden door, in warm evening light. He holds a small clay bowl of golden-brown roasted groundnuts in his LEFT hand on his lap and holds one roasted groundnut between the thumb and finger of his RIGHT hand near his mouth, smiling with satisfaction. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ },
+ {
+  "name": "thumb",
+  "image": "base_medium.png",
+  "seeds": [
+   5
+  ],
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Close-up: he holds a bowl of golden roasted groundnuts toward the camera and gives a big, joyful smile with a thumbs-up from the other hand. Warm, bright, colourful, eye-catching village background. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct.",
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280
+ }
+]

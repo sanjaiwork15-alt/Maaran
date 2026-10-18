@@ -62,6 +62,13 @@ kaggle kernels output "$U/$SLUG" -p "$OUT" -o -q 2>/dev/null || true
 for i in $(seq 1 30); do
   if [ "$(kaggle datasets status "$U/$SLUG-out" 2>/dev/null)" = "ready" ]; then
     rm -rf "$OUT/ds" && mkdir -p "$OUT/ds" && { kaggle datasets download "$U/$SLUG-out" -p "$OUT/ds" --unzip -q 2>/dev/null || true; }
+    # the whole-dataset download 404s for a while after a new version; single files work sooner (Ep 10)
+    if [ -z "$(ls "$OUT/ds")" ]; then
+      for f in $(kaggle datasets files "$U/$SLUG-out" 2>/dev/null | awk 'NR>2 {print $1}'); do
+        kaggle datasets download "$U/$SLUG-out" -f "$f" -p "$OUT/ds" -q 2>/dev/null || true
+      done
+      (cd "$OUT/ds" && for z in *.zip; do [ -f "$z" ] && unzip -oq "$z" && rm -f "$z"; done) || true
+    fi
     if python3 - "$IN/jobs.json" "$OUT/ds" <<'PY'
 import json, sys
 from pathlib import Path

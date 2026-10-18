@@ -1,0 +1,26 @@
+[
+ {
+  "name": "intro",
+  "type": "s2v",
+  "image": "f_pod_s3.png",
+  "audio": "voice_intro.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A warm, happy old Indian farmer greets the camera with a big smile and talks proudly, holding up a groundnut pod steadily. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "sub",
+  "type": "s2v",
+  "image": "base_medium.png",
+  "audio": "voice_sub.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A warm, cheerful old Indian farmer talks to the camera with a big friendly smile and slowly waves his free hand warmly at the camera. His other hand holds his walking stick. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

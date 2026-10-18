@@ -79,6 +79,10 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   with silence to the edit's full length first (Ep 8). Run long renders detached with `< /dev/null`.
 - S2V can drop a held prop over a long clip (Ep 9: the bowl vanished after 2.5 s). For long lines with a prop, use a
   short I2V "holds it steady" shot (2 seeds) under the voice instead, or keep the S2V clip to 1 chunk.
+- Kaggle may run only ONE GPU session at a time (Ep 10: session B sat QUEUED 2.5 h while A ran, then started anyway
+  and used quota). Check both statuses ~5 min after launch; if B is still QUEUED, move its jobs to A. A stale queued
+  run can only be stopped on kaggle.com. The whole-dataset results download 404s for a while after a new version;
+  `kaggle_run.sh` now falls back to per-file downloads.
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`).
 
@@ -107,5 +111,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut Ep 6: done (`series/01-groundnut/ep06/final/groundnut_ep06.mp4`, 48.0 s).
 - Groundnut Ep 7: done (`series/01-groundnut/ep07/final/groundnut_ep07.mp4`, 50.3 s).
 - Groundnut Ep 8: done (`series/01-groundnut/ep08/final/groundnut_ep08.mp4`, 46.0 s).
-- Groundnut Ep 9: done, waiting for review (`series/01-groundnut/ep09/final/groundnut_ep09.mp4`, 45.1 s).
-- Next: Groundnut Ep 10 – series finale (from dried groundnut to a tea-time snack).
+- Groundnut Ep 9: done (`series/01-groundnut/ep09/final/groundnut_ep09.mp4`, 45.1 s).
+- Groundnut Ep 10 (series finale): done, waiting for review (`series/01-groundnut/ep10/final/groundnut_ep10.mp4`, 46.2 s).
+- Next: a new crop series – the owner will send the overview/scripts (see `bible/world.md` for the land and locations).
