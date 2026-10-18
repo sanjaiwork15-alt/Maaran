@@ -1,0 +1,13 @@
+[
+ {"id": "L1a", "tanglish": "Vanakkam makkaley!", "tamil": "வணக்கம் மக்களே!", "pause_after": 0.2},
+ {"id": "L1b", "tanglish": "Oru chinna vidhaiya mannula pottu aarambichom... ippo adhu namma tea-time snack-a maara pogudhu!", "tamil": "ஒரு சின்ன விதைய மண்ணுல போட்டு ஆரம்பிச்சோம்... இப்போ அது நம்ம டீ டைம் ஸ்நாக்கா மாற போகுது!", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Vayal-la irundhu edutha verkadalaiya mudhalla sutham pannanum.", "tamil": "வயல்ல இருந்து எடுத்த வேர்க்கடலைய முதல்ல சுத்தம் பண்ணணும்.", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Saemichu vaikka poromnaa, poonjai varaama irukka nallaa ularavaikkanum!", "tamil": "சேமிச்சு வைக்க போறோம்னா, பூஞ்சை வராம இருக்க நல்லா உலரவைக்கணும்!", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Ippo indha ularndha verkadalaiya sariyaa varuthaa... andha vaasanaiye vera level dhaan!", "tamil": "இப்போ இந்த உலர்ந்த வேர்க்கடலைய சரியா வறுத்தா... அந்த வாசனையே வேற லெவல் தான்!", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Aana adhigamaa karugaama gavanamaa varukkanum!", "tamil": "ஆனா அதிகமா கருகாம கவனமா வறுக்கணும்!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Aahaa! Idhudhaan namma uzhaippoda palan!", "tamil": "ஆஹா! இதுதான் நம்ம உழைப்போட பலன்!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Oru chinna vidhaiyila irundhu, ivlo azhagaana payanam... vivasaayathula ovvoru kattamum mukkiyam!", "tamil": "ஒரு சின்ன விதையில இருந்து, இவ்ளோ அழகான பயணம்... விவசாயத்துல ஒவ்வொரு கட்டமும் முக்கியம்!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Indha verkadalai payanam ungalukku pudichirundhaa, Maaran Thatha channel-a Subscribe pannunga!", "tamil": "இந்த வேர்க்கடலை பயணம் உங்களுக்கு புடிச்சிருந்தா, மாறன் தாத்தா சேனல சப்ஸ்க்ரைப் பண்ணுங்க!", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Adutha payiroda innoru pudhu payanathula sandhippom.", "tamil": "அடுத்த பயிரோட இன்னொரு புது பயணத்துல சந்திப்போம்.", "pause_after": 0.2},
+ {"id": "L5c", "tanglish": "Nandri makkaley!", "tamil": "நன்றி மக்களே!", "pause_after": 0.6}
+]
