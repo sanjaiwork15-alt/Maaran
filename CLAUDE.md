@@ -113,4 +113,5 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut Ep 8: done (`series/01-groundnut/ep08/final/groundnut_ep08.mp4`, 46.0 s).
 - Groundnut Ep 9: done (`series/01-groundnut/ep09/final/groundnut_ep09.mp4`, 45.1 s).
 - Groundnut Ep 10 (series finale): done, waiting for review (`series/01-groundnut/ep10/final/groundnut_ep10.mp4`, 46.2 s).
+- Groundnut long-form compilation: done, waiting for review (`series/01-groundnut/longform/groundnut_longform.mp4`, 6:44, 16:9; `tools/compile_longform.py`).
 - Next: a new crop series – the owner will send the overview/scripts (see `bible/world.md` for the land and locations).

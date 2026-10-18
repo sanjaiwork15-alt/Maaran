@@ -129,7 +129,7 @@ def card_piece(kind, d, tmp, out):
     ff("-loop", "1", "-i", str(png), "-i", str(tmp / f"{kind}_bed.wav"), "-filter_complex",
        f"[0:v]scale={2 * W}:{2 * H},zoompan=z='1+0.04*on/{n}':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s={W}x{H}:fps={FPS},"
        f"fade=in:st=0:d=0.4,fade=out:st={d - 0.4:.3f}:d=0.4,format=yuv420p[v];"
-       f"[1:a]volume=-6dB,afade=in:st=0:d=0.4,afade=out:st={d - 0.5:.3f}:d=0.5[a]",
+       f"[1:a]afade=in:st=0:d=0.4,afade=out:st={d - 0.5:.3f}:d=0.5[a]",
        "-map", "[v]", "-map", "[a]", "-frames:v", str(n), "-t", f"{d:.3f}", *ENC, str(out))
 
 
@@ -137,16 +137,21 @@ def vo_piece(cfg, base, lines, tmp, out, still=None):
     """Footage (video only) cut to the new voice line's length; the last range (or still) stretches to fit."""
     vdir = base / "voice_lines"
     rng = cfg["video"]
-    total = sum(b - a for _, a, b in rng)
+    total = sum(r[2] - r[1] for r in rng)
     audio, length = voice_track(vdir, lines, cfg["voice"], tmp, total)
     segs, inp = [], []
-    for i, (ep, a, b) in enumerate(rng):
+    for i, (ep, a, b, *crop) in enumerate(rng):
         d = b - a
         if i == len(rng) - 1 and not still:
             d = length - (total - d)
-        inp += ["-ss", f"{a:.3f}", "-t", f"{min(d, b - a):.3f}", "-i", str(ep_file(base, ep))]
+        src = base / ep if "/" in ep else ep_file(base, ep)       # an episode, or a raw shot file
+        inp += ["-ss", f"{a:.3f}", "-t", f"{min(d, b - a):.3f}", "-i", str(src)]
         pad = f",tpad=stop_mode=clone:stop_duration={max(0, d - (b - a)):.3f}" if d > b - a else ""
-        segs.append(f"[{i}:v]{FIT}{pad},trim=duration={d:.3f},setpts=PTS-STARTPTS[s{i}]")
+        zoom = ""
+        if crop:                                                  # [zoom, focus_x, focus_y] like edit.json
+            z, fx, fy = crop[0]
+            zoom = f"crop=iw/{z}:ih/{z}:(iw-iw/{z})*{fx}:(ih-ih/{z})*{fy},scale=1080:1920,"
+        segs.append(f"[{i}:v]{zoom}{FIT}{pad},trim=duration={d:.3f},setpts=PTS-STARTPTS[s{i}]")
     k = len(rng)
     if still:
         rest = length - total
