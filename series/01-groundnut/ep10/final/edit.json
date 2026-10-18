@@ -127,7 +127,15 @@
    "video": "shots/sub.mp4",
    "start": 33.166,
    "end": 39.915,
-   "src_start": 0.15
+   "src_start": 0.15,
+   "zoom": [
+    1.7,
+    1.8
+   ],
+   "focus": [
+    0.42,
+    0.22
+   ]
   },
   {
    "video": "../../ep09/final/shots/bowl.mp4",
