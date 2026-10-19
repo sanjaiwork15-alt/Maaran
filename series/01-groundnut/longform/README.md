@@ -19,6 +19,8 @@ Cuts (exact ranges in `cuts.json`):
 - Ep 10's "Vanakkam", subscribe line and goodbye, which the new closing replaces.
 - The leading silences.
 
+Thumbnail: `thumbnail.png` (1280x720, `tools/longform_thumb.py`, from approved episode frames).
+
 No music (owner's rule): nature bed only.
 
 Publishing: credit the CC BY nature sounds (`assets/sound/nature/CREDITS.md`) and the voice reference (`assets/voice/CREDITS.md`).
