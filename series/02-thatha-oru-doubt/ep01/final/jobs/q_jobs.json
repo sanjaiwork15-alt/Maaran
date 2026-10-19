@@ -1,0 +1,38 @@
+[
+ {
+  "name": "f_two",
+  "image": "base_medium.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280,
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Same red-soil farm background. He holds one unripe GREEN banana in his RIGHT hand (the hand on the left side of the image) and one ripe YELLOW banana in his LEFT hand (the hand on the right side of the image, next to the green towel), both raised at chest height in front of him, one in each hand, clearly visible. No walking stick in this shot. He raises his bushy eyebrows and looks at the camera with a funny, suspicious, puzzled expression. Medium shot from the waist up. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct."
+ },
+ {
+  "name": "f_place",
+  "image": "f_sit_s3.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280,
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Same house front and thinnai, same walking stick leaning beside him, brown leather slippers. Remove the bowl of groundnuts. A small woven bamboo basket with a few green bananas stands on the thinnai right beside him. He holds one green banana in his RIGHT hand (the hand on the left side of the image) just above the basket, about to place it in, and looks down at it with a gentle, careful face. His LEFT hand rests on his knee. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct."
+ },
+ {
+  "name": "f_wink",
+  "image": "f_sit_s3.png",
+  "seeds": [
+   3,
+   8
+  ],
+  "type": "qwen_edit",
+  "width": 720,
+  "height": 1280,
+  "prompt": "Keep the same cartoon old man exactly: same face, white hair, white beard and curled moustache, same cream half-sleeve shirt, the same green towel on his left shoulder, white veshti with green border, his body shape stays exactly the same, same flat 2D cartoon style with clean dark outlines. Same house front and thinnai, same walking stick leaning beside him, brown leather slippers. Remove the bowl of groundnuts. A small woven bamboo basket with a few green bananas stands on the thinnai right beside him. He sits up and looks straight at the camera with a playful, mischievous smile and one eyebrow raised, his RIGHT hand (the hand on the left side of the image) pointing down at the basket of green bananas, his LEFT hand resting on his knee. He has exactly one left hand and one right hand, five fingers each, arms anatomically correct."
+ }
+]

@@ -1,0 +1,15 @@
+[
+ {"id": "L1a", "tanglish": "Dei makkaley!", "tamil": "டேய் மக்களே!", "pause_after": 0.2},
+ {"id": "L1b", "tanglish": "Marathula irundhu vazhaipazhattha parichuttaachu...", "tamil": "மரத்துல இருந்து வாழைப்பழத்த பறிச்சுட்டாச்சு...", "pause_after": 0.2},
+ {"id": "L1c", "tanglish": "Aana adhu appuramum pazhukkudhe! Idhu enna maayam?", "tamil": "ஆனா அது அப்புறமும் பழுக்குதே! இது என்ன மாயம்?", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Indha pachai vazhaipazham konja naal-la manjal aagudhu...", "tamil": "இந்த பச்சை வாழைப்பழம் கொஞ்ச நாள்ல மஞ்சள் ஆகுது...", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Appo marathula irundhu parikkumbodhu mattum dhaan pazhukkumaa? Illa, paricha appuramum pazhukkumaa?", "tamil": "அப்போ மரத்துல இருந்து பறிக்கும்போது மட்டும் தான் பழுக்குமா? இல்ல, பறிச்ச அப்புறமும் பழுக்குமா?", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Adhula oru ragasiyam irukku makkaley!", "tamil": "அதுல ஒரு ரகசியம் இருக்கு மக்களே!", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Pazhukkura nerathula vaazhaipazham ethylene-nu oru vaayu veliya vidum.", "tamil": "பழுக்குற நேரத்துல வாழைப்பழம் எத்திலீன்னு ஒரு வாயு வெளிய விடும்.", "pause_after": 0.2},
+ {"id": "L3c", "tanglish": "Andha vaayu pazham pazhukkura vegathai adhigamaakka udhavum!", "tamil": "அந்த வாயு பழம் பழுக்குற வேகத்தை அதிகமாக்க உதவும்!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Adhaan kadaiyila pachaiyaa vaanguna pazhamum veettukku vandha konja naal-la manjal aagidudhu!", "tamil": "அதான் கடையில பச்சையா வாங்குன பழமும் வீட்டுக்கு வந்த கொஞ்ச நாள்ல மஞ்சள் ஆகிடுது!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Aana pazham pazhukka vechadhukkaaga adha dhinamum utkaandhu paakkaadheenga...", "tamil": "ஆனா பழம் பழுக்க வெச்சதுக்காக அத தினமும் உட்காந்து பாக்காதீங்க...", "pause_after": 0.2},
+ {"id": "L4c", "tanglish": "Adhu unga paarvaiya paathu seekiram pazhukkaadhu!", "tamil": "அது உங்க பார்வைய பாத்து சீக்கிரம் பழுக்காது!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Seri sollunga makkaley... neenga vazhaipazham vaangumbodhu pachaiyaa irukkuradha vaanguveengalaa, illa nalla manjala irukkuradha vaanguveengalaa?", "tamil": "சரி சொல்லுங்க மக்களே... நீங்க வாழைப்பழம் வாங்கும்போது பச்சையா இருக்குறத வாங்குவீங்களா, இல்ல நல்லா மஞ்சளா இருக்குறத வாங்குவீங்களா?", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Comment-la sollunga!", "tamil": "கமெண்ட்ல சொல்லுங்க!", "pause_after": 0.6}
+]

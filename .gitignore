@@ -2,3 +2,6 @@ __pycache__/
 series/*/*/final/kaggle/
 series/*/*/final/.pieces/
 series/01-groundnut/longform/.pieces/
+series/*/*/final/kq*
+series/*/*/final/wav/
+series/*/*/final/*_log.txt
