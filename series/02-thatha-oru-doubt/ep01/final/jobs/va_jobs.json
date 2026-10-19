@@ -2,7 +2,7 @@
  {
   "name": "hook",
   "type": "s2v",
-  "image": "f_two_SEL.png",
+  "image": "f_two_s3.png",
   "audio": "voice_hook.wav",
   "chunks": 2,
   "width": 480,
@@ -14,7 +14,7 @@
  {
   "name": "q",
   "type": "s2v",
-  "image": "f_two_SEL.png",
+  "image": "f_two_s3.png",
   "audio": "voice_q.wav",
   "chunks": 2,
   "width": 480,
@@ -26,7 +26,7 @@
  {
   "name": "ans",
   "type": "s2v",
-  "image": "f_two_SEL.png",
+  "image": "f_two_s3.png",
   "audio": "voice_ans.wav",
   "chunks": 1,
   "width": 480,
