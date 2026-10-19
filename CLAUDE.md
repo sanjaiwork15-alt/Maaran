@@ -84,6 +84,8 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   and used quota). Check both statuses ~5 min after launch; if B is still QUEUED, move its jobs to A. A stale queued
   run can only be stopped on kaggle.com. The whole-dataset results download 404s for a while after a new version;
   `kaggle_run.sh` now falls back to per-file downloads.
+- A run can sit QUEUED for hours even with no other session running (Doubt Ep 1: 3 h+ on 2026-10-19). Do all CPU work
+  (voice, clips, cut-aways, job lists) while waiting; ask the owner to check kaggle.com for a stray running notebook.
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`).
 
