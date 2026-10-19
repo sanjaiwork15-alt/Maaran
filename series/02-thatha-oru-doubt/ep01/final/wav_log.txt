@@ -10,3 +10,16 @@ Download Vocos from huggingface charactr/vocos-mel-24khz
 
 vocab :  /root/.maaran/hf/hub/models--ai4bharat--IndicF5/snapshots/fb652a96e508091045890dae5bb99fe511facbcf/checkpoints/vocab.txt
 token :  custom
+L1a done
+L1b done
+L1c done
+L2a done
+L2b done
+L3a done
+L3b done
+L3c done
+L4a done
+L4b done
+L4c done
+L5a done
+L5b done

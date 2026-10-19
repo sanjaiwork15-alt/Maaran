@@ -1,0 +1,38 @@
+[
+ {
+  "name": "hook",
+  "type": "s2v",
+  "image": "f_two_SEL.png",
+  "audio": "voice_hook.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A funny old Indian farmer looks suspiciously from the green banana to the yellow banana, raises his eyebrows and talks to the camera with a puzzled, amused face, holding one banana steadily in each hand. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "q",
+  "type": "s2v",
+  "image": "f_two_SEL.png",
+  "audio": "voice_q.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A curious old Indian farmer lifts the green banana a little and asks the camera a question with wide, curious eyes, holding one banana steadily in each hand, then tilts his head thoughtfully. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "ans",
+  "type": "s2v",
+  "image": "f_two_SEL.png",
+  "audio": "voice_ans.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A confident, knowing old Indian farmer leans slightly towards the camera and tells a secret with a sly smile, holding one banana steadily in each hand. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

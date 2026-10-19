@@ -1,0 +1,37 @@
+[
+ {
+  "name": "wink",
+  "type": "s2v",
+  "image": "f_wink_SEL.png",
+  "audio": "voice_wink.wav",
+  "chunks": 1,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A playful old Indian farmer sitting on the verandah talks to the camera with a mischievous smile and one raised eyebrow, his hand pointing slowly at the basket of green bananas beside him. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "end",
+  "type": "s2v",
+  "image": "f_two_SEL.png",
+  "audio": "voice_end.wav",
+  "chunks": 2,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "A friendly old Indian farmer asks the camera a question, slowly lifting the green banana a little and then the yellow banana a little, holding one banana steadily in each hand, ending with a warm, friendly smile. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ },
+ {
+  "name": "stare",
+  "type": "i2v",
+  "image": "f_place_SEL.png",
+  "frames": 81,
+  "width": 480,
+  "height": 848,
+  "seed": 7,
+  "upscale": true,
+  "prompt": "Sitting on the verandah, the old farmer slowly places the green banana into the basket beside him, then leans forward, rests his chin on his hand and stares at the bananas intently with a comic, serious squint, very still. Flat 2D cartoon style, clean outlines, static camera, smooth natural human movement, slow and small gestures."
+ }
+]

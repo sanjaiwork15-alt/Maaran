@@ -106,7 +106,7 @@ def shimmer(cx, cy, t, amount, seed):
     for k in range(5):
         ph = (t * 0.55 + k / 5 + seed * 0.13) % 1
         r = 60 + ph * 330
-        op = amount * 0.55 * (1 - ph) * min(1, ph * 5)
+        op = amount * 0.75 * (1 - ph) * min(1, ph * 5)
         if op < 0.01:
             continue
         pts = []
