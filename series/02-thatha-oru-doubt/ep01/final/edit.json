@@ -1,0 +1,140 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 41,
+ "shots": [
+  {
+   "video": "shots/hook.mp4",
+   "start": 0.0,
+   "end": 1.33,
+   "src_start": -0.1,
+   "zoom": [
+    1.0,
+    1.06
+   ]
+  },
+  {
+   "video": "shots/hook.mp4",
+   "start": 1.33,
+   "end": 4.2,
+   "src_start": 1.23,
+   "zoom": [
+    1.2,
+    1.35
+   ],
+   "focus": [
+    0.5,
+    0.27
+   ]
+  },
+  {
+   "video": "shots/hook.mp4",
+   "start": 4.2,
+   "end": 7.25,
+   "src_start": 4.1
+  },
+  {
+   "video": "cut_ripen.mp4",
+   "start": 7.25,
+   "end": 10.25,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/q.mp4",
+   "start": 10.25,
+   "end": 13.62,
+   "src_start": 0.05,
+   "zoom": 1.18
+  },
+  {
+   "video": "shots/q.mp4",
+   "start": 13.62,
+   "end": 16.3,
+   "src_start": 3.42,
+   "zoom": [
+    1.0,
+    1.06
+   ]
+  },
+  {
+   "video": "shots/ans.mp4",
+   "start": 16.3,
+   "end": 18.5,
+   "src_start": 0.05,
+   "zoom": [
+    1.1,
+    1.25
+   ]
+  },
+  {
+   "video": "shots/ans.mp4",
+   "start": 18.5,
+   "end": 20.6,
+   "src_start": 2.25
+  },
+  {
+   "video": "cut_ethylene.mp4",
+   "start": 20.6,
+   "end": 26.0,
+   "src_start": 0.0
+  },
+  {
+   "video": "cut_home.mp4",
+   "start": 26.0,
+   "end": 31.6,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/stare.mp4",
+   "start": 31.6,
+   "end": 35.95,
+   "src_start": 0.0,
+   "zoom": [
+    1.0,
+    1.15
+   ],
+   "focus": [
+    0.45,
+    0.3
+   ]
+  },
+  {
+   "video": "shots/wink.mp4",
+   "start": 35.95,
+   "end": 38.8,
+   "src_start": 0.0,
+   "zoom": 1.25
+  },
+  {
+   "video": "shots/wink.mp4",
+   "start": 38.8,
+   "end": 40.7,
+   "src_start": 2.85
+  },
+  {
+   "video": "shots/end.mp4",
+   "start": 40.7,
+   "end": 44.0,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/end.mp4",
+   "start": 44.0,
+   "end": 47.68,
+   "src_start": 3.3,
+   "zoom": [
+    1.0,
+    1.12
+   ],
+   "focus": [
+    0.5,
+    0.28
+   ]
+  },
+  {
+   "video": "shots/end.mp4",
+   "start": 47.68,
+   "end": 49.6,
+   "src_start": 6.98
+  }
+ ]
+}
