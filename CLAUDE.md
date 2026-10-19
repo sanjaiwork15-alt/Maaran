@@ -84,10 +84,12 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   and used quota). Check both statuses ~5 min after launch; if B is still QUEUED, move its jobs to A. A stale queued
   run can only be stopped on kaggle.com. The whole-dataset results download 404s for a while after a new version;
   `kaggle_run.sh` now falls back to per-file downloads.
-- A run can sit QUEUED for hours even with no other session running (Doubt Ep 1: 3 h+ on 2026-10-19). Do all CPU work
-  (voice, clips, cut-aways, job lists) while waiting; ask the owner to check kaggle.com for a stray running notebook.
+- A run can sit QUEUED for hours even with no other session running (Doubt Ep 1: 3.5 h on 2026-10-19). Don't wait past
+  ~30 min: ask the owner to open kaggle.com → ☰ → "View Active Events" and cancel the stuck run, then resubmit (the
+  resubmitted run started within 1 min). Do all CPU work (voice, clips, cut-aways, job lists) meanwhile.
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
-  pattern (`"kaggle/q[a] series"`).
+  pattern (`"kaggle/q[a] series"`). Same for `pkill -f`: never put the killed pattern's plain text anywhere else in
+  the same command (a `pkill` + relaunch of `kaggle_run.sh` in one command killed its own shell).
 
 ## Improvement backlog (work through these, newest first)
 Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split over two shots (first line ends at
@@ -118,4 +120,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut Ep 10 (series finale): done, waiting for review (`series/01-groundnut/ep10/final/groundnut_ep10.mp4`, 46.2 s).
 - Groundnut long-form compilation: done, waiting for review (`series/01-groundnut/longform/groundnut_longform.mp4`, 6:44, 16:9; `tools/compile_longform.py`).
 - Series 02 "Thatha, Oru Doubt!" (8 everyday-science Q&A Shorts): brief saved in `series/02-thatha-oru-doubt/overview.md`;
-  waiting for the owner's Ep 1 script (bananas ripening after picking). Episodes go in `series/02-thatha-oru-doubt/epNN/final/`.
+  episodes go in `series/02-thatha-oru-doubt/epNN/final/`.
+- Doubt Ep 1 (bananas ripening after picking): in production – voice, clips, cut-aways (`tools/toon/banana.py`) done;
+  start frames on Kaggle, then video runs `jobs/va_jobs.json`, `jobs/vb_jobs.json` (replace `*_SEL.png` with the picked seeds).
