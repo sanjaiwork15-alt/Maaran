@@ -20,3 +20,4 @@ The village never changes. Each **series** has its own fixed spot on Thatha's la
 | # | Series | Location | Status |
 |---|---|---|---|
 | 01 | Groundnut | Semman kaadu | Done: 10 Shorts + 6:44 long-form compilation |
+| 02 | Thatha, Oru Doubt! (everyday food/plant/nature questions) | Changes with the story (farm, thottam, kitchen, vayal) | Brief received; waiting for Ep 1 script |

@@ -115,4 +115,5 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut Ep 9: done (`series/01-groundnut/ep09/final/groundnut_ep09.mp4`, 45.1 s).
 - Groundnut Ep 10 (series finale): done, waiting for review (`series/01-groundnut/ep10/final/groundnut_ep10.mp4`, 46.2 s).
 - Groundnut long-form compilation: done, waiting for review (`series/01-groundnut/longform/groundnut_longform.mp4`, 6:44, 16:9; `tools/compile_longform.py`).
-- Next: a new crop series – the owner will send the overview/scripts (see `bible/world.md` for the land and locations).
+- Series 02 "Thatha, Oru Doubt!" (8 everyday-science Q&A Shorts): brief saved in `series/02-thatha-oru-doubt/overview.md`;
+  waiting for the owner's Ep 1 script (bananas ripening after picking). Episodes go in `series/02-thatha-oru-doubt/epNN/final/`.
