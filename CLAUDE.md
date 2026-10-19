@@ -37,7 +37,8 @@ Rejected approaches (3D look, code-drawn Thatha, code puppet, MuseTalk, music be
 from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not retry them.
 
 ## Gotchas learned the hard way
-- Fresh session: `bash tools/setup.sh` (needs `HF_TOKEN`; Kaggle needs `KAGGLE_USERNAME`, `KAGGLE_API_TOKEN`).
+- Fresh session: `bash tools/setup.sh` (needs `HF_TOKEN`; Kaggle needs `KAGGLE_USERNAME`, `KAGGLE_API_TOKEN`). It takes
+  ~35 min (CUDA torch wheels, ~7 GB) – run it detached in the background and read the scripts meanwhile.
 - Kaggle machine: use `NvidiaTeslaT4` (default). `NvidiaL4` is accepted but runs CPU-only on the free tier.
 - `www.kaggleusercontent.com` is blocked here, so `kaggle kernels output` fails. Outputs are printed into the
   run log as base64 and the runner follows the **live** log (finished runs keep only the tail). Don't remove that.
