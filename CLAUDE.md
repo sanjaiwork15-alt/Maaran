@@ -16,6 +16,9 @@ Read `bible/character.md`, `bible/world.md`, `docs/video-pipeline-plan.md` and t
 - **Time:** "not very time consuming" – target ~2 h per episode, mostly unattended.
 - For a new style/look: show 2–3 stills first, render the clip only after approval.
 - Keep improving every episode (see backlog below). On-screen text: none.
+- **Variety (owner, Doubt Ep 4):** nothing should feel repeated – use 3–4 different Thatha poses per episode, cut every
+  ~1.5–3 s (never hold one frame long), mix poses, punch-ins and code animations; keep idle head motion calm
+  (no constant shaking) – head shakes/nods only where the script asks.
 
 ## Method now (no GPU, since Doubt Ep 1 – Kaggle account suspended 2026-10-20)
 Talking/reacting shots = `tools/toon/talk.py RIG.json SHOT OUT.mp4`: one approved still frame (CPU-upscaled with
@@ -92,7 +95,8 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
   Lost shots so far came from runs with 3+ jobs; keep runs to 2–3 jobs.
 - Qwen frames with a NEW background (flowering field) drift in style and dropped his slippers (Ep 5) – frame those
   shots knees-up, or ask for "brown leather slippers" explicitly.
-- If the voice runs long, trim pauses first, then speed the FINISHED video (setpts + atempo together keeps lip sync);
+- If the voice runs long, trim pauses first (Doubt Ep 4: 62 s → 53 s with 0.22 s pauses, then `atempo=1.07` on
+  voice.wav BEFORE animating talk.py shots, timings ÷ 1.07), then speed the FINISHED video (setpts + atempo together keeps lip sync);
   Ep 7 used 1.06x. Make each S2V clip fit its chunks (4.8 s each) or plan a cut-away over the uncovered tail.
 - `tools/mix.py` hangs (ffmpeg at ~0% CPU) when the edit runs longer than voice.wav (its apad tail). Pad voice.wav
   with silence to the edit's full length first (Ep 8). Run long renders detached with `< /dev/null`.
@@ -150,4 +154,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   (`series/02-thatha-oru-doubt/ep02/final/doubt_ep02.mp4`, 46.4 s). Owner: "keep improvising the animation".
 - Doubt Ep 3 (onion tears, two kitchen corners): done without GPU, waiting for review
   (`series/02-thatha-oru-doubt/ep03/final/doubt_ep03.mp4`, 45.1 s).
-- Next: Doubt Ep 4 (tomato colours) – thottam (garden plot) per the overview; needs a new background plate.
+- Doubt Ep 4 (tomato colours, thottam, 4 poses, fast cuts): done without GPU, waiting for review
+  (`series/02-thatha-oru-doubt/ep04/final/doubt_ep04.mp4`, 51.0 s).
+- Next: Doubt Ep 5 (rice journey, vayal) – needs a paddy-field plate; reuse the Ep 4 pose layers in new places.

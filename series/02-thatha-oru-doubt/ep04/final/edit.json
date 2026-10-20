@@ -1,0 +1,228 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 74,
+ "shots": [
+  {
+   "video": "shots/A.mp4",
+   "start": 0,
+   "end": 1.1,
+   "src_start": 0.0,
+   "zoom": [
+    1.0,
+    1.06
+   ]
+  },
+  {
+   "video": "cut_plant.mp4",
+   "start": 1.1,
+   "end": 2.17,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/A.mp4",
+   "start": 2.17,
+   "end": 3.73,
+   "src_start": 2.17,
+   "zoom": 1.3,
+   "focus": [
+    0.3,
+    0.5
+   ]
+  },
+  {
+   "video": "shots/B.mp4",
+   "start": 3.73,
+   "end": 5.49,
+   "src_start": 0.13
+  },
+  {
+   "video": "shots/C.mp4",
+   "start": 5.49,
+   "end": 7.49,
+   "src_start": 0.09,
+   "zoom": [
+    1.1,
+    1.2
+   ]
+  },
+  {
+   "video": "shots/D.mp4",
+   "start": 7.49,
+   "end": 9.68,
+   "src_start": 0.09,
+   "zoom": 1.2,
+   "focus": [
+    0.5,
+    0.32
+   ]
+  },
+  {
+   "video": "cut_ripen.mp4",
+   "start": 9.68,
+   "end": 11.11,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/D.mp4",
+   "start": 11.11,
+   "end": 12.49,
+   "src_start": 3.71
+  },
+  {
+   "video": "cut_stages.mp4",
+   "start": 12.49,
+   "end": 15.25,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/E.mp4",
+   "start": 15.25,
+   "end": 17.55,
+   "src_start": 0.15,
+   "zoom": [
+    1.0,
+    1.1
+   ]
+  },
+  {
+   "video": "shots/F.mp4",
+   "start": 17.55,
+   "end": 19.78,
+   "src_start": 0.05,
+   "zoom": [
+    1.0,
+    1.12
+   ]
+  },
+  {
+   "video": "shots/F.mp4",
+   "start": 19.78,
+   "end": 21.57,
+   "src_start": 2.28,
+   "zoom": 1.25,
+   "focus": [
+    0.45,
+    0.32
+   ]
+  },
+  {
+   "video": "cut_ripen.mp4",
+   "start": 21.57,
+   "end": 23.31,
+   "src_start": 1.8
+  },
+  {
+   "video": "cut_pigment.mp4",
+   "start": 23.31,
+   "end": 26.1,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/G.mp4",
+   "start": 26.1,
+   "end": 27.76,
+   "src_start": 0.1,
+   "zoom": 1.15,
+   "focus": [
+    0.45,
+    0.32
+   ]
+  },
+  {
+   "video": "cut_pigment.mp4",
+   "start": 27.76,
+   "end": 30.27,
+   "src_start": 4.4
+  },
+  {
+   "video": "shots/H.mp4",
+   "start": 30.27,
+   "end": 32.71,
+   "src_start": 0.07
+  },
+  {
+   "video": "shots/H.mp4",
+   "start": 32.71,
+   "end": 34.8,
+   "src_start": 2.51,
+   "zoom": 1.25,
+   "focus": [
+    0.5,
+    0.32
+   ]
+  },
+  {
+   "video": "shots/I.mp4",
+   "start": 34.8,
+   "end": 37.05,
+   "src_start": 0.1,
+   "zoom": [
+    1.0,
+    1.08
+   ]
+  },
+  {
+   "video": "shots/J.mp4",
+   "start": 37.05,
+   "end": 38.5,
+   "src_start": 0.15
+  },
+  {
+   "video": "shots/L.mp4",
+   "start": 38.5,
+   "end": 39.92,
+   "src_start": 0.1,
+   "zoom": 1.2,
+   "focus": [
+    0.5,
+    0.3
+   ]
+  },
+  {
+   "video": "shots/K.mp4",
+   "start": 39.92,
+   "end": 42.46,
+   "src_start": 0.12
+  },
+  {
+   "video": "shots/K.mp4",
+   "start": 42.46,
+   "end": 44.6,
+   "src_start": 2.66,
+   "zoom": 1.3,
+   "focus": [
+    0.68,
+    0.33
+   ]
+  },
+  {
+   "video": "cut_ripen.mp4",
+   "start": 44.6,
+   "end": 46.6,
+   "src_start": 1.0
+  },
+  {
+   "video": "shots/K.mp4",
+   "start": 46.6,
+   "end": 48.45,
+   "src_start": 6.8,
+   "zoom": 1.3,
+   "focus": [
+    0.32,
+    0.33
+   ]
+  },
+  {
+   "video": "shots/K.mp4",
+   "start": 48.45,
+   "end": 49.5,
+   "src_start": 8.65
+  },
+  {
+   "video": "cut_plant.mp4",
+   "start": 49.5,
+   "end": 51.0,
+   "src_start": 1.2
+  }
+ ]
+}
