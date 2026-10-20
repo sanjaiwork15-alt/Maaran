@@ -182,7 +182,7 @@ def draw_lid(img, c, e, skin, close):
     xr = (xx / S + x0 - cx) / rx
     curve = lid_y + 0.25 * ry * (1 - xr ** 2) * close
     cover = ((yy / S + y0) <= curve) & (ell > 0)
-    line = (np.abs((yy / S + y0) - curve) <= 1.6) & (ell > 0)
+    line = (np.abs((yy / S + y0) - curve) <= 1.6) & (ell > 0) & (np.abs(xr) < 0.84)
     sz = (x1 - x0, y1 - y0)
     a_c = cv2.resize(cover.astype(np.uint8) * 255, sz, interpolation=cv2.INTER_AREA)[..., None] / 255.0
     a_l = cv2.resize(line.astype(np.uint8) * 255, sz, interpolation=cv2.INTER_AREA)[..., None] / 255.0

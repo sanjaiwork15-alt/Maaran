@@ -44,3 +44,17 @@ household tip, local knowledge). No generic "like, share, subscribe" every time.
   `f_sit_s3.png`); Qwen frames on new backgrounds drift in style – frame knees-up or name the slippers.
 - Food demos (banana ripeness stages, ethylene, wilting, onion cells, tomato colours, rice journey) as code
   cut-aways, like the Groundnut biology animations.
+
+## Locations (owner, 2026-10-20: every episode in a new place, different things)
+| Ep | Topic | Location | Props |
+|---|---|---|---|
+| 1 | Banana ripening | Semman kaadu field + thinnai (made) | green + yellow banana, basket |
+| 2 | Coriander wilting | Village sandhai (weekly market), vegetable stall | coriander bunches, wet cloth |
+| 3 | Onion tears | Village kitchen (clay wall, wood stove) | onions, knife, chopping board |
+| 4 | Tomato colours | Thottam – tomato plants on stakes | green / turning / red tomatoes |
+| 5 | Rice journey | Vayal – golden paddy by the lake | paddy sheaf, threshing, rice |
+| 6 | Mango sour/sweet | Mango tree in the thottam (maanthoppu) | raw + ripe mango, salt and chilli |
+| 7 | Plants and sunlight | Sunflower patch at sunrise / window plant | sunflowers, potted seedling |
+| 8 | Is naatu food always healthy? | Thinnai, banana-leaf meal | banana leaf, millet, sweets |
+Without a GPU, new places need new background art: either a few minutes of GPU on a legitimate paid/credit service
+(Modal) for the start frames, or backgrounds drawn in code (cheaper look). Owner to choose.
