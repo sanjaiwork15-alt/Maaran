@@ -1,0 +1,17 @@
+[
+ {"id": "L1a", "tanglish": "Enna kodumai idhu!", "tamil": "என்ன கொடுமை இது!", "pause_after": 0.2},
+ {"id": "L1b", "tanglish": "Ore chediyila oru thakkali pachaiyaa irukku, innonnu nalla sivappaa irukku!", "tamil": "ஒரே செடியில ஒரு தக்காளி பச்சையா இருக்கு, இன்னொன்னு நல்லா சிவப்பா இருக்கு!", "pause_after": 0.2},
+ {"id": "L1c", "tanglish": "Rendu perum ore family dhaane?", "tamil": "ரெண்டு பேரும் ஒரே ஃபேமிலி தானே?", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Indha pachai thakkaliya paathaa, 'Enna, innum ready aagalayaa?' nu kekkanum pola irukku!", "tamil": "இந்த பச்சை தக்காளிய பாத்தா, என்ன, இன்னும் ரெடி ஆகலையா? ன்னு கேக்கணும் போல இருக்கு!", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Aana ore chediyila irukkura kaaygal ellam ore nerathula pazhukka vendiyadhillaye!", "tamil": "ஆனா ஒரே செடியில இருக்குற காய்கள் எல்லாம் ஒரே நேரத்துல பழுக்க வேண்டியதில்லையே!", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Idhoda mukkiyamaana kaaranam enna theriyumaa?", "tamil": "இதோட முக்கியமான காரணம் என்ன தெரியுமா?", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Ovvoru thakkaliyum valarndhu pazhukkura vegam konjam maaralaam.", "tamil": "ஒவ்வொரு தக்காளியும் வளர்ந்து பழுக்குற வேகம் கொஞ்சம் மாறலாம்.", "pause_after": 0.2},
+ {"id": "L3c", "tanglish": "Pazhukkumbodhu pachai nirathukku kaaranamaana chlorophyll kuraiyum;", "tamil": "பழுக்கும்போது பச்சை நிறத்துக்கு காரணமான குளோரோஃபில் குறையும்;", "pause_after": 0.2},
+ {"id": "L3d", "tanglish": "sivappu nirathukku kaaranamaana pigment adhigamaagum!", "tamil": "சிவப்பு நிறத்துக்கு காரணமான பிக்மென்ட் அதிகமாகும்!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Appo pachai thakkali somberi illa makkaley...", "tamil": "அப்போ பச்சை தக்காளி சோம்பேறி இல்ல மக்களே...", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "adhu innum pazhukkura velaiya mudikkala!", "tamil": "அது இன்னும் பழுக்குற வேலைய முடிக்கல!", "pause_after": 0.2},
+ {"id": "L4c", "tanglish": "Ellaarum ore speed-la valaranumna, namma veetlaye mudiyadhu... thakkalikku mattum eppadi?", "tamil": "எல்லாரும் ஒரே ஸ்பீட்ல வளரணும்னா, நம்ம வீட்லயே முடியாது... தக்காளிக்கு மட்டும் எப்படி?", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Seri makkaley, thakkali vaangumbodhu nalla sivappaa irukkuradha vaanguveengalaa?", "tamil": "சரி மக்களே, தக்காளி வாங்கும்போது நல்லா சிவப்பா இருக்குறத வாங்குவீங்களா?", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Illa veetla vechu pazhukka pachaiyaa irukkuradha vaanguveengalaa?", "tamil": "இல்ல வீட்ல வெச்சு பழுக்க பச்சையா இருக்குறத வாங்குவீங்களா?", "pause_after": 0.2},
+ {"id": "L5c", "tanglish": "Comment-la sollunga!", "tamil": "கமெண்ட்ல சொல்லுங்க!", "pause_after": 0.6}
+]

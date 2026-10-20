@@ -21,6 +21,7 @@ small nods on stressed syllables, breathing, and a slight hand bob. "mode": "sta
 the banana in his hand, brows down, leaning in (no talking). Shot options: "gaze": [[t0, t1, dx, dy], ...] moves his
 pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], ...] a playful head shake,
 "tears": [[t0, t1], ...] watery eyes and tear drops, "laugh": [[t0, dur], ...] a silent chuckle,
+"nod": [[t0, dur], ...] two approving nods,
 "brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5;
 6 for frames marked "grin": true, whose art already shows an open smile – only the jaw moves there).
 """
@@ -259,8 +260,8 @@ def main():
     while t < shot["duration"]:
         blinks.append(t)
         t += rng.uniform(2.5, 4.5)
-    brow_t = [o / FPS for o in ons[::2]] + shot.get("brows", [])
-    nod_t = [o / FPS for o in ons]
+    brow_t = [o / FPS for o in ons[1::3]] + shot.get("brows", [])
+    nod_t = [o / FPS for o in ons[::3]]        # owner (Doubt Ep 4): less constant head movement
     ph = rng.uniform(0, 6.28, 6)
     ff = subprocess.Popen(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24",
                            "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-crf", "16",
@@ -270,10 +271,10 @@ def main():
         t = i / FPS
         jaw = env[i] * jaw_max
         brow = sum(bump(t, b, 0.15, 0.45) for b in brow_t) * 4.5 * K
-        theta = math.radians(1.1 * math.sin(2 * math.pi * 0.21 * t + ph[0]) +
-                             1.4 * sum(bump(t, b, 0.1, 0.3) for b in nod_t))
-        tx = 3.0 * K * math.sin(2 * math.pi * 0.17 * t + ph[1])
-        ty = 3.5 * K * sum(bump(t, b, 0.1, 0.3) for b in nod_t)
+        theta = math.radians(0.45 * math.sin(2 * math.pi * 0.21 * t + ph[0]) +
+                             0.8 * sum(bump(t, b, 0.1, 0.3) for b in nod_t))
+        tx = 1.5 * K * math.sin(2 * math.pi * 0.17 * t + ph[1])
+        ty = 2.0 * K * sum(bump(t, b, 0.1, 0.3) for b in nod_t)
         breath = 1 + 0.0025 * math.sin(2 * math.pi * 0.25 * t + ph[2])
         talk = float(np.mean(env[max(0, i - 12):i + 1]))
         hands = [(1.5 * K * math.sin(2 * math.pi * 0.3 * t + ph[3 + k]),
@@ -300,6 +301,11 @@ def main():
                 theta += math.radians(-1.2 * env_l)
                 close = max(close, 0.3 * env_l)
                 jaw = max(jaw, jaw_max * 0.55 * env_l * (0.6 + 0.4 * math.sin(2 * math.pi * 5.2 * (t - t0))))
+        for t0, dur in shot.get("nod", []):                  # deliberate approving nods (two down-up beats)
+            if t0 <= t <= t0 + dur:
+                u = (t - t0) / dur
+                ty += 7 * K * math.sin(math.pi * u) * abs(math.sin(2 * math.pi * u))
+                theta += math.radians(0.6 * math.sin(2 * math.pi * u))
         for t0, dur in shot.get("shake", []):                # playful "no-no" head shake
             if t0 <= t <= t0 + dur:
                 env_s = math.sin(math.pi * (t - t0) / dur)

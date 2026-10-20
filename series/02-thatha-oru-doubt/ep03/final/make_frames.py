@@ -78,6 +78,8 @@ def main():
     fing &= alpha > 0
     body_p = Image.fromarray(np.dstack([np.array(clean), alpha]))
     fing_p = Image.fromarray(np.dstack([a, (fing * 255).astype(np.uint8)]))
+    body_p.save(FR / "body_pod.png")              # reusable layers (unscaled, f_pod_s3 coordinates)
+    fing_p.save(FR / "fingers_pod.png")
     out = ImageOps.mirror(plate.convert("RGB")).convert("RGBA")
     out.alpha_composite(body_p, (PDX, PDY))
     out.alpha_composite(svg_layer(onion_half(586 + PDX, 212 + PDY, 72, -10)))
