@@ -88,16 +88,16 @@
    ],
    "eyes": [
     [
-     270,
-     342,
-     22,
-     12
+     257,
+     345,
+     17,
+     9
     ],
     [
-     342,
-     338,
-     22,
-     12
+     335,
+     340,
+     17,
+     9
     ]
    ],
    "brows": [
@@ -130,5 +130,91 @@
    "image": "frames/up/f_kpod.png"
   }
  },
- "shots": {}
+ "shots": {
+  "hook": {
+   "frame": "f_kon",
+   "audio": "voice_hook.wav",
+   "duration": 6.95,
+   "seed": 21,
+   "tears": [
+    [
+     0.0,
+     6.95
+    ]
+   ],
+   "gaze": [
+    [
+     4.5,
+     6.3,
+     6,
+     1
+    ]
+   ]
+  },
+  "q": {
+   "frame": "f_kon",
+   "audio": "voice_q.wav",
+   "duration": 5.0,
+   "seed": 22,
+   "tears": [
+    [
+     0.0,
+     2.0
+    ]
+   ],
+   "brows": [
+    2.6
+   ]
+  },
+  "sci": {
+   "frame": "f_kon",
+   "audio": "voice_sci.wav",
+   "duration": 7.9,
+   "seed": 23,
+   "brows": [
+    0.3,
+    5.4
+   ]
+  },
+  "cry": {
+   "frame": "f_kon",
+   "audio": "voice_cry.wav",
+   "duration": 2.2,
+   "seed": 24,
+   "tears": [
+    [
+     0.0,
+     2.2
+    ]
+   ]
+  },
+  "twist": {
+   "frame": "f_kpod",
+   "audio": "voice_twist.wav",
+   "duration": 9.1,
+   "seed": 25,
+   "shake": [
+    [
+     2.8,
+     1.0
+    ]
+   ],
+   "laugh": [
+    [
+     8.2,
+     0.9
+    ]
+   ]
+  },
+  "end": {
+   "frame": "f_kpod",
+   "audio": "voice_end.wav",
+   "duration": 8.8,
+   "seed": 26,
+   "brows": [
+    0.4,
+    4.9
+   ]
+  }
+ }
 }

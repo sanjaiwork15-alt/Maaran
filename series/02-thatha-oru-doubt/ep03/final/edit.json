@@ -1,0 +1,167 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 63,
+ "shots": [
+  {
+   "video": "shots/hook.mp4",
+   "start": 0.0,
+   "end": 0.97,
+   "src_start": -0.1,
+   "zoom": [
+    1.0,
+    1.05
+   ]
+  },
+  {
+   "video": "shots/hook.mp4",
+   "start": 0.97,
+   "end": 3.35,
+   "src_start": 0.87,
+   "zoom": 1.28,
+   "focus": [
+    0.5,
+    0.32
+   ]
+  },
+  {
+   "video": "shots/hook.mp4",
+   "start": 3.35,
+   "end": 4.6,
+   "src_start": 3.25
+  },
+  {
+   "video": "shots/hook.mp4",
+   "start": 4.6,
+   "end": 6.86,
+   "src_start": 4.5,
+   "zoom": [
+    1.1,
+    1.25
+   ],
+   "focus": [
+    0.62,
+    0.33
+   ]
+  },
+  {
+   "video": "cut_chop.mp4",
+   "start": 6.86,
+   "end": 9.92,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/q.mp4",
+   "start": 9.92,
+   "end": 12.3,
+   "src_start": 0.12,
+   "zoom": 1.18
+  },
+  {
+   "video": "shots/q.mp4",
+   "start": 12.3,
+   "end": 14.62,
+   "src_start": 2.5
+  },
+  {
+   "video": "shots/sci.mp4",
+   "start": 14.62,
+   "end": 16.7,
+   "src_start": 0.12,
+   "zoom": [
+    1.05,
+    1.2
+   ]
+  },
+  {
+   "video": "cut_cells.mp4",
+   "start": 16.7,
+   "end": 19.8,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/sci.mp4",
+   "start": 19.8,
+   "end": 22.1,
+   "src_start": 5.3,
+   "zoom": 1.15
+  },
+  {
+   "video": "cut_cells.mp4",
+   "start": 22.1,
+   "end": 24.63,
+   "src_start": 5.4
+  },
+  {
+   "video": "shots/cry.mp4",
+   "start": 24.63,
+   "end": 26.54,
+   "src_start": 0.13,
+   "zoom": 1.32,
+   "focus": [
+    0.5,
+    0.32
+   ]
+  },
+  {
+   "video": "shots/twist.mp4",
+   "start": 26.54,
+   "end": 29.4,
+   "src_start": 0.14,
+   "zoom": [
+    1.0,
+    1.08
+   ]
+  },
+  {
+   "video": "shots/twist.mp4",
+   "start": 29.4,
+   "end": 31.34,
+   "src_start": 3.0,
+   "zoom": 1.2,
+   "focus": [
+    0.5,
+    0.3
+   ]
+  },
+  {
+   "video": "shots/twist.mp4",
+   "start": 31.34,
+   "end": 35.12,
+   "src_start": 4.94
+  },
+  {
+   "video": "shots/end.mp4",
+   "start": 35.12,
+   "end": 38.0,
+   "src_start": 0.12,
+   "zoom": 1.15,
+   "focus": [
+    0.5,
+    0.3
+   ]
+  },
+  {
+   "video": "shots/end.mp4",
+   "start": 38.0,
+   "end": 42.27,
+   "src_start": 3.0
+  },
+  {
+   "video": "shots/end.mp4",
+   "start": 42.27,
+   "end": 43.45,
+   "src_start": 7.27,
+   "zoom": 1.2,
+   "focus": [
+    0.5,
+    0.3
+   ]
+  },
+  {
+   "video": "cut_board.mp4",
+   "start": 43.45,
+   "end": 45.1,
+   "src_start": 0.0
+  }
+ ]
+}
