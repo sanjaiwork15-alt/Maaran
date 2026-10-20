@@ -22,7 +22,11 @@ Talking/reacting shots = `tools/toon/talk.py RIG.json SHOT OUT.mp4`: one approve
 `tools/upscale.py --scale 1.5`) animated in code – jaw + mouth from the voice loudness, blinks, brow lifts, head
 sway/nods, breathing, small hand bob; `"mode": "stare"` squints and leans in. Rig = face points per frame in 720x1280
 coords (`series/02-thatha-oru-doubt/ep01/final/rig.json`; find them on a 10 px grid crop). No limb articulation.
-Renders ~40 s per shot; whole episode assembled in ~2 min. New start frames / new places still need an image model
+Renders ~40 s per shot; whole episode assembled in ~2 min. Shot options: `gaze` (pupils slide, head follows),
+`shake` (head shake), `brows`, `jaw`. New places without a GPU (Doubt Ep 2): cut Thatha out of an approved frame with
+rembg (`isnet-anime`), remove props/people with LaMa (`simple-lama-inpainting`, CPU; patch `torch.jit.load` to
+`map_location="cpu"`), and draw new props in code (`tools/toon/coriander.py`), fingers re-pasted on top – see
+`series/02-thatha-oru-doubt/ep02/final/make_frames.py`. Kitchen plate = Ep 10 kitchen with Thatha removed. New start frames / new places still need an image model
 (see overview "Locations"). Everything else below (voice, cut-aways, assembly) is unchanged.
 
 ## Method used for Groundnut (GPU on Kaggle – not available now)
@@ -101,6 +105,9 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
 - A run can sit QUEUED for hours even with no other session running (Doubt Ep 1: 3.5 h on 2026-10-19). Don't wait past
   ~30 min: ask the owner to open kaggle.com → ☰ → "View Active Events" and cancel the stuck run, then resubmit (the
   resubmitted run started within 1 min). Do all CPU work (voice, clips, cut-aways, job lists) meanwhile.
+- Never `uv pip install` into `~/.maaran/f5` while the voice runs: the half-replaced packages crashed IndicF5 at start
+  ("Could not import module 'pipeline'", Doubt Ep 2). rembg, simple-lama-inpainting, spandrel, cairosvg are now in f5.
+- The container restarts sometimes (uptime resets); background jobs die with it. Check `pgrep` before waiting on one.
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`). Same for `pkill -f`: never put the killed pattern's plain text anywhere else in
   the same command (a `pkill` + relaunch of `kaggle_run.sh` in one command killed its own shell).
@@ -137,4 +144,5 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   episodes go in `series/02-thatha-oru-doubt/epNN/final/`.
 - Doubt Ep 1 (bananas ripening after picking): done without GPU, waiting for review
   (`series/02-thatha-oru-doubt/ep01/final/doubt_ep01.mp4`, 49.6 s; talk.py shots).
-- Next: Doubt Ep 2 (coriander) – owner wants every episode in a new place; locations planned in the overview.
+- Doubt Ep 2 (coriander, village kitchen): in production – kitchen frames f_kfw/f_kff made in code, cut-aways in
+  `tools/toon/coriander.py`; voice running. Owner: "keep improvising the animation".

@@ -18,7 +18,9 @@ RIG.json:
 Only small, natural motions on the owner's art (no limb articulation – see docs/video-pipeline-plan.md):
 jaw drop + mouth interior from the voice loudness, blinks, eyebrow lifts on phrase starts, a slow head sway with
 small nods on stressed syllables, breathing, and a slight hand bob. "mode": "stare" instead makes him squint at
-the banana in his hand, brows down, leaning in (no talking).
+the banana in his hand, brows down, leaning in (no talking). Shot options: "gaze": [[t0, t1, dx, dy], ...] moves his
+pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], ...] a playful head shake,
+"brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5).
 """
 import json
 import math
@@ -106,7 +108,7 @@ class Rig:
         self.hand_w = [np.exp(-(((xx - h[0]) / 120) ** 2 + ((yy - h[1]) / 120) ** 2)).astype(np.float32) for h in self.hands]
         self.skin = [self.img[int(e[1] + e[3] + 10), int(e[0])].astype(int).tolist() for e in self.eyes]
 
-    def disp(self, jaw, brow, theta, tx, ty, breath, hands):
+    def disp(self, jaw, brow, theta, tx, ty, breath, hands, gaze=(0.0, 0.0)):
         """Total (dx, dy) forward displacement field."""
         xx, yy = self.xx, self.yy
         dx = np.zeros_like(xx)
@@ -165,6 +167,27 @@ def draw_mouth(img, pts, open_px):
     roi = roi * (1 - a_t * 0.9) + np.array(TONGUE) * a_t * 0.9
     roi = roi * (1 - a_e) + np.array(OUTLINE) * a_e
     img[y0:y1, x0:x1] = roi.clip(0, 255).astype(np.uint8)
+
+
+def draw_gaze(img, c, e, shift):
+    """Slide the iris + pupil inside the eye (outline stays put), filling the uncovered part with eye-white."""
+    sx, sy = shift
+    if abs(sx) < 0.3 and abs(sy) < 0.3:
+        return
+    cx, cy = c
+    rx, ry = e[2] * 0.86, e[3] * 0.86
+    ri = min(e[2], e[3]) * 0.72
+    x0, y0, x1, y1 = int(cx - rx - 2), int(cy - ry - 2), int(cx + rx + 3), int(cy + ry + 3)
+    roi = img[y0:y1, x0:x1].astype(float)
+    yy, xx = np.mgrid[y0:y1, x0:x1].astype(float)
+    inside = np.clip((1 - np.sqrt(((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2)) * rx / 1.5, 0, 1)[..., None]
+    lum = roi.mean(2)
+    white = np.percentile(roi[(inside[..., 0] > 0.5) & (lum > np.percentile(lum, 70))], 60, axis=0) \
+        if ((inside[..., 0] > 0.5) & (lum > np.percentile(lum, 70))).any() else np.array([238, 240, 242])
+    src = cv2.remap(img, (xx - sx).astype(np.float32), (yy - sy).astype(np.float32), cv2.INTER_CUBIC)
+    iris = np.clip((ri - np.sqrt((xx - cx - sx) ** 2 + (yy - cy - sy) ** 2)) / 1.2, 0, 1)[..., None]
+    new = white * (1 - iris) + src.astype(float) * iris
+    img[y0:y1, x0:x1] = (roi * (1 - inside) + new * inside).clip(0, 255).astype(np.uint8)
 
 
 def draw_lid(img, c, e, skin, close):
@@ -228,6 +251,18 @@ def main():
         hands = [(1.5 * K * math.sin(2 * math.pi * 0.3 * t + ph[3 + k]),
                   (2.5 * math.sin(2 * math.pi * 0.37 * t + ph[4 + k]) - 4.5 * talk) * K) for k in range(len(rig.hands))]
         close = max([0.0] + [max(0.0, 1 - abs(t - b) / 0.09) for b in blinks])
+        gx = gy = 0.0
+        for t0, t1, ex, ey in shot.get("gaze", []):          # look at something: [t0, t1, dx, dy] (720 px)
+            u = min(1.0, max(0.0, (t - t0) / 0.15)) * min(1.0, max(0.0, (t1 - t) / 0.15))
+            gx += ex * u * K
+            gy += ey * u * K
+            tx += ex * u * K * 0.9                           # the head follows the eyes a little
+            theta += math.radians(ex * u * 0.25)
+        for t0, dur in shot.get("shake", []):                # playful "no-no" head shake
+            if t0 <= t <= t0 + dur:
+                env_s = math.sin(math.pi * (t - t0) / dur)
+                theta += math.radians(2.6 * env_s * math.sin(2 * math.pi * 2.6 * (t - t0)))
+                tx += 5 * K * env_s * math.sin(2 * math.pi * 2.6 * (t - t0))
         if stare:
             u = min(1.0, t / 1.2)
             u = u * u * (3 - 2 * u)
@@ -243,6 +278,7 @@ def main():
         mp = [rig.at(dx0, dy0, p - [0, 3]) + [0, 3] for p in rig.mouth]
         draw_mouth(frame, mp, jaw)
         for e, skin in zip(rig.eyes, rig.skin):
+            draw_gaze(frame, rig.at(dx0, dy0, e[:2]), e, (gx, gy))
             draw_lid(frame, rig.at(dx0, dy0, e[:2]), e, skin, close)
         ff.stdin.write(frame.tobytes())
     ff.stdin.close()

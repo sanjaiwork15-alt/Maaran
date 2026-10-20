@@ -1,0 +1,16 @@
+[
+ {"id": "L1a", "tanglish": "Aiyayo makkaley!", "tamil": "ஐயையோ மக்களே!", "pause_after": 0.2},
+ {"id": "L1b", "tanglish": "Kaalaila dhaan fresh-aa kothamalli vaangunen...", "tamil": "காலையில தான் ஃப்ரெஷ்ஷா கொத்தமல்லி வாங்குனேன்...", "pause_after": 0.2},
+ {"id": "L1c", "tanglish": "Adutha naal paathaa vaadippochu! Idhu enna kodumai?", "tamil": "அடுத்த நாள் பாத்தா வாடிப்போச்சு! இது என்ன கொடுமை?", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Samayal-la konjam kothamalli thoovinaale vaasanaiyum suvaiyum nalla irukkum!", "tamil": "சமையல்ல கொஞ்சம் கொத்தமல்லி தூவினாலே வாசனையும் சுவையும் நல்லா இருக்கும்!", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Aana indha kothamalli mattum yen ivlo seekiram sorndhu poidudhu?", "tamil": "ஆனா இந்த கொத்தமல்லி மட்டும் ஏன் இவ்ளோ சீக்கிரம் சோர்ந்து போயிடுது?", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Idhula oru chinna science irukku makkaley!", "tamil": "இதுல ஒரு சின்ன சயின்ஸ் இருக்கு மக்களே!", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Chediyilirundhu parichadhukku appuramum, indha ilaigal thanniyai izhakkum.", "tamil": "செடியிலிருந்து பறிச்சதுக்கு அப்புறமும், இந்த இலைகள் தண்ணியை இழக்கும்.", "pause_after": 0.2},
+ {"id": "L3c", "tanglish": "Thanni koranjaa, ilaigal vaada aarambichidum!", "tamil": "தண்ணி கொறஞ்சா, இலைகள் வாட ஆரம்பிச்சிடும்!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Adhaan vaanguna udane veyil-la vechidaadheenga!", "tamil": "அதான் வாங்குன உடனே வெயில்ல வெச்சிடாதீங்க!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Fresh-aa vaikka, ilaigalai nalla gavanichu, sariyaa store pannanum.", "tamil": "ஃப்ரெஷ்ஷா வைக்க, இலைகளை நல்லா கவனிச்சு, சரியா ஸ்டோர் பண்ணணும்.", "pause_after": 0.2},
+ {"id": "L4c", "tanglish": "Eppavum open-aa vittutta seekiram vaadidum!", "tamil": "எப்பவும் ஓப்பனா விட்டுட்டா சீக்கிரம் வாடிடும்!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Seri makkaley, unga veetla kothamalli fresh-aa vaikka enna trick use pannuveenga?", "tamil": "சரி மக்களே, உங்க வீட்ல கொத்தமல்லி ஃப்ரெஷ்ஷா வைக்க என்ன ட்ரிக் யூஸ் பண்ணுவீங்க?", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Engalukum sollunga!", "tamil": "எங்களுக்கும் சொல்லுங்க!", "pause_after": 0.2},
+ {"id": "L5c", "tanglish": "Unga tip vera yaarukkaavadhu help aagalaam!", "tamil": "உங்க டிப் வேற யாருக்காவது ஹெல்ப் ஆகலாம்!", "pause_after": 0.6}
+]
