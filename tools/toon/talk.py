@@ -20,7 +20,9 @@ jaw drop + mouth interior from the voice loudness, blinks, eyebrow lifts on phra
 small nods on stressed syllables, breathing, and a slight hand bob. "mode": "stare" instead makes him squint at
 the banana in his hand, brows down, leaning in (no talking). Shot options: "gaze": [[t0, t1, dx, dy], ...] moves his
 pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], ...] a playful head shake,
-"brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5).
+"tears": [[t0, t1], ...] watery eyes and tear drops, "laugh": [[t0, dur], ...] a silent chuckle,
+"brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5;
+6 for frames marked "grin": true, whose art already shows an open smile – only the jaw moves there).
 """
 import json
 import math
@@ -84,6 +86,7 @@ class Rig:
         self.brows = [s(b) for b in fr["brows"]]
         self.pivot = s(fr["pivot"])
         self.hands = [s(h) for h in fr.get("hands", [])]
+        self.grin = fr.get("grin", False)           # open grin in the art (teeth showing): move the jaw, draw no mouth
         yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
         self.xx, self.yy = xx, yy
         hc = s(fr["head"])
@@ -190,6 +193,31 @@ def draw_gaze(img, c, e, shift):
     img[y0:y1, x0:x1] = (roi * (1 - inside) + new * inside).clip(0, 255).astype(np.uint8)
 
 
+def draw_tears(img, c, e, amt, t, side):
+    """Watery eye: a wet shine on the lower lid and drops that well up at the outer corner and run down the cheek."""
+    if amt < 0.02:
+        return
+    cx, cy = c
+    rx, ry = e[2], e[3]
+    over = img.copy()
+    cv2.ellipse(over, (int(cx), int(cy + ry * 0.55)), (int(rx * 0.85), int(ry * 0.35)), 0, 10, 170, (255, 236, 205), 3,
+                cv2.LINE_AA)
+    for k in range(3):                            # a drop every ~0.6 s per eye, 1.3 s down the cheek
+        ph = (t * 0.75 + k / 3 + side * 0.17) % 1
+        x = cx + side * rx * (0.55 + 0.25 * ph)
+        y = cy + ry * 0.95 + ph ** 1.6 * 95 * K
+        r = (3.2 + 2.2 * min(1, ph * 3)) * K
+        if ph > 0.08:                             # the wet trail it leaves
+            cv2.line(over, (int(x - side * 2 * K), int(y - r - 22 * K)), (int(x), int(y - r)), (250, 230, 200),
+                     max(1, int(1.2 * K)), cv2.LINE_AA)
+        pts = np.array([[x, y - r * 2.1], [x + r, y], [x, y + r], [x - r, y]], np.float32)
+        cv2.fillPoly(over, [pts.astype(np.int32)], (250, 222, 180), cv2.LINE_AA)
+        cv2.circle(over, (int(x), int(y)), int(r), (250, 222, 180), -1, cv2.LINE_AA)
+        cv2.circle(over, (int(x), int(y)), int(r), (200, 150, 90), 1, cv2.LINE_AA)
+        cv2.circle(over, (int(x - r * 0.35), int(y - r * 0.35)), max(1, int(r * 0.3)), (255, 255, 255), -1, cv2.LINE_AA)
+    cv2.addWeighted(over, 0.85 * amt, img, 1 - 0.85 * amt, 0, img)
+
+
 def draw_lid(img, c, e, skin, close):
     """Upper eyelid coming down over the eye (close 0..1), skin-coloured with a dark lid line."""
     if close < 0.05:
@@ -237,7 +265,7 @@ def main():
     ff = subprocess.Popen(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24",
                            "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-crf", "16",
                            "-preset", "medium", "-pix_fmt", "yuv420p", out], stdin=subprocess.PIPE)
-    jaw_max = shot.get("jaw", 12.5) * K
+    jaw_max = shot.get("jaw", 6.0 if rig.grin else 12.5) * K
     for i in range(n):
         t = i / FPS
         jaw = env[i] * jaw_max
@@ -258,6 +286,20 @@ def main():
             gy += ey * u * K
             tx += ex * u * K * 0.9                           # the head follows the eyes a little
             theta += math.radians(ex * u * 0.25)
+        cry = 0.0
+        for t0, t1 in shot.get("tears", []):                 # watery eyes, drops running down, sad squint
+            cry = max(cry, min(1.0, max(0.0, (t - t0) / 0.4)) * min(1.0, max(0.0, (t1 - t) / 0.4)))
+        if cry:
+            close = max(close, 0.3 * cry)
+            brow += 3.0 * K * cry                            # brows up in the middle: a pleading, teary face
+            ty += 1.2 * K * cry * math.sin(2 * math.pi * 3.2 * t)   # little sobs
+        for t0, dur in shot.get("laugh", []):                # silent chuckle: quick bounce, happy squint
+            if t0 <= t <= t0 + dur:
+                env_l = math.sin(math.pi * (t - t0) / dur)
+                ty += 2.5 * K * env_l * abs(math.sin(2 * math.pi * 2.6 * (t - t0)))
+                theta += math.radians(-1.2 * env_l)
+                close = max(close, 0.3 * env_l)
+                jaw = max(jaw, jaw_max * 0.55 * env_l * (0.6 + 0.4 * math.sin(2 * math.pi * 5.2 * (t - t0))))
         for t0, dur in shot.get("shake", []):                # playful "no-no" head shake
             if t0 <= t <= t0 + dur:
                 env_s = math.sin(math.pi * (t - t0) / dur)
@@ -276,10 +318,13 @@ def main():
         # overlays follow the moved face (displacement sampled just above the mouth line / at the eyes)
         dx0, dy0 = rig.disp(0, brow, theta, tx, ty, breath, hands)
         mp = [rig.at(dx0, dy0, p - [0, 3]) + [0, 3] for p in rig.mouth]
-        draw_mouth(frame, mp, jaw)
+        if not rig.grin:
+            draw_mouth(frame, mp, jaw)
         for e, skin in zip(rig.eyes, rig.skin):
             draw_gaze(frame, rig.at(dx0, dy0, e[:2]), e, (gx, gy))
             draw_lid(frame, rig.at(dx0, dy0, e[:2]), e, skin, close)
+        for side, e in zip((-1, 1), sorted(rig.eyes, key=lambda q: q[0])):
+            draw_tears(frame, rig.at(dx0, dy0, e[:2]), e, cry, t, side)
         ff.stdin.write(frame.tobytes())
     ff.stdin.close()
     ff.wait()

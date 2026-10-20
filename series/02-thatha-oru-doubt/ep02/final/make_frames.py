@@ -101,6 +101,8 @@ def main():
 
     body = place(Image.fromarray(np.dstack([np.array(clean), np.array(alpha)])))
     fingers = place(Image.fromarray(fing_rgba))
+    body.save(FR / "body_two.png")                # reusable layers for later episodes (already scaled by K)
+    fingers.save(FR / "fingers_two.png")
     for name, wilts in (("f_kfw", {"R": 0.0, "L": 1.0}), ("f_kff", {"R": 0.0, "L": 0.0})):
         out = plate.copy().convert("RGBA")
         out.alpha_composite(body, (int(DX), int(DY)))

@@ -1,0 +1,17 @@
+[
+ {"id": "L1a", "tanglish": "Aiyayo!", "tamil": "ஐயையோ!", "pause_after": 0.2},
+ {"id": "L1b", "tanglish": "Makkaley, vengayam vetturadhu oruthar... azhuradhu innoruthar!", "tamil": "மக்களே, வெங்காயம் வெட்டுறது ஒருத்தர்... அழுறது இன்னொருத்தர்!", "pause_after": 0.2},
+ {"id": "L1c", "tanglish": "Vengayathukku namma mela enna kovam?", "tamil": "வெங்காயத்துக்கு நம்ம மேல என்ன கோவம்?", "pause_after": 0.25},
+ {"id": "L2a", "tanglish": "Vengayam vettumbodhu kannu eriyudhu, thanni varudhu!", "tamil": "வெங்காயம் வெட்டும்போது கண்ணு எரியுது, தண்ணி வருது!", "pause_after": 0.2},
+ {"id": "L2b", "tanglish": "Aana adha saapdumbodhu ippadi azhuromaa?", "tamil": "ஆனா அத சாப்டும்போது இப்படி அழுறோமா?", "pause_after": 0.2},
+ {"id": "L2c", "tanglish": "Appo cutting-la dhaan yedho vishayam irukku!", "tamil": "அப்போ கட்டிங்ல தான் ஏதோ விஷயம் இருக்கு!", "pause_after": 0.25},
+ {"id": "L3a", "tanglish": "Idhula oru science irukku makkaley!", "tamil": "இதுல ஒரு சயின்ஸ் இருக்கு மக்களே!", "pause_after": 0.2},
+ {"id": "L3b", "tanglish": "Vengayathai vettumbodhu, adhoda selgal udaiyum.", "tamil": "வெங்காயத்தை வெட்டும்போது, அதோட செல்கள் உடையும்.", "pause_after": 0.2},
+ {"id": "L3c", "tanglish": "Appo sila porutkal react aagi, kannai erichal paduthura oru vaayu uruvaagum.", "tamil": "அப்போ சில பொருட்கள் ரியாக்ட் ஆகி, கண்ணை எரிச்சல் படுத்துற ஒரு வாயு உருவாகும்.", "pause_after": 0.2},
+ {"id": "L3d", "tanglish": "Adhanaala dhaan kannula thanni varudhu!", "tamil": "அதனால தான் கண்ணுல தண்ணி வருது!", "pause_after": 0.25},
+ {"id": "L4a", "tanglish": "Vengayam namma azha vaikka plan panni vechirukkunu nenachidaadheenga!", "tamil": "வெங்காயம் நம்ம அழ வைக்க பிளான் பண்ணி வெச்சிருக்குன்னு நெனச்சிடாதீங்க!", "pause_after": 0.2},
+ {"id": "L4b", "tanglish": "Adhu thannoda velaiya seyyudhu... namma kannudhaan reaction kudukkudhu!", "tamil": "அது தன்னோட வேலைய செய்யுது... நம்ம கண்ணுதான் ரியாக்ஷன் குடுக்குது!", "pause_after": 0.25},
+ {"id": "L5a", "tanglish": "Seri makkaley, vengayam vettumbodhu unga kannulayum thanni varumaa?", "tamil": "சரி மக்களே, வெங்காயம் வெட்டும்போது உங்க கண்ணுலயும் தண்ணி வருமா?", "pause_after": 0.2},
+ {"id": "L5b", "tanglish": "Illa neenga azhaama vettura expert-aa?", "tamil": "இல்ல நீங்க அழாம வெட்டுற எக்ஸ்பர்ட்டா?", "pause_after": 0.2},
+ {"id": "L5c", "tanglish": "Comment-la sollunga!", "tamil": "கமெண்ட்ல சொல்லுங்க!", "pause_after": 0.6}
+]
