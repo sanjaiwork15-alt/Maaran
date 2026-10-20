@@ -1,0 +1,21 @@
+{
+ "frames": {
+  "f_two_s3": {"image": "frames/up/f_two_s3.png", "mouth": [[318, 449], [348, 451], [378, 449]], "chin": 545,
+               "beard": [255, 445], "eyes": [[303, 372, 22, 20], [387, 369, 22, 20]], "brows": [[300, 337], [392, 332]],
+               "pivot": [350, 560], "head": [350, 390, 165, 200], "hands": [[115, 545], [595, 545]]},
+  "f_wink_s8": {"image": "frames/up/f_wink_s8.png", "mouth": [[340, 452], [365, 449], [392, 441]], "chin": 518,
+               "beard": [283, 447], "eyes": [[318, 388, 18, 14], [390, 372, 18, 15]], "brows": [[315, 355], [392, 335]],
+               "pivot": [365, 540], "head": [365, 400, 150, 185], "hands": []},
+  "f_place_s3": {"image": "frames/up/f_place_s3.png", "mouth": [[327, 467], [353, 466], [380, 460]], "chin": 530,
+               "beard": [270, 440], "eyes": [[303, 412, 17, 9], [370, 394, 17, 9]], "brows": [[300, 380], [375, 362]],
+               "pivot": [340, 560], "head": [340, 410, 150, 185], "hands": [[230, 590]]}
+ },
+ "shots": {
+  "hook": {"frame": "f_two_s3", "audio": "voice_hook.wav", "duration": 7.4, "seed": 1},
+  "q":    {"frame": "f_two_s3", "audio": "voice_q.wav", "duration": 6.4, "seed": 2},
+  "ans":  {"frame": "f_two_s3", "audio": "voice_ans.wav", "duration": 4.6, "seed": 3},
+  "wink": {"frame": "f_wink_s8", "audio": "voice_wink.wav", "duration": 5.0, "seed": 4},
+  "end":  {"frame": "f_two_s3", "audio": "voice_end.wav", "duration": 9.2, "seed": 5},
+  "stare": {"frame": "f_place_s3", "mode": "stare", "duration": 4.8, "seed": 6}
+ }
+}

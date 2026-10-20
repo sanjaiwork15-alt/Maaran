@@ -7,3 +7,6 @@ series/*/*/final/wav/
 series/*/*/final/*_log.txt
 series/*/*/final/kv*
 series/*/*/final/run*.sh
+series/*/*/final/frames/up_l/
+series/*/*/final/rig_test.json
+series/*/*/final/*_test.mp4
