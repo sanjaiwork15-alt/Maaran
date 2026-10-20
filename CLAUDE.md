@@ -39,6 +39,9 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
 ## Gotchas learned the hard way
 - Fresh session: `bash tools/setup.sh` (needs `HF_TOKEN`; Kaggle needs `KAGGLE_USERNAME`, `KAGGLE_API_TOKEN`). It takes
   ~35 min (CUDA torch wheels, ~7 GB) – run it detached in the background and read the scripts meanwhile.
+- **2026-10-20: the owner's Kaggle account was suspended** (login page: "Your account has been suspended or banned").
+  All GPU work (Qwen frames, Wan S2V/I2V, Real-ESRGAN) is blocked until Kaggle restores it or the owner picks another
+  GPU service. Do not create or use another Kaggle account to get around a suspension.
 - Kaggle token stopped working overnight (Doubt Ep 1, 2026-10-20: every API call 403 "Permission 'users.get' was denied",
   CLI says "Authentication required"). The owner makes a new API token on kaggle.com → Settings and updates
   `KAGGLE_API_TOKEN` in the environment settings; a new session picks it up. Never ask for the token in chat.
@@ -124,5 +127,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut long-form compilation: done, waiting for review (`series/01-groundnut/longform/groundnut_longform.mp4`, 6:44, 16:9; `tools/compile_longform.py`).
 - Series 02 "Thatha, Oru Doubt!" (8 everyday-science Q&A Shorts): brief saved in `series/02-thatha-oru-doubt/overview.md`;
   episodes go in `series/02-thatha-oru-doubt/epNN/final/`.
-- Doubt Ep 1 (bananas ripening after picking): in production – voice, clips, cut-aways (`tools/toon/banana.py`) done;
+- Doubt Ep 1 (bananas ripening after picking): BLOCKED (Kaggle account suspended); start frames picked, voice,
+  clips, cut-aways and edit.json done; the 6 video jobs (`kv/jobs.json` = va + vb) never ran. Earlier note: – voice, clips, cut-aways (`tools/toon/banana.py`) done;
   start frames on Kaggle, then video runs `jobs/va_jobs.json`, `jobs/vb_jobs.json` (replace `*_SEL.png` with the picked seeds).
