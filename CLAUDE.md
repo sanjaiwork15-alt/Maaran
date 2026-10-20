@@ -39,6 +39,9 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
 ## Gotchas learned the hard way
 - Fresh session: `bash tools/setup.sh` (needs `HF_TOKEN`; Kaggle needs `KAGGLE_USERNAME`, `KAGGLE_API_TOKEN`). It takes
   ~35 min (CUDA torch wheels, ~7 GB) – run it detached in the background and read the scripts meanwhile.
+- Kaggle token stopped working overnight (Doubt Ep 1, 2026-10-20: every API call 403 "Permission 'users.get' was denied",
+  CLI says "Authentication required"). The owner makes a new API token on kaggle.com → Settings and updates
+  `KAGGLE_API_TOKEN` in the environment settings; a new session picks it up. Never ask for the token in chat.
 - Kaggle machine: use `NvidiaTeslaT4` (default). `NvidiaL4` is accepted but runs CPU-only on the free tier.
 - `www.kaggleusercontent.com` is blocked here, so `kaggle kernels output` fails. Outputs are printed into the
   run log as base64 and the runner follows the **live** log (finished runs keep only the tail). Don't remove that.
