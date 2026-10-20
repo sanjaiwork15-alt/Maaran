@@ -144,5 +144,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   episodes go in `series/02-thatha-oru-doubt/epNN/final/`.
 - Doubt Ep 1 (bananas ripening after picking): done without GPU, waiting for review
   (`series/02-thatha-oru-doubt/ep01/final/doubt_ep01.mp4`, 49.6 s; talk.py shots).
-- Doubt Ep 2 (coriander, village kitchen): in production – kitchen frames f_kfw/f_kff made in code, cut-aways in
-  `tools/toon/coriander.py`; voice running. Owner: "keep improvising the animation".
+- Doubt Ep 2 (coriander, village kitchen): done without GPU, waiting for review
+  (`series/02-thatha-oru-doubt/ep02/final/doubt_ep02.mp4`, 46.4 s). Owner: "keep improvising the animation".
+- Next: Doubt Ep 3 (onion tears) – kitchen again in the plan; make it a different corner/angle or another place.
