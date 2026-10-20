@@ -10,3 +10,4 @@ series/*/*/final/run*.sh
 series/*/*/final/frames/up_l/
 series/*/*/final/rig_test.json
 series/*/*/final/*_test.mp4
+series/*/*/final/frames/up/log.txt
