@@ -1,5 +1,9 @@
 # Video pipeline (final approach, locked after Groundnut Episode 1, 2026-10-15)
 
+**Update 2026-10-20:** the Kaggle account was suspended for "resource abuse", so the GPU steps (4–6) are unavailable.
+Doubt Ep 1 replaced steps 5–6 with `tools/toon/talk.py` (code animation of one approved still: lip sync, blinks,
+brows, nods, breathing – no limb articulation, so it is not the rejected arm-rig puppet). Owner asked for it.
+
 Goal: one 45–50 s Short in about 2 hours, mostly unattended, free tools only, in the owner's 2D style,
 with human-looking movement and no glitches.
 

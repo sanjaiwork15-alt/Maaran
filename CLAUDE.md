@@ -17,7 +17,15 @@ Read `bible/character.md`, `bible/world.md`, `docs/video-pipeline-plan.md` and t
 - For a new style/look: show 2–3 stills first, render the clip only after approval.
 - Keep improving every episode (see backlog below). On-screen text: none.
 
-## Method (used for Groundnut Ep 1 – the default)
+## Method now (no GPU, since Doubt Ep 1 – Kaggle account suspended 2026-10-20)
+Talking/reacting shots = `tools/toon/talk.py RIG.json SHOT OUT.mp4`: one approved still frame (CPU-upscaled with
+`tools/upscale.py --scale 1.5`) animated in code – jaw + mouth from the voice loudness, blinks, brow lifts, head
+sway/nods, breathing, small hand bob; `"mode": "stare"` squints and leans in. Rig = face points per frame in 720x1280
+coords (`series/02-thatha-oru-doubt/ep01/final/rig.json`; find them on a 10 px grid crop). No limb articulation.
+Renders ~40 s per shot; whole episode assembled in ~2 min. New start frames / new places still need an image model
+(see overview "Locations"). Everything else below (voice, cut-aways, assembly) is unchanged.
+
+## Method used for Groundnut (GPU on Kaggle – not available now)
 | Part | Tool |
 |---|---|
 | Voice | IndicF5 + locked reference `assets/voice/thatha_ref.wav`: `tools/f5_voice.py lines.json OUT` (Tamil script; CPU, slow – start it first) |
@@ -127,6 +135,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Groundnut long-form compilation: done, waiting for review (`series/01-groundnut/longform/groundnut_longform.mp4`, 6:44, 16:9; `tools/compile_longform.py`).
 - Series 02 "Thatha, Oru Doubt!" (8 everyday-science Q&A Shorts): brief saved in `series/02-thatha-oru-doubt/overview.md`;
   episodes go in `series/02-thatha-oru-doubt/epNN/final/`.
-- Doubt Ep 1 (bananas ripening after picking): BLOCKED (Kaggle account suspended); start frames picked, voice,
-  clips, cut-aways and edit.json done; the 6 video jobs (`kv/jobs.json` = va + vb) never ran. Earlier note: – voice, clips, cut-aways (`tools/toon/banana.py`) done;
-  start frames on Kaggle, then video runs `jobs/va_jobs.json`, `jobs/vb_jobs.json` (replace `*_SEL.png` with the picked seeds).
+- Doubt Ep 1 (bananas ripening after picking): done without GPU, waiting for review
+  (`series/02-thatha-oru-doubt/ep01/final/doubt_ep01.mp4`, 49.6 s; talk.py shots).
+- Next: Doubt Ep 2 (coriander) – owner wants every episode in a new place; locations planned in the overview.
