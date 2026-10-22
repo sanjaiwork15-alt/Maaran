@@ -256,5 +256,72 @@
    "image": "frames/up/f_hfin.png"
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_hice",
+   "audio": "voice_A.wav",
+   "duration": 4.8,
+   "seed": 60
+  },
+  "B": {
+   "frame": "f_hcubes",
+   "audio": "voice_B.wav",
+   "duration": 9.8,
+   "seed": 61,
+   "gaze": [
+    [
+     0.15,
+     1.0,
+     -5,
+     4
+    ],
+    [
+     1.05,
+     2.0,
+     5,
+     4
+    ],
+    [
+     3.3,
+     4.4,
+     -5,
+     4
+    ],
+    [
+     4.4,
+     5.4,
+     5,
+     4
+    ]
+   ]
+  },
+  "C": {
+   "frame": "f_hfin",
+   "audio": "voice_C.wav",
+   "duration": 12.4,
+   "seed": 62,
+   "brows": [
+    0.2,
+    10.9
+   ]
+  },
+  "D": {
+   "frame": "f_hjuice",
+   "audio": "voice_D.wav",
+   "duration": 8.4,
+   "seed": 63
+  },
+  "E": {
+   "frame": "f_hice",
+   "audio": "voice_E.wav",
+   "duration": 4.9,
+   "seed": 64
+  },
+  "F": {
+   "frame": "f_hcubes",
+   "audio": "voice_F.wav",
+   "duration": 2.6,
+   "seed": 65
+  }
+ }
 }

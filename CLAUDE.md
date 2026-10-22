@@ -158,4 +158,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   (`series/02-thatha-oru-doubt/ep04/final/doubt_ep04.mp4`, 51.0 s).
 - Doubt Ep 5 (rice journey, vayal, 4 poses): done without GPU, waiting for review
   (`series/02-thatha-oru-doubt/ep05/final/doubt_ep05.mp4`, 41.6 s).
-- Next: Doubt Ep 6 (mango sour/sweet) – maanthoppu (mango grove) per the overview.
+- Doubt Ep 6 ("Ice Yen Urugudhu?" – owner changed the topic from mango; veedu = owner's 07_home art): done without
+  GPU, waiting for review (`series/02-thatha-oru-doubt/ep06/final/doubt_ep06.mp4`, 45.3 s).
+- Next: Doubt Ep 7 – wait for the owner's script (topics can change, as Ep 6 did).
