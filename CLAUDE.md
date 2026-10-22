@@ -156,4 +156,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   (`series/02-thatha-oru-doubt/ep03/final/doubt_ep03.mp4`, 45.1 s).
 - Doubt Ep 4 (tomato colours, thottam, 4 poses, fast cuts): done without GPU, waiting for review
   (`series/02-thatha-oru-doubt/ep04/final/doubt_ep04.mp4`, 51.0 s).
-- Next: Doubt Ep 5 (rice journey, vayal) – needs a paddy-field plate; reuse the Ep 4 pose layers in new places.
+- Doubt Ep 5 (rice journey, vayal, 4 poses): done without GPU, waiting for review
+  (`series/02-thatha-oru-doubt/ep05/final/doubt_ep05.mp4`, 41.6 s).
+- Next: Doubt Ep 6 (mango sour/sweet) – maanthoppu (mango grove) per the overview.
