@@ -1,0 +1,86 @@
+[
+ {
+  "id": "L1a",
+  "tanglish": "Indha ice kattikku oru vishayam theriyumaa makkaley?",
+  "tamil": "இந்த ஐஸ் கட்டிக்கு ஒரு விஷயம் தெரியுமா மக்களே?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1b",
+  "tanglish": "Thanni-la vizhundhaa, adhu konjam konjamaa thanniyaave maaridum!",
+  "tamil": "தண்ணில விழுந்தா, அது கொஞ்சம் கொஞ்சமா தண்ணியாவே மாறிடும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1c",
+  "tanglish": "Aana endha glass-la seekiram urugum? Vaanga paakkalaam!",
+  "tamil": "ஆனா எந்த கிளாஸ்ல சீக்கிரம் உருகும்? வாங்க பாக்கலாம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2a",
+  "tanglish": "Rendu glass-layum ore alavu ice!",
+  "tamil": "ரெண்டு கிளாஸ்லயும் ஒரே அளவு ஐஸ்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2b",
+  "tanglish": "Onnu saadharana thanni... innonnu soodaana thanni.",
+  "tamil": "ஒண்ணு சாதாரண தண்ணி... இன்னொண்ணு சூடான தண்ணி.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2c",
+  "tanglish": "Ippo gavanamaa paarunga!",
+  "tamil": "இப்போ கவனமா பாருங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2d",
+  "tanglish": "Soodaana thannila irukkura ice seekiramaa urugudhu!",
+  "tamil": "சூடான தண்ணில இருக்குற ஐஸ் சீக்கிரமா உருகுது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3a",
+  "tanglish": "Idhukku kaaranam veppam dhaan!",
+  "tamil": "இதுக்கு காரணம் வெப்பம் தான்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3b",
+  "tanglish": "Soodaana thanniyilirundhu ice-kku veppam vegamaa kadathappadum.",
+  "tamil": "சூடான தண்ணியிலிருந்து ஐஸுக்கு வெப்பம் வேகமா கடத்தப்படும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3c",
+  "tanglish": "Ice andha aatralai eduthukkumbodhu, thidamaana nilaiyilirundhu thirava nilaiya maarudhu.",
+  "tamil": "ஐஸ் அந்த ஆற்றலை எடுத்துக்கும்போது, திடமான நிலையிலிருந்து திரவ நிலையா மாறுது.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3d",
+  "tanglish": "Adhaan ice urugudhu!",
+  "tamil": "அதான் ஐஸ் உருகுது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4a",
+  "tanglish": "Adhaan makkaley, juice-la ice pottuttu romba neram pesitte irundhaa...",
+  "tamil": "அதான் மக்களே, ஜூஸ்ல ஐஸ் போட்டுட்டு ரொம்ப நேரம் பேசிட்டே இருந்தா...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4b",
+  "tanglish": "kadaisila ice-um thanniyaagum, juice-um neerthupogum!",
+  "tamil": "கடைசில ஐஸும் தண்ணியாகும், ஜூஸும் நீர்த்துப்போகும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5a",
+  "tanglish": "Seri, adutha murai ice podumbodhu indha vishayathai nyabagam vechukkonga!",
+  "tamil": "சரி, அடுத்த முறை ஐஸ் போடும்போது இந்த விஷயத்தை ஞாபகம் வெச்சுக்கோங்க!",
+  "pause_after": 0.5
+ }
+]
