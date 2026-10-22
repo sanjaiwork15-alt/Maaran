@@ -53,7 +53,7 @@ household tip, local knowledge). No generic "like, share, subscribe" every time.
 | 3 | Onion tears | Village kitchen (clay wall, wood stove) | onions, knife, chopping board |
 | 4 | Tomato colours | Thottam – tomato plants on stakes | green / turning / red tomatoes |
 | 5 | Rice journey | Vayal – golden paddy by the lake | paddy sheaf, threshing, rice |
-| 6 | Mango sour/sweet | Mango tree in the thottam (maanthoppu) | raw + ripe mango, salt and chilli |
+| 6 | Ice Yen Urugudhu? (owner's new topic, replaces mango) | Veedu – house front (owner's 07_home art) | ice cubes, two glasses, juice |
 | 7 | Plants and sunlight | Sunflower patch at sunrise / window plant | sunflowers, potted seedling |
 | 8 | Is naatu food always healthy? | Thinnai, banana-leaf meal | banana leaf, millet, sweets |
 Without a GPU, new places need new background art: either a few minutes of GPU on a legitimate paid/credit service
