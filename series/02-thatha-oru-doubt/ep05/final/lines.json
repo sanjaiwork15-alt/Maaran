@@ -1,0 +1,104 @@
+[
+ {
+  "id": "L1a",
+  "tanglish": "Dei makkaley!",
+  "tamil": "டேய் மக்களே!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1b",
+  "tanglish": "Namma dhinamum saapadra indha vellai arisi...",
+  "tamil": "நம்ம தினமும் சாப்பிடுற இந்த வெள்ளை அரிசி...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1c",
+  "tanglish": "vayalla eppadi irukkum theriyumaa?",
+  "tamil": "வயல்ல எப்படி இருக்கும் தெரியுமா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1d",
+  "tanglish": "Idha paathaa neengale aachariyapaduveenga!",
+  "tamil": "இத பாத்தா நீங்களே ஆச்சரியப்படுவீங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2a",
+  "tanglish": "Vayalla arisi ippadi vellaiyaa irukkaadhu!",
+  "tamil": "வயல்ல அரிசி இப்படி வெள்ளையா இருக்காது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2b",
+  "tanglish": "Nel payir-la chinna chinna nel manigal irukkum.",
+  "tamil": "நெல் பயிர்ல சின்ன சின்ன நெல் மணிகள் இருக்கும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2c",
+  "tanglish": "Adhoda veliya oru thol irukkum!",
+  "tamil": "அதோட வெளிய ஒரு தோல் இருக்கும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3a",
+  "tanglish": "Payir nalla valandha appuram nel aruvadai pannuvaanga.",
+  "tamil": "பயிர் நல்லா வளந்த அப்புறம் நெல் அறுவடை பண்ணுவாங்க.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3b",
+  "tanglish": "Nel manigalai pirichu, kaaya vechu,",
+  "tamil": "நெல் மணிகளை பிரிச்சு, காய வெச்சு,",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3c",
+  "tanglish": "arisi mill-la araichu veli tholai neekkuna...",
+  "tamil": "அரிசி மில்ல அரைச்சு வெளி தோலை நீக்குனா...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3d",
+  "tanglish": "namma saapadra arisi kidaikkum!",
+  "tamil": "நம்ம சாப்பிடுற அரிசி கிடைக்கும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4a",
+  "tanglish": "Appo indha arisi vayalla packet-la ready-aa valaralaye!",
+  "tamil": "அப்போ இந்த அரிசி வயல்ல பாக்கெட்ல ரெடியா வளரலையே!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4b",
+  "tanglish": "Vayalla vivasaayi uzhaippu... mill-la processing...",
+  "tamil": "வயல்ல விவசாயி உழைப்பு... மில்ல பிராசசிங்...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4c",
+  "tanglish": "appuram dhaan namma saappaattu thattukku varudhu!",
+  "tamil": "அப்புறம் தான் நம்ம சாப்பாட்டு தட்டுக்கு வருது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5a",
+  "tanglish": "Seri makkaley, nel-lendhu arisi eppadi varudhunnu munnaadi theriyumaa?",
+  "tamil": "சரி மக்களே, நெல்லேந்து அரிசி எப்படி வருதுன்னு முன்னாடி தெரியுமா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5b",
+  "tanglish": "Illa innikku dhaan therinjukitteengalaa?",
+  "tamil": "இல்ல இன்னிக்கு தான் தெரிஞ்சுக்கிட்டீங்களா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5c",
+  "tanglish": "Comment-la sollunga!",
+  "tamil": "கமெண்ட்ல சொல்லுங்க!",
+  "pause_after": 0.5
+ }
+]
