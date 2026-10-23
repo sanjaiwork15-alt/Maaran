@@ -1,0 +1,86 @@
+[
+ {
+  "id": "L1a",
+  "tanglish": "Aahaa... indha vaasanai dhaan makkaley!",
+  "tamil": "ஆஹா... இந்த வாசனை தான் மக்களே!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1b",
+  "tanglish": "Mudhal mazhai mannula vizhundhaa varra indha man vaasanai-ku thani sugam irukku!",
+  "tamil": "முதல் மழை மண்ணுல விழுந்தா வர்ற இந்த மண் வாசனைக்கு தனி சுகம் இருக்கு!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1c",
+  "tanglish": "Aana idhu enga irundhu varudhu theriyumaa?",
+  "tamil": "ஆனா இது எங்க இருந்து வருது தெரியுமா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2a",
+  "tanglish": "Veyilla kaanja mannula pala nunuyirigal vaazhum.",
+  "tamil": "வெயில்ல காஞ்ச மண்ணுல பல நுண்ணுயிரிகள் வாழும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2b",
+  "tanglish": "Adhula sila bacteria, geosmin-nu oru porulai uruvaakkum.",
+  "tamil": "அதுல சில பாக்டீரியா, ஜியோஸ்மின்னு ஒரு பொருளை உருவாக்கும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2c",
+  "tanglish": "Adhu dhaan andha man vaasanai-ku mukkiyamaana kaaranam!",
+  "tamil": "அது தான் அந்த மண் வாசனைக்கு முக்கியமான காரணம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3a",
+  "tanglish": "Mannula mazhai thuli vizhumbodhu, romba chinna thuligal kaathula paravum.",
+  "tamil": "மண்ணுல மழைத் துளி விழும்போது, ரொம்ப சின்ன துளிகள் காத்துல பரவும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3b",
+  "tanglish": "Avatroda serndhu andha vaasanaiyum namma mookku varaikkum vandhudum.",
+  "tamil": "அவற்றோட சேர்ந்து அந்த வாசனையும் நம்ம மூக்கு வரைக்கும் வந்துடும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3c",
+  "tanglish": "Adhanaala dhaan mazhai peinja udane andha man vaasanaiya namma unarrom!",
+  "tamil": "அதனால தான் மழை பெஞ்ச உடனே அந்த மண் வாசனைய நாம உணர்றோம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4a",
+  "tanglish": "Indha vaasanai vandhaa, vivasaayikku mazhai vandha sandhosham...",
+  "tamil": "இந்த வாசனை வந்தா, விவசாயிக்கு மழை வந்த சந்தோஷம்...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4b",
+  "tanglish": "enakku pazhaya ninaivugal vandha sandhosham!",
+  "tamil": "எனக்கு பழைய நினைவுகள் வந்த சந்தோஷம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4c",
+  "tanglish": "Aana vaasanai mattum paathu payirukku evlo thanni kidaichudhunnu mudivu panna mudiyaadhu!",
+  "tamil": "ஆனா வாசனை மட்டும் பார்த்து பயிருக்கு எவ்ளோ தண்ணி கிடைச்சுதுன்னு முடிவு பண்ண முடியாது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5a",
+  "tanglish": "Ungalukku mudhal mazhai mann vaasanai pidikkumaa?",
+  "tamil": "உங்களுக்கு முதல் மழை மண் வாசனை பிடிக்குமா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5b",
+  "tanglish": "Andha vaasanai vandhaa enna nyabagam varum? Sollunga!",
+  "tamil": "அந்த வாசனை வந்தா என்ன ஞாபகம் வரும்? சொல்லுங்க!",
+  "pause_after": 0.5
+ }
+]

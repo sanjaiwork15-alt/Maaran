@@ -23,6 +23,9 @@ pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], .
 "tears": [[t0, t1], ...] watery eyes and tear drops, "laugh": [[t0, dur], ...] a silent chuckle,
 "nod": [[t0, dur], ...] two approving nods,
 "ants": {"path": [[x, y], ...], "n": 14, "size": 1.0, "speed": 60} live ants walking in the scene,
+"inhale": [[t0, dur], ...] a slow deep breath through the nose – eyes close, brows lift, head rises a little,
+"rain": {"rate": 0.6, "ground": 700} falling rain + splashes, "scent": {"to": [x, y], "from": [x0, x1, y]} golden
+specks drifting from the soil to his nose (both in tools/toon/rain.py, Doubt Ep 8),
 "brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5;
 6 for frames marked "grin": true, whose art already shows an open smile – only the jaw moves there).
 """
@@ -38,6 +41,7 @@ import soundfile as sf
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ants import draw_cv as draw_ants  # noqa: E402
+from rain import draw_rain, draw_scent  # noqa: E402
 
 W, H, FPS, K = 1080, 1920, 25, 1.5       # K: rig coords (720x1280) -> output pixels
 OUTLINE = (36, 22, 20)                   # BGR of the art's dark brown outline
@@ -315,6 +319,13 @@ def main():
                 env_s = math.sin(math.pi * (t - t0) / dur)
                 theta += math.radians(2.6 * env_s * math.sin(2 * math.pi * 2.6 * (t - t0)))
                 tx += 5 * K * env_s * math.sin(2 * math.pi * 2.6 * (t - t0))
+        for t0, dur in shot.get("inhale", []):               # deep breath of the smell: eyes shut, chest up, relax
+            if t0 <= t <= t0 + dur:
+                e_in = math.sin(math.pi * (t - t0) / dur)
+                close = max(close, 0.86 * min(1.0, e_in * 1.7))
+                ty -= 3.0 * K * e_in
+                brow += 2.2 * K * e_in
+                breath += 0.006 * e_in
         if stare:
             u = min(1.0, t / 1.2)
             u = u * u * (3 - 2 * u)
@@ -337,6 +348,10 @@ def main():
             draw_tears(frame, rig.at(dx0, dy0, e[:2]), e, cry, t, side)
         if "ants" in shot:                                   # live ants walking along a path in the scene (Doubt Ep 7)
             draw_ants(frame, t, shot["ants"], K)
+        if "scent" in shot:                                  # the smell drifting up to his nose (Doubt Ep 8)
+            draw_scent(frame, t, shot["scent"], K)
+        if "rain" in shot:
+            draw_rain(frame, t, shot["rain"], K)
         ff.stdin.write(frame.tobytes())
     ff.stdin.close()
     ff.wait()
