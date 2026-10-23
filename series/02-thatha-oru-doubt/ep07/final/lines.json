@@ -1,0 +1,80 @@
+[
+ {
+  "id": "L1a",
+  "tanglish": "Indha erumbunga mattum paarunga!",
+  "tamil": "இந்த எறும்புங்க மட்டும் பாருங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1b",
+  "tanglish": "Oru periya traffic police thevaiye illa...",
+  "tamil": "ஒரு பெரிய டிராஃபிக் போலீஸ் தேவையே இல்ல...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1c",
+  "tanglish": "ellaarum ore varisai-la poraanga!",
+  "tamil": "எல்லாரும் ஒரே வரிசையில போறாங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2a",
+  "tanglish": "Idhoda ragasiyam enna theriyumaa?",
+  "tamil": "இதோட ரகசியம் என்ன தெரியுமா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2b",
+  "tanglish": "Munnadi pona erumbu, nadakkura vazhiyila pheromone-nu oru vaasanai chemical-ai vittuttu pogum.",
+  "tamil": "முன்னாடி போன எறும்பு, நடக்குற வழியில ஃபெரமோன்னு ஒரு வாசனை கெமிக்கலை விட்டுட்டு போகும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2c",
+  "tanglish": "Pinnadi varra erumbunga andha signal-a pinthodarndhu pogum!",
+  "tamil": "பின்னாடி வர்ற எறும்புங்க அந்த சிக்னலை பின்தொடர்ந்து போகும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3a",
+  "tanglish": "Oru erumbu saappaadu kandupidichaa, adha kootathukku therivikka indha chemical signal udhavum.",
+  "tamil": "ஒரு எறும்பு சாப்பாடு கண்டுபிடிச்சா, அத கூட்டத்துக்கு தெரிவிக்க இந்த கெமிக்கல் சிக்னல் உதவும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3b",
+  "tanglish": "Nalla saappaadu kidaikkura vazhiya niraiya erumbunga pinthodarumbodhu, andha vazhi innum balamaana signal-a maaralaam!",
+  "tamil": "நல்ல சாப்பாடு கிடைக்குற வழிய நிறைய எறும்புங்க பின்தொடரும்போது, அந்த வழி இன்னும் பலமான சிக்னலா மாறலாம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4a",
+  "tanglish": "Paatheengalaa makkaley?",
+  "tamil": "பாத்தீங்களா மக்களே?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4b",
+  "tanglish": "Erumbukku phone illa, WhatsApp group-um illa...",
+  "tamil": "எறும்புக்கு ஃபோன் இல்ல, வாட்ஸ்அப் குரூப்பும் இல்ல...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4c",
+  "tanglish": "aana saappaadu enga irukkunnu team-ku sollidudhu!",
+  "tamil": "ஆனா சாப்பாடு எங்க இருக்குன்னு டீமுக்கு சொல்லிடுது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5a",
+  "tanglish": "Unga veetlayum erumbunga ippadi varisaiyaa poguradha paathirukkeengalaa?",
+  "tamil": "உங்க வீட்லயும் எறும்புங்க இப்படி வரிசையா போறத பாத்திருக்கீங்களா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5b",
+  "tanglish": "Enga paatheengannu sollunga!",
+  "tamil": "எங்க பாத்தீங்கன்னு சொல்லுங்க!",
+  "pause_after": 0.5
+ }
+]

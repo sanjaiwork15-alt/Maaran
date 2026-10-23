@@ -22,6 +22,7 @@ the banana in his hand, brows down, leaning in (no talking). Shot options: "gaze
 pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], ...] a playful head shake,
 "tears": [[t0, t1], ...] watery eyes and tear drops, "laugh": [[t0, dur], ...] a silent chuckle,
 "nod": [[t0, dur], ...] two approving nods,
+"ants": {"path": [[x, y], ...], "n": 14, "size": 1.0, "speed": 60} live ants walking in the scene,
 "brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5;
 6 for frames marked "grin": true, whose art already shows an open smile – only the jaw moves there).
 """
@@ -34,6 +35,9 @@ from pathlib import Path
 import cv2
 import numpy as np
 import soundfile as sf
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ants import draw_cv as draw_ants  # noqa: E402
 
 W, H, FPS, K = 1080, 1920, 25, 1.5       # K: rig coords (720x1280) -> output pixels
 OUTLINE = (36, 22, 20)                   # BGR of the art's dark brown outline
@@ -331,6 +335,8 @@ def main():
             draw_lid(frame, rig.at(dx0, dy0, e[:2]), e, skin, close)
         for side, e in zip((-1, 1), sorted(rig.eyes, key=lambda q: q[0])):
             draw_tears(frame, rig.at(dx0, dy0, e[:2]), e, cry, t, side)
+        if "ants" in shot:                                   # live ants walking along a path in the scene (Doubt Ep 7)
+            draw_ants(frame, t, shot["ants"], K)
         ff.stdin.write(frame.tobytes())
     ff.stdin.close()
     ff.wait()
