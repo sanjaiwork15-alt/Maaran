@@ -55,6 +55,6 @@ household tip, local knowledge). No generic "like, share, subscribe" every time.
 | 5 | Rice journey | Vayal – golden paddy by the lake | paddy sheaf, threshing, rice |
 | 6 | Ice Yen Urugudhu? (owner's new topic, replaces mango) | Veedu – house front (owner's 07_home art) | ice cubes, two glasses, juice |
 | 7 | Erumbunga Eppadi Varisaiyaa Pogudhu? (owner's new topic, replaces sunflowers) | Thinnai at tea time + verandah crop (07_home) | tea tumbler + davara, phone, murukku, live ants |
-| 8 | Is naatu food always healthy? | Thinnai, banana-leaf meal | banana leaf, millet, sweets |
+| 8 | Mazhai Peinja Mann Vaasana Yen Varudhu? (owner's new topic, replaces naatu food) | Semman kaadu field in the first monsoon rain (storm sky, wet soil in code) | damp earth, rain, the smell as a glowing stream |
 Without a GPU, new places need new background art: either a few minutes of GPU on a legitimate paid/credit service
 (Modal) for the start frames, or backgrounds drawn in code (cheaper look). Owner to choose.

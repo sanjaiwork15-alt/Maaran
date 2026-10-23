@@ -114,6 +114,10 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
 - Never `uv pip install` into `~/.maaran/f5` while the voice runs: the half-replaced packages crashed IndicF5 at start
   ("Could not import module 'pipeline'", Doubt Ep 2). rembg, simple-lama-inpainting, spandrel, cairosvg are now in f5.
 - The container restarts sometimes (uptime resets); background jobs die with it. Check `pgrep` before waiting on one.
+- Background Bash jobs stop at their timeout (default 30 min): pass a long `timeout` for upscales/renders, and
+  `renice 19` an upscale that runs beside the voice (IndicF5 slowed to ~10 min/line with ESRGAN on the same 4 CPUs).
+- No rain/storm recordings in `assets/sound/nature` and Wikimedia Commons is blocked here: `tools/ambience.py
+  --rain/--thunder` synthesises them (Doubt Ep 8).
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`). Same for `pkill -f`: never put the killed pattern's plain text anywhere else in
   the same command (a `pkill` + relaunch of `kaggle_run.sh` in one command killed its own shell).
@@ -169,4 +173,7 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   sunflowers; thinnai + verandah crop, live ant overlay): done without GPU, waiting for review
   (`series/02-thatha-oru-doubt/ep07/final/doubt_ep07.mp4`, 46.3 s).
 - Eps 2–6 videos still show Real-ESRGAN's small dhoti smudge (frames are fixed; re-assemble if the owner wants).
-- Next: Doubt Ep 8 – wait for the owner's script.
+- Doubt Ep 8 ("Mazhai Peinja Mann Vaasana Yen Varudhu?" – petrichor/geosmin; owner changed the topic from naatu
+  food; rainy semman kaadu field, storm sky + rain + scent in code, rain sound synthesised): done without GPU, waiting
+  for review (`series/02-thatha-oru-doubt/ep08/final/doubt_ep08.mp4`, 48.7 s). Season 1's 8 episodes are done.
+- Next: wait for the owner (Season 1 complete; maybe review fixes, the Eps 2–6 dhoti smudge re-assembly, or Season 2).

@@ -215,8 +215,9 @@ class Storm:
         sky[:ch] = self.clouds[:, off:off + W]
         sky[ch:] = self.clouds[-1:, off:off + W]
         base = self.sunny * (1 - c) + self.grey * c
-        m = self.mask * np.clip((np.arange(W)[None, :, None] > (W - (W + 300) * c)) * 1.0, 0, 1)
-        m = cv2.GaussianBlur(m[..., 0], (0, 0), 25)[..., None] * self.mask
+        edge = W - (W + 900) * c                              # the cloud front rolls in from the right, wide and soft
+        front = np.clip((np.arange(W, dtype=np.float32) - edge) / 450, 0, 1)
+        m = self.mask * front[None, :, None]
         img = base * (1 - m) + overcast(sky.astype(np.uint8), 0.2) * m
         img = img.astype(np.uint8)
         if self.cfg.get("soak"):
@@ -366,8 +367,8 @@ def section_scene(t, cfg):
         y = SY - 90 - 1000 * u
         if y < -40:
             continue
-        g.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="13" fill="#dcefff" fill-opacity="0.8" stroke="#8fb5cc" stroke-width="2"/>'
-                 f'<circle cx="{x:.0f}" cy="{y:.0f}" r="5" fill="#e8b33a"/>')
+        g.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="19" fill="#dcefff" fill-opacity="0.8" stroke="#8fb5cc" stroke-width="2.5"/>'
+                 f'<circle cx="{x:.0f}" cy="{y:.0f}" r="8" fill="#e8b33a"/>')
     return "".join(g)
 
 
@@ -396,8 +397,8 @@ def main():
         else:
             body = drops_scene(t, cfg, base) if mode == "drops" else section_scene(t, cfg)
             img = cv2.cvtColor(svg_png(body, W, H, f"{W / 2 - w / 2:.1f} {cy - h / 2:.1f} {w:.1f} {h:.1f}"), cv2.COLOR_RGBA2BGR)
-        if mode == "drops":
-            draw_rain(img, t, {"rate": 0.35, "ground": 2000}, K=1.5)
+        if mode in ("drops", "section"):
+            draw_rain(img, t, {"rate": 0.35 if mode == "drops" else 0.2, "ground": 2000}, K=1.5)
         if only is not None:
             cv2.imwrite(out, img)
         else:
