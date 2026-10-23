@@ -1,0 +1,10 @@
+{
+ "mode": "storm",
+ "duration": 5.2,
+ "span": [
+  -20,
+  -10
+ ],
+ "rain_rate": 0.9,
+ "soak": 1
+}

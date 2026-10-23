@@ -5,12 +5,14 @@ Usage:
 Frame helpers (make_frames.py): storm_sky(w, h, seed) cloud layer, sky_mask(), overcast(), wet().
 talk.py shot options (720x1280 coords):
     "rain":  {"rate": 0.6, "ground": 700}         falling streaks + splash rings on the ground below y = ground
-    "scent": {"to": [x, y], "from": [x0, x1, y], "n": 18, "period": 2.6}   golden specks drifting up to his nose
+    "scent": {"to": [x, y], "from": [x0, x1, y], "n": 16, "period": 2.8, "span": [t0, t1]}   a glowing stream
+             drifting up to his nose (only between t0 and t1 if "span" is given, fading in and out)
 
 TIMING.json: {"mode": "storm" | "drops" | "section", "duration": 4, "fps": 25, "span": [t0, t1],
               "camera": [[t, cy, h], ...]}
 storm:   the owner's dry field art (05_field_vertical): dark clouds roll in over the sunny sky, the light goes grey,
-         the first drops fall and leave dark wet spots on the red soil.
+         the first drops fall and leave dark wet spots on the red soil. "rain_rate" (default 0.25) sets the rain at
+         the end; "soak": 1 also wets the whole field (use a span in the past for a steady rainy field).
 drops:   close-up of dry, cracked soil: big drops hit it, splash, and fling up tiny droplets and dust.
 section: soil cross-section: Streptomyces filaments (soil bacteria) make geosmin (golden specks) in dry soil; a raindrop
          lands, air bubbles rise through it and burst, and tiny droplets (aerosols) carrying the specks float up and away.
@@ -163,6 +165,12 @@ def draw_scent(img, t, prm, K=1.5, seed=9):
     rng = np.random.default_rng(seed)
     sx, ph, wob = rng.uniform(x0, x1, n), rng.uniform(0, 1, n), rng.uniform(0, 6.28, n)
     side = 1 if (x0 + x1) / 2 > tx else -1
+    on = 1.0
+    if "span" in prm:
+        a, b = prm["span"]
+        on = min(1.0, max(0.0, (t - a) / 0.5)) * min(1.0, max(0.0, (b - t) / 0.5))
+        if on <= 0:
+            return
     glow = np.zeros(img.shape[:2], np.float32)
     core = np.zeros(img.shape[:2], np.float32)
     for k in range(n):
@@ -171,7 +179,7 @@ def draw_scent(img, t, prm, K=1.5, seed=9):
         bow = math.sin(math.pi * e) * 90 * K * side                    # the stream curves out and back in
         x = sx[k] + (tx - sx[k]) * e + bow + math.sin(t * 2.0 + wob[k]) * 12 * K * (1 - e)
         y = y0 + (ty - y0) * (u ** 0.8)
-        fade = min(1, u * 5) * min(1, (1 - u) * 6)
+        fade = min(1, u * 5) * min(1, (1 - u) * 6) * on
         r = (8 - 4 * e) * K
         cv2.circle(glow, (int(x), int(y)), int(r * 2.2), fade, -1, cv2.LINE_AA)
         cv2.circle(core, (int(x), int(y)), int(r * 0.7), fade, -1, cv2.LINE_AA)
@@ -211,6 +219,8 @@ class Storm:
         m = cv2.GaussianBlur(m[..., 0], (0, 0), 25)[..., None] * self.mask
         img = base * (1 - m) + overcast(sky.astype(np.uint8), 0.2) * m
         img = img.astype(np.uint8)
+        if self.cfg.get("soak"):
+            img = wet(img, self.cfg["soak"], ytop=int(0.37 * H))
         wetp = ease((p - 0.7) / 0.3)                         # the first drops: dark spots on the red soil
         if wetp > 0:
             spot = np.zeros((H, W), np.float32)
@@ -222,7 +232,7 @@ class Storm:
             img = (img * (1 - 0.35 * spot)).astype(np.uint8)
         bgr = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
         if wetp > 0:
-            draw_rain(bgr, t, {"rate": 0.25 * wetp, "ground": 0.45 * 1280}, K=1.5)
+            draw_rain(bgr, t, {"rate": self.cfg.get("rain_rate", 0.25) * wetp, "ground": 0.45 * 1280}, K=1.5)
         return bgr
 
 

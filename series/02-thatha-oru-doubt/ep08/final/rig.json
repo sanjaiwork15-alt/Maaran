@@ -260,7 +260,180 @@
     320,
     413
    ]
+  },
+  "f_mbreath_w": {
+   "mouth": [
+    [
+     252,
+     458
+    ],
+    [
+     307,
+     465
+    ],
+    [
+     362,
+     456
+    ]
+   ],
+   "chin": 500,
+   "beard": [
+    215,
+    405
+   ],
+   "eyes": [
+    [
+     250,
+     372,
+     22,
+     12
+    ],
+    [
+     347,
+     363,
+     22,
+     12
+    ]
+   ],
+   "brows": [
+    [
+     243,
+     330
+    ],
+    [
+     350,
+     317
+    ]
+   ],
+   "pivot": [
+    305,
+    560
+   ],
+   "head": [
+    305,
+    360,
+    165,
+    200
+   ],
+   "hands": [
+    [
+     330,
+     900
+    ]
+   ],
+   "grin": true,
+   "image": "frames/up/f_mbreath_w.png",
+   "nose": [
+    307,
+    412
+   ]
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_mbreath",
+   "audio": "voice_A.wav",
+   "duration": 9.3,
+   "seed": 80,
+   "inhale": [
+    [
+     0.05,
+     1.05
+    ]
+   ],
+   "scent": {
+    "to": [
+     307,
+     412
+    ],
+    "from": [
+     430,
+     640,
+     1180
+    ],
+    "span": [
+     0.0,
+     3.0
+    ]
+   },
+   "rain": {
+    "rate": 0.15,
+    "ground": 660
+   },
+   "brows": [
+    8.3
+   ]
+  },
+  "B": {
+   "frame": "f_msoil",
+   "audio": "voice_B.wav",
+   "duration": 9.65,
+   "seed": 81,
+   "rain": {
+    "rate": 0.45,
+    "ground": 520
+   },
+   "jaw": 9,
+   "brows": [
+    7.0
+   ]
+  },
+  "D": {
+   "frame": "f_mbreath_w",
+   "audio": "voice_D.wav",
+   "duration": 11.35,
+   "seed": 83,
+   "scent": {
+    "to": [
+     307,
+     412
+    ],
+    "from": [
+     430,
+     640,
+     1180
+    ],
+    "span": [
+     0.0,
+     2.3
+    ]
+   },
+   "rain": {
+    "rate": 0.6,
+    "ground": 660
+   },
+   "laugh": [
+    [
+     10.1,
+     0.65
+    ]
+   ]
+  },
+  "E": {
+   "frame": "f_mpoint",
+   "audio": "voice_E.wav",
+   "duration": 11.6,
+   "seed": 84,
+   "rain": {
+    "rate": 0.7,
+    "ground": 680
+   },
+   "brows": [
+    10.6
+   ]
+  },
+  "F": {
+   "frame": "f_mstick",
+   "audio": "voice_F.wav",
+   "duration": 6.2,
+   "seed": 85,
+   "rain": {
+    "rate": 0.85,
+    "ground": 640
+   },
+   "brows": [
+    2.8
+   ]
+  }
+ }
 }
