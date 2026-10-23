@@ -37,7 +37,7 @@ def path_point(path, u):
     pts = np.array(path, float)
     seg = np.linalg.norm(np.diff(pts, axis=0), axis=1)
     L = seg.sum()
-    d = (u % 1) * L
+    d = (u % 1) * L if u < 1 else L                            # u = 1 is the end, not the start again
     i = int(np.searchsorted(np.cumsum(seg), d))
     i = min(i, len(seg) - 1)
     d0 = np.cumsum(seg)[i] - seg[i]

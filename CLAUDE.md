@@ -117,6 +117,11 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
   pattern (`"kaggle/q[a] series"`). Same for `pkill -f`: never put the killed pattern's plain text anywhere else in
   the same command (a `pkill` + relaunch of `kaggle_run.sh` in one command killed its own shell).
+- **Real-ESRGAN invented a grey smudge on the dhoti** of every frame built from the Ep 2/3 body layers (`body_two`,
+  `body_pod` – shipped unnoticed in Doubt Eps 2–6, found in Ep 7). The 720 source looks clean there. `tools/upscale.py`
+  now has a guard (Lanczos where ESRGAN strays far from it on flat art); `--fix` applies it to an existing upscale.
+  All Doubt `frames/up/` are fixed; the already-rendered Eps 2–6 videos still have it until they are re-assembled.
+  Review sheets: always add a full-res crop of the dhoti/lower body, not just faces.
 
 ## Improvement backlog (work through these, newest first)
 Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split over two shots (first line ends at
@@ -160,4 +165,8 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   (`series/02-thatha-oru-doubt/ep05/final/doubt_ep05.mp4`, 41.6 s).
 - Doubt Ep 6 ("Ice Yen Urugudhu?" – owner changed the topic from mango; veedu = owner's 07_home art): done without
   GPU, waiting for review (`series/02-thatha-oru-doubt/ep06/final/doubt_ep06.mp4`, 45.3 s).
-- Next: Doubt Ep 7 – wait for the owner's script (topics can change, as Ep 6 did).
+- Doubt Ep 7 ("Erumbunga Eppadi Varisaiyaa Pogudhu?" – ants and pheromone trails; owner changed the topic from
+  sunflowers; thinnai + verandah crop, live ant overlay): done without GPU, waiting for review
+  (`series/02-thatha-oru-doubt/ep07/final/doubt_ep07.mp4`, 46.3 s).
+- Eps 2–6 videos still show Real-ESRGAN's small dhoti smudge (frames are fixed; re-assemble if the owner wants).
+- Next: Doubt Ep 8 – wait for the owner's script.
