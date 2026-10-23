@@ -155,24 +155,33 @@ def draw_rain(img, t, prm, K=1.5, seed=5):
 
 
 def draw_scent(img, t, prm, K=1.5, seed=9):
-    """Golden specks rising from the soil and drifting to his nose (the smell) – they shrink and fade on arrival."""
+    """Soft glowing golden motes rising from the soil in a curving stream to his nose (the smell); they shrink and
+    fade as they arrive."""
     tx, ty = np.array(prm["to"], float) * K
     x0, x1, y0 = np.array(prm["from"], float) * K
-    n, per = prm.get("n", 18), prm.get("period", 2.6)
+    n, per = prm.get("n", 16), prm.get("period", 2.8)
     rng = np.random.default_rng(seed)
     sx, ph, wob = rng.uniform(x0, x1, n), rng.uniform(0, 1, n), rng.uniform(0, 6.28, n)
-    lay = img.copy()
-    alpha = np.zeros(img.shape[:2], np.float32)
+    side = 1 if (x0 + x1) / 2 > tx else -1
+    glow = np.zeros(img.shape[:2], np.float32)
+    core = np.zeros(img.shape[:2], np.float32)
     for k in range(n):
         u = ((t / per) + ph[k]) % 1
         e = u * u * (3 - 2 * u)
-        x = sx[k] + (tx - sx[k]) * e + math.sin(t * 2.2 + wob[k]) * 14 * K * (1 - e)
-        y = y0 + (ty - y0) * e
-        r = (5.5 - 3 * e) * K
-        cv2.circle(lay, (int(x), int(y)), int(r), SCENT, -1, cv2.LINE_AA)
-        cv2.circle(alpha, (int(x), int(y)), int(r), float(min(1, u * 6) * (1 - max(0, u - 0.8) * 5) * 0.85), -1, cv2.LINE_AA)
-    alpha = cv2.GaussianBlur(alpha, (0, 0), 1.2)[..., None]
-    img[:] = (img * (1 - alpha) + lay * alpha).astype(np.uint8)
+        bow = math.sin(math.pi * e) * 90 * K * side                    # the stream curves out and back in
+        x = sx[k] + (tx - sx[k]) * e + bow + math.sin(t * 2.0 + wob[k]) * 12 * K * (1 - e)
+        y = y0 + (ty - y0) * (u ** 0.8)
+        fade = min(1, u * 5) * min(1, (1 - u) * 6)
+        r = (8 - 4 * e) * K
+        cv2.circle(glow, (int(x), int(y)), int(r * 2.2), fade, -1, cv2.LINE_AA)
+        cv2.circle(core, (int(x), int(y)), int(r * 0.7), fade, -1, cv2.LINE_AA)
+    glow = cv2.GaussianBlur(glow, (0, 0), 6 * K)[..., None] * 0.55
+    core = cv2.GaussianBlur(core, (0, 0), 1.5)[..., None] * 0.9
+    col = np.array(SCENT, np.float32)
+    x = img.astype(np.float32)
+    x = x + (255 - x) * glow * (col / 255)                            # light, not paint: a warm glow
+    x = x * (1 - core) + np.array([170, 235, 255], np.float32) * core
+    img[:] = np.clip(x, 0, 255).astype(np.uint8)
 
 
 # ---------------------------------------------------------------- cut-aways
