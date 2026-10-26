@@ -247,5 +247,99 @@
    "grin": true
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_sphone",
+   "audio": "voice_A.wav",
+   "duration": 9.7,
+   "seed": 365,
+   "shake": [
+    [
+     1.6,
+     1.1
+    ]
+   ],
+   "brows": [
+    6.8
+   ]
+  },
+  "B": {
+   "frame": "f_sphone",
+   "audio": "voice_B.wav",
+   "duration": 6.9,
+   "seed": 366,
+   "laugh": [
+    [
+     2.6,
+     1.1
+    ]
+   ],
+   "brows": [
+    3.3
+   ],
+   "shake": [
+    [
+     5.4,
+     0.9
+    ]
+   ]
+  },
+  "C": {
+   "frame": "f_slate",
+   "audio": "voice_C.wav",
+   "duration": 7.2,
+   "seed": 367,
+   "brows": [
+    2.7,
+    3.1
+   ],
+   "laugh": [
+    [
+     6.3,
+     0.8
+    ]
+   ]
+  },
+  "D": {
+   "frame": "f_slist",
+   "audio": "voice_D.wav",
+   "duration": 9.6,
+   "seed": 368,
+   "nod": [
+    [
+     1.2,
+     1.0
+    ]
+   ],
+   "brows": [
+    6.6
+   ]
+  },
+  "E": {
+   "frame": "f_sstand",
+   "audio": "voice_E.wav",
+   "duration": 9.3,
+   "seed": 369,
+   "gaze": [
+    [
+     0.2,
+     1.7,
+     14,
+     10
+    ]
+   ],
+   "shake": [
+    [
+     1.9,
+     1.1
+    ]
+   ],
+   "laugh": [
+    [
+     8.0,
+     0.9
+    ]
+   ]
+  }
+ }
 }
