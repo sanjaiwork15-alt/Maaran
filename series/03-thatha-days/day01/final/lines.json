@@ -1,107 +1,92 @@
 [
  {
-  "id": "Y1a",
-  "speaker": "thambi",
-  "tanglish": "Cha Thatha! Enakku suthamaa nerame illa!",
-  "tamil": "ச்சா தாத்தா! எனக்கு சுத்தமா நேரமே இல்ல!",
-  "pause_after": 0.2
+  "id": "L1a",
+  "tanglish": "Aiyayo makkaley! Innikku enakku nerame illa!",
+  "tamil": "ஐயையோ மக்களே! இன்னிக்கு எனக்கு நேரமே இல்ல!",
+  "pause_after": 0.15
  },
  {
-  "id": "Y1b",
-  "speaker": "thambi",
-  "tanglish": "Evlo velai irukku theriyumaa? Kaalaila irundhu orey tension!",
-  "tamil": "எவ்ளோ வேலை இருக்கு தெரியுமா? காலையில இருந்து ஒரே டென்ஷன்!",
-  "pause_after": 0.45
+  "id": "L1b",
+  "tanglish": "Indha velaiya mudikkanum, andha velaiya mudikkanum...",
+  "tamil": "இந்த வேலைய முடிக்கணும், அந்த வேலைய முடிக்கணும்...",
+  "pause_after": 0.15
  },
  {
-  "id": "T1",
-  "speaker": "thatha",
-  "tanglish": "Appadiyaa thambi? Kaalaila irundhu enna velai paakkura?",
-  "tamil": "அப்படியா தம்பி? காலையில இருந்து என்ன வேலை பாக்குற?",
-  "pause_after": 0.45
+  "id": "L1c",
+  "tanglish": "aana phone-a konjam paathuttu velaiya aarambikkalaam!",
+  "tamil": "ஆனா ஃபோனை கொஞ்சம் பாத்துட்டு வேலைய ஆரம்பிக்கலாம்!",
+  "pause_after": 0.15
  },
  {
-  "id": "Y2a",
-  "speaker": "thambi",
-  "tanglish": "Velaiyaa? Neraiya irukku Thatha!",
-  "tamil": "வேலையா? நெறைய இருக்கு தாத்தா!",
-  "pause_after": 0.2
+  "id": "L2a",
+  "tanglish": "Seri, ore oru video mattum paakkalaam!",
+  "tamil": "சரி, ஒரே ஒரு வீடியோ மட்டும் பாக்கலாம்!",
+  "pause_after": 0.15
  },
  {
-  "id": "Y2b",
-  "speaker": "thambi",
-  "tanglish": "Aana konjam relax pannalaamnu phone paakkuren!",
-  "tamil": "ஆனா கொஞ்சம் ரிலாக்ஸ் பண்ணலாம்னு ஃபோன் பாக்குறேன்!",
-  "pause_after": 0.45
+  "id": "L2b",
+  "tanglish": "Ada, idhu nalla irukke!",
+  "tamil": "அட, இது நல்லா இருக்கே!",
+  "pause_after": 0.15
  },
  {
-  "id": "T2a",
-  "speaker": "thatha",
-  "tanglish": "Seri thambi... oru nimisham relax pannalaam.",
-  "tamil": "சரி தம்பி... ஒரு நிமிஷம் ரிலாக்ஸ் பண்ணலாம்.",
-  "pause_after": 0.2
+  "id": "L2c",
+  "tanglish": "Aduthu enna varudhunnu paappom...",
+  "tamil": "அடுத்து என்ன வருதுன்னு பாப்போம்...",
+  "pause_after": 0.15
  },
  {
-  "id": "T2b",
-  "speaker": "thatha",
-  "tanglish": "Aana nee evlo neramaa indha phone paakkura?",
-  "tamil": "ஆனா நீ எவ்ளோ நேரமா இந்த ஃபோன் பாக்குற?",
-  "pause_after": 1.7
+  "id": "L2d",
+  "tanglish": "ada, idhuvum nalla irukke!",
+  "tamil": "அட, இதுவும் நல்லா இருக்கே!",
+  "pause_after": 0.15
  },
  {
-  "id": "Y3a",
-  "speaker": "thambi",
-  "tanglish": "Theriyala Thatha... oru video paakka aarambichen.",
-  "tamil": "தெரியல தாத்தா... ஒரு வீடியோ பாக்க ஆரம்பிச்சேன்.",
-  "pause_after": 0.2
+  "id": "L3a",
+  "tanglish": "Enna idhu? Oru video paakka utkaarndhen...",
+  "tamil": "என்ன இது? ஒரு வீடியோ பாக்க உட்கார்ந்தேன்...",
+  "pause_after": 0.15
  },
  {
-  "id": "Y3b",
-  "speaker": "thambi",
-  "tanglish": "Appuram innonnu... appuram innonnu!",
-  "tamil": "அப்புறம் இன்னொன்னு... அப்புறம் இன்னொன்னு!",
-  "pause_after": 0.75
+  "id": "L3b",
+  "tanglish": "ivlo neram aayiduchaa?",
+  "tamil": "இவ்ளோ நேரம் ஆயிடுச்சா?",
+  "pause_after": 0.15
  },
  {
-  "id": "T3a",
-  "speaker": "thatha",
-  "tanglish": "Adhaan thambi prachanai!",
-  "tamil": "அதான் தம்பி பிரச்சனை!",
-  "pause_after": 0.2
+  "id": "L3c",
+  "tanglish": "Tea aari pochu, velaiyum appadiye irukku!",
+  "tamil": "டீ ஆறிப் போச்சு, வேலையும் அப்படியே இருக்கு!",
+  "pause_after": 0.15
  },
  {
-  "id": "T3b",
-  "speaker": "thatha",
-  "tanglish": "Oru video paakkuradhula thappilla.",
-  "tamil": "ஒரு வீடியோ பாக்குறதுல தப்பில்ல.",
-  "pause_after": 0.2
+  "id": "L4a",
+  "tanglish": "Idhula oru vishayam puriyudhu makkaley.",
+  "tamil": "இதுல ஒரு விஷயம் புரியுது மக்களே.",
+  "pause_after": 0.15
  },
  {
-  "id": "T3c",
-  "speaker": "thatha",
-  "tanglish": "Aana adutha video, adutha video-nu poitte irundhaa, namma velaiya seiya vendiya neram enga irundhu varum?",
-  "tamil": "ஆனா அடுத்த வீடியோ, அடுத்த வீடியோன்னு போயிட்டே இருந்தா, நம்ம வேலைய செய்ய வேண்டிய நேரம் எங்க இருந்து வரும்?",
-  "pause_after": 1.05
+  "id": "L4b",
+  "tanglish": "Konjam relax pannuradhu thappilla.",
+  "tamil": "கொஞ்சம் ரிலாக்ஸ் பண்றது தப்பில்ல.",
+  "pause_after": 0.15
  },
  {
-  "id": "Y4",
-  "speaker": "thambi",
-  "tanglish": "Seri Thatha... ippo phone-a vechittu velaiya mudikkuren!",
-  "tamil": "சரி தாத்தா... இப்போ ஃபோனை வெச்சிட்டு வேலைய முடிக்கிறேன்!",
-  "pause_after": 1.35
+  "id": "L4c",
+  "tanglish": "Aana namma nerathai nammale gavanikkaama vittuttaa, mukkiyamaana velai ellaam pinnaadi poidum!",
+  "tamil": "ஆனா நம்ம நேரத்தை நாமளே கவனிக்காம விட்டுட்டா, முக்கியமான வேலை எல்லாம் பின்னாடி போயிடும்!",
+  "pause_after": 0.15
  },
  {
-  "id": "T4a",
-  "speaker": "thatha",
-  "tanglish": "Nalla mudivu thambi!",
-  "tamil": "நல்ல முடிவு தம்பி!",
-  "pause_after": 0.2
+  "id": "L5a",
+  "tanglish": "Phone-a appuram paathukkalaam! Mudhal-la velaiya mudippom.",
+  "tamil": "ஃபோனை அப்புறம் பாத்துக்கலாம்! முதல்ல வேலைய முடிப்போம்.",
+  "pause_after": 0.15
  },
  {
-  "id": "T4b",
-  "speaker": "thatha",
-  "tanglish": "Phone namma kaiyila irukkanum... namma neram phone kaiyila irukka koodaadhu!",
-  "tamil": "ஃபோன் நம்ம கையில இருக்கணும்... நம்ம நேரம் ஃபோன் கையில இருக்கக் கூடாது!",
+  "id": "L5b",
+  "tanglish": "Illenna, phone namakku pozhudhu pokku illa... pozhudhe phone-kku pokkaayidum!",
+  "tamil": "இல்லன்னா, ஃபோன் நமக்கு பொழுதுபோக்கு இல்ல... பொழுதே ஃபோனுக்கு போக்காயிடும்!",
   "pause_after": 0.5
  }
 ]

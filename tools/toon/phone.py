@@ -2,7 +2,7 @@
 
 Usage:
     python tools/toon/phone.py OUT.mp4 TIMING.json
-TIMING.json: {"mode": "feed" | "lock", "duration": 4, "fps": 25, "reels": ["cat", "cricket", "dosa", "dog"],
+TIMING.json: {"mode": "feed" | "lock", "duration": 4, "bg": "frames/plate.png" (blurred behind the phone; default 07_home), "fps": 25, "reels": ["cat", "cricket", "dosa", "dog"],
               "each": 1.2, "start": 0}
 feed: the phone fills most of the frame (courtyard blurred behind), one reel after another, each swiped up after
       "each" seconds (a quick 0.25 s slide); right-side icons (heart, comment, share) and a progress bar – icons only,
@@ -164,7 +164,7 @@ def main():
     cfg = json.loads(Path(sys.argv[2]).read_text())
     fps = cfg.get("fps", 25)
     n = round(cfg["duration"] * fps)
-    plate = Image.open(ROOT / "assets/2d/source/07_home.png").convert("RGB").resize((W, H), Image.LANCZOS)
+    plate = Image.open(Path(sys.argv[2]).parent / cfg["bg"] if cfg.get("bg") else ROOT / "assets/2d/source/07_home.png").convert("RGB").resize((W, H), Image.LANCZOS)
     bg = cv2.GaussianBlur(np.array(plate), (0, 0), 18).astype(np.float32) * 0.6
     ff = subprocess.Popen(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
                            "-s", f"{W}x{H}", "-framerate", str(fps), "-i", "-", "-c:v", "libx264", "-crf", "17",

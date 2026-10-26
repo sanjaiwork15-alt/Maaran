@@ -1,0 +1,32 @@
+/root/.maaran/f5/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 1.142 seconds.
+Prefix dict has been built successfully.
+Word segmentation module jieba initialized.
+
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /root/.cache/huggingface/hub/models--ai4bharat--IndicF5/snapshots/fb652a96e508091045890dae5bb99fe511facbcf/checkpoints/vocab.txt
+token :  custom
+T1 done
+T2a done
+/root/.maaran/f5/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.588 seconds.
+Prefix dict has been built successfully.
+Word segmentation module jieba initialized.
+
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /root/.cache/huggingface/hub/models--ai4bharat--IndicF5/snapshots/fb652a96e508091045890dae5bb99fe511facbcf/checkpoints/vocab.txt
+token :  custom
+T2b done
+T3a done
+T3b done
+T3c done
+T4a done
+T4b done
