@@ -27,7 +27,7 @@ pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], .
 "rain": {"rate": 0.6, "ground": 700} falling rain + splashes, "scent": {"to": [x, y], "from": [x0, x1, y]} golden
 specks drifting from the soil to his nose (both in tools/toon/rain.py, Doubt Ep 8),
 "brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5;
-6 for frames marked "grin": true, whose art already shows an open smile – only the jaw moves there).
+frame "no_blink": true for art whose eyes are already shut; 6 for frames marked "grin": true, whose art already shows an open smile – only the jaw moves there).
 """
 import json
 import math
@@ -96,6 +96,7 @@ class Rig:
         self.pivot = s(fr["pivot"])
         self.hands = [s(h) for h in fr.get("hands", [])]
         self.grin = fr.get("grin", False)           # open grin in the art (teeth showing): move the jaw, draw no mouth
+        self.frame = fr
         yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
         self.xx, self.yy = xx, yy
         hc = s(fr["head"])
@@ -268,6 +269,8 @@ def main():
     while t < shot["duration"]:
         blinks.append(t)
         t += rng.uniform(2.5, 4.5)
+    if rig.frame.get("no_blink"):                 # art with the eyes already shut (laughing): no lids drawn
+        blinks = []
     brow_t = [o / FPS for o in ons[1::3]] + shot.get("brows", [])
     nod_t = [o / FPS for o in ons[::3]]        # owner (Doubt Ep 4): less constant head movement
     ph = rng.uniform(0, 6.28, 6)
