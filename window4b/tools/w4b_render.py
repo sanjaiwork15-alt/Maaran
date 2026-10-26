@@ -111,7 +111,7 @@ def grade_city(img, p):
     lum = (img @ np.array([0.114, 0.587, 0.299], np.float32))[..., None]
     grey = np.array(p["tint"], np.float32)  # BGR overcast tint
     warm = np.clip((img[..., 2:3] - img[..., 0:1]) * 2.5, 0, 1)   # sunset orange/pink (R - B)
-    k = np.clip(0.8 + 0.2 * warm, 0, 1) * w                       # warm light goes fully grey
+    k = np.clip(0.88 + 0.4 * warm, 0, 1) * w                       # warm light goes fully grey
     out = img * (1 - k) + lum * grey * k
     out = (out - 0.5) * (1 - 0.25 * w) + 0.5 - 0.06 * w
     out *= 1 - p["dark"]
@@ -332,11 +332,11 @@ def glass(frame, t, p):
     for i in range(N):
         born = rng.random() * DURATION if i > 6 else 1.0 + i * 0.45  # first few = the opening taps
         x = x0 + rng.random() * (x1 - x0); y = y0 + rng.random() * (y1 - y0)
-        r = (1.5 + rng.random() ** 3 * 5) * G["sc"]
+        r = (2.5 + rng.random() ** 3 * 7) * G["sc"]
         slide = rng.random() < 0.35
         life = 4 + rng.random() * 10
         if i <= 6:
-            born, x, y, r, slide = born, x0 + (0.42 + 0.03 * i) * (x1 - x0), y0 + (0.25 + 0.05 * i) * (y1 - y0), 4.5 * G["sc"], False
+            born, x, y, r, slide = born, x0 + (0.30 + 0.07 * i) * (x1 - x0), y0 + (0.18 + 0.06 * (i % 4)) * (y1 - y0), (12 if i == 0 else 8) * G["sc"], False
         if born > t or rng.random() > p["drops"] and i > 6:
             continue
         age = t - born
@@ -349,12 +349,15 @@ def glass(frame, t, p):
             if yy > y1:
                 continue
             cv2.line(trails, (int(x), int(y)), (int(x), int(yy)), 0.35, max(1, int(r * 0.6)), cv2.LINE_AA)
+        if i <= 6 and age < 0.18:  # the impact: a flat splash that pulls into a bead
+            k = 1 - age / 0.18
+            cv2.ellipse(trails, (int(x), int(yy)), (int(r * (1 + 1.6 * k)), int(r * (0.6 + 0.6 * k))), 0, 0, 360, 0.8 * k, -1, cv2.LINE_AA)
         out = bead(out, blur, x, yy, r)
     if p["final_drop"]:
         ft = p["final_drop"]
         fx = x0 + 0.5 * (x1 - x0); fy = y0 + 0.2 * (y1 - y0) + ft * 0.45 * (y1 - y0)
-        cv2.line(trails, (int(fx), int(y0 + 0.2 * (y1 - y0))), (int(fx), int(fy)), 0.45, max(1, int(3 * G["sc"])), cv2.LINE_AA)
-        out = bead(out, blur, fx, fy, 6 * G["sc"])
+        cv2.line(trails, (int(fx), int(y0 + 0.2 * (y1 - y0))), (int(fx), int(fy)), 0.6, max(1, int(6 * G["sc"])), cv2.LINE_AA)
+        out = bead(out, blur, fx, fy, 13 * G["sc"])
     tr = cv2.GaussianBlur(trails, (0, 0), 1.0)[..., None] * G["outside"][..., None]
     out = out * (1 - tr * 0.5) + (blur * 1.15 + 0.03) * tr * 0.5
     return out
@@ -421,15 +424,6 @@ def room(t, p):
         ov = cv2.GaussianBlur(ov, (0, 0), 1)[..., None]
         water_col = np.array([0.52, 0.5, 0.46], np.float32) * (1 - p["dark"] * 0.5)
         img = img * (1 - ov * 0.8) + water_col * ov * 0.8
-        if p["drip"] is not None:  # a drip falls from the window head into the mug
-            ph = p["drip"]
-            if ph < 0.6:
-                yy = int(ph / 0.6 * cy)
-                cv2.line(img, (int(cx), max(0, yy - int(14 * sc))), (int(cx), yy), (0.8, 0.82, 0.85), max(1, int(2 * sc)), cv2.LINE_AA)
-            else:
-                rr = (ph - 0.6) / 0.4
-                cv2.ellipse(img, (int(cx), int(cy)), (int(ax * 0.7 * rr) + 1, int(ay * 0.7 * rr) + 1), 0, 0, 360,
-                            (0.85, 0.85, 0.85), 1, cv2.LINE_AA)
     # light: warm sunset -> cool grey daylight
     w = p["wet"]
     lum = (img @ np.array([0.114, 0.587, 0.299], np.float32))[..., None]
@@ -438,6 +432,24 @@ def room(t, p):
     img *= 1 - p["room_dark"]
     img += p["flash"] * 0.18
     return img, a
+
+
+def drip(img, p):
+    """A drip from a leak in the window head falls into the mug (in front of the glass)."""
+    if p["drip"] is None or p["mug"] <= 0:
+        return img
+    mg = G["cfg"]["mug"]; sc = G["sc"]
+    cx, cy, ax, ay = mg["cx"] * sc, mg["cy"] * sc, mg["ax"] * sc, mg["ay"] * sc
+    ph = p["drip"]
+    if ph < 0.6:
+        yy = int((ph / 0.6) ** 2 * cy)
+        cv2.line(img, (int(cx), max(0, yy - int(22 * sc))), (int(cx), yy), (0.78, 0.8, 0.82), max(2, int(3 * sc)), cv2.LINE_AA)
+        cv2.circle(img, (int(cx), yy), max(2, int(3 * sc)), (0.85, 0.87, 0.9), -1, cv2.LINE_AA)
+    else:
+        rr = (ph - 0.6) / 0.4
+        cv2.ellipse(img, (int(cx), int(cy)), (int(ax * 0.8 * rr) + 1, int(ay * 0.8 * rr) + 1), 0, 0, 360,
+                    (0.9, 0.9, 0.9), max(1, int(1.5 * sc)), cv2.LINE_AA)
+    return img
 
 
 def counter(frame, p):
@@ -476,6 +488,7 @@ def render(t):
     rm, a = room(t, p)
     a = a[..., None]
     frame = city * (1 - a) + rm * a
+    frame = drip(frame, p)
     frame = frame * (1 - p["jump"] * 0.25)
     frame = counter(frame, p)
     return (np.clip(frame, 0, 1) * 255).astype(np.uint8)
