@@ -1,0 +1,51 @@
+[
+ {
+  "id": "Y1a",
+  "speaker": "thambi",
+  "tanglish": "Cha Thatha! Enakku suthamaa nerame illa!",
+  "tamil": "ச்சா தாத்தா! எனக்கு சுத்தமா நேரமே இல்ல!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "Y1b",
+  "speaker": "thambi",
+  "tanglish": "Evlo velai irukku theriyumaa? Kaalaila irundhu orey tension!",
+  "tamil": "எவ்ளோ வேலை இருக்கு தெரியுமா? காலையில இருந்து ஒரே டென்ஷன்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "Y2a",
+  "speaker": "thambi",
+  "tanglish": "Velaiyaa? Neraiya irukku Thatha!",
+  "tamil": "வேலையா? நெறைய இருக்கு தாத்தா!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "Y2b",
+  "speaker": "thambi",
+  "tanglish": "Aana konjam relax pannalaamnu phone paakkuren!",
+  "tamil": "ஆனா கொஞ்சம் ரிலாக்ஸ் பண்ணலாம்னு ஃபோன் பாக்குறேன்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "Y3a",
+  "speaker": "thambi",
+  "tanglish": "Theriyala Thatha... oru video paakka aarambichen.",
+  "tamil": "தெரியல தாத்தா... ஒரு வீடியோ பாக்க ஆரம்பிச்சேன்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "Y3b",
+  "speaker": "thambi",
+  "tanglish": "Appuram innonnu... appuram innonnu!",
+  "tamil": "அப்புறம் இன்னொன்னு... அப்புறம் இன்னொன்னு!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "Y4",
+  "speaker": "thambi",
+  "tanglish": "Seri Thatha... ippo phone-a vechittu velaiya mudikkuren!",
+  "tamil": "சரி தாத்தா... இப்போ ஃபோனை வெச்சிட்டு வேலைய முடிக்கிறேன்!",
+  "pause_after": 0.15
+ }
+]

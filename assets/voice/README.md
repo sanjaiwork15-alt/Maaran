@@ -13,3 +13,14 @@ Prompt used in AI Studio:
 > Vanakkam pa... Indha manna paathiya? Namma paattan poottan kaalam thottu valatha bhoomi idhu! (warm chuckle) Nalla uzhaichaa... manasu eppovum niraivaa irukkum!
 
 This clip is set once and reused for every episode: `python tools/f5_voice.py LINES.json OUT_DIR`.
+
+## Young man ("Thambi") – Maaran Thatha, Day N series
+
+| File | What |
+|---|---|
+| `thambi_ref_source_gemini_puck.mp3` | Original 9.4 s clip by the channel owner (Google AI Studio, Gemini TTS, "Puck" voice), 2026-10-26 |
+| `thambi_ref.wav` / `thambi_ref.txt` | Cleaned reference + exact Tamil text (`tools/set_reference.py CLIP "TEXT" --name thambi`) |
+
+Text: "Dei machaan... indha phone-la oru video paathen, semma comedy da! Aana enakku innum assignment mudikkala...
+seri, naalaikku paathukkalaam!" His lines: `tools/f5_voice.py LINES.json OUT --ref-wav assets/voice/thambi_ref.wav
+--ref-txt assets/voice/thambi_ref.txt`.
