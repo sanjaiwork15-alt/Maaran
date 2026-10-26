@@ -176,4 +176,8 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Doubt Ep 8 ("Mazhai Peinja Mann Vaasana Yen Varudhu?" – petrichor/geosmin; owner changed the topic from naatu
   food; rainy semman kaadu field, storm sky + rain + scent in code, rain sound synthesised): done without GPU, waiting
   for review (`series/02-thatha-oru-doubt/ep08/final/doubt_ep08.mp4`, 48.7 s). Season 1's 8 episodes are done.
-- Next: wait for the owner (Season 1 complete; maybe review fixes, the Eps 2–6 dhoti smudge re-assembly, or Season 2).
+- Series 03 "Maaran Thatha – Day N" (owner, 2026-10-26: everyday-life comedy with a second character, a young man
+  "Thambi"; courtyard): episodes in `series/03-thatha-days/dayNN/final/`. Thambi's voice = owner's Gemini "Puck" clip
+  (`assets/voice/thambi_ref.*`, f5_voice.py `--ref-wav/--ref-txt`); his look = owner's 2D art (prompts in
+  `day01/final/thambi_requests.md`), expected in `assets/2d/source/thambi/`. Day 1 ("Phone Irukku, Neram Illai!"):
+  voices generating; waiting for Thambi's art.
