@@ -188,7 +188,10 @@ def build(cfg, debug=None):
         height[t] = np.maximum(height[t], v)
     height[sky] = 99.0
 
-    out = dict(outside=outside, sky=sky_soft, height=height, river=river, ground=ground,
+    canopy = (leafy | trunk) & opening & ~occ & ~ground & ~river & ~objects
+    canopy[: cfg.get("canopy_top", 455)] = False
+    canopy = cv2.GaussianBlur(canopy.astype(np.float32), (0, 0), 1.5)
+    out = dict(canopy=canopy, outside=outside, sky=sky_soft, height=height, river=river, ground=ground,
                plant=plant_soft, clean=clean, hole=hole.astype(bool))
     for k, v in sprites.items():
         out["sprite_" + k] = v

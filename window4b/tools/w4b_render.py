@@ -19,8 +19,9 @@ import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-from scenes import SCENES
-from timeline import params, FPS_DEFAULT, DURATION
+from scenes import SCENES, ROOT
+from timeline import params, FPS_DEFAULT, DURATION, COLLAPSE, CLOSEUP, DROP_LANDS, ease
+import story
 
 FONT = "/usr/share/fonts/opentype/inter/Inter-Bold.otf"
 G = {}  # per-process scene state
@@ -83,7 +84,17 @@ def setup(which, masks_path):
     G["s"] = lambda y_m: max(cfg.get("scale_min", 1.2), lo[1] + (y_m - lo[0]) * (hi[1] - lo[1]) / (hi[0] - lo[0]))
     # emissive bits of the city (lit windows, lamps) keep glowing in the rain
     hsv = cv2.cvtColor((G["city_img"] * 255).astype(np.uint8), cv2.COLOR_BGR2HSV).astype(np.float32)
-    em = ((hsv[..., 2] > 215) & (hsv[..., 1] > 60) & (hsv[..., 0] < 35)).astype(np.float32)
+    em = ((hsv[..., 2] > 215) & (hsv[..., 1] > 60) & (hsv[..., 0] < 35)).astype(np.uint8)
+    em[G["river"] > 0.3] = 0                      # sun glare on the water is not a light
+    n, lab, st, _ = cv2.connectedComponentsWithStats(em)
+    small = np.zeros(n, bool); small[1:] = st[1:, cv2.CC_STAT_AREA] < 500 * sc * sc
+    em = small[lab].astype(np.float32)             # big bright patches are sunlit walls, not lights
+    blds = np.zeros((H, W), np.uint8)              # ...except inside the near buildings: lit rooms
+    for key in ("tower", "near_building"):
+        if key in cfg:
+            cv2.fillPoly(blds, [(np.array(cfg[key]) * sc).astype(np.int32)], 1)
+    warm_lit = (hsv[..., 2] > 170) & (hsv[..., 1] > 50) & (hsv[..., 0] < 35)
+    em = np.maximum(em, (warm_lit & (blds > 0)).astype(np.float32))
     G["emissive"] = cv2.GaussianBlur(em * (1 - G["sky"]) * G["outside"], (0, 0), 1.0)
     rows = np.arange(H, dtype=np.float32)[:, None] / H
     G["rows"] = rows
@@ -99,29 +110,142 @@ def setup(which, masks_path):
         rain_texture(H, W, 160, 70 * k, 2, 13, 53, 0.55),   # near, big
     ]
     G["font"] = ImageFont.truetype(FONT, int(cfg["counter_size"] * k))
+    G["canopy"] = rs(m["canopy"].astype(np.float32)) if "canopy" in m.files else np.zeros((H, W), np.float32)
+    big = np.zeros((H, W), np.float32)
+    pts, base = cfg["trees"][cfg.get("wind_tree", 1)]
+    cv2.fillPoly(big, [(np.array(pts) * sc).astype(np.int32)], 1.0)
+    top = min(p[1] for p in pts)
+    G["big_tree"] = cv2.GaussianBlur(big, (0, 0), 6) * np.clip((base * sc - G["yy"]) / ((base - top) * sc), 0, 1)
+    setup_lights(cfg, em)
+    setup_vines(cfg)
+    bus = cv2.imread(str(ROOT / "assets/sprites/bus_road.png"), cv2.IMREAD_UNCHANGED)
+    G["extra_sprites"] = {"bus_road": (bus, 32.0)}   # sprite, px per metre where it was cut
+    G["draw_sprite_at"] = draw_sprite_at
     # where the outside view is (for drops on the glass)
     ys, xs = np.nonzero(G["outside"] > 0.98)
     G["glass_box"] = (xs.min(), ys.min(), xs.max(), ys.max())
 
 
+def setup_lights(cfg, em):
+    """Every lit window and lamp gets its own moment: lamps switch on at dusk on Day 1,
+    windows go dark through Month 2 (the power cut), streetlights flicker and die in Month 3."""
+    W, H, sc = G["W"], G["H"], G["sc"]
+    n, lab = cv2.connectedComponents(cv2.dilate((em > 0.5).astype(np.uint8), np.ones((3, 3), np.uint8)))
+    G["light_lab"] = lab
+    rng = np.random.default_rng(17)
+    on_t = np.zeros(n); off_t = np.full(n, 1e9); lamp = np.zeros(n, bool)
+    blds = [np.array(cfg[k]) * sc for k in ("tower", "near_building") if k in cfg]
+    ys, xs = np.nonzero(lab)
+    cx = np.bincount(lab[ys, xs], xs, n) / np.maximum(np.bincount(lab[ys, xs], None, n), 1)
+    cy = np.bincount(lab[ys, xs], ys, n) / np.maximum(np.bincount(lab[ys, xs], None, n), 1)
+    for i in range(1, n):
+        inside = any(cv2.pointPolygonTest(b.astype(np.float32), (float(cx[i]), float(cy[i])), False) >= 0 for b in blds)
+        if inside:
+            off_t[i] = rng.uniform(53, 66) if rng.random() < 0.75 else rng.uniform(76, 92)
+        elif cy[i] / sc > 470:
+            lamp[i] = True
+            on_t[i] = rng.uniform(2.5, 8.0)
+            off_t[i] = rng.uniform(72.5, 76.5)
+        else:
+            off_t[i] = rng.uniform(55, 90)
+    G["light_on"], G["light_off"], G["light_lamp"] = on_t, off_t, lamp
+    G["em_lamp"] = G["emissive"] * lamp[lab]
+
+
+def light_levels(t):
+    on_t, off_t, lamp = G["light_on"], G["light_off"], G["light_lamp"]
+    lvl = (np.clip((t - on_t) / 0.4, 0, 1) * np.clip((off_t - t) / 0.3, 0, 1)).astype(np.float32)
+    flick = lamp & (t > off_t - 1.6) & (t < off_t)
+    if flick.any():  # failing streetlights stutter before they die
+        hsh = np.sin(np.arange(len(lvl)) * 12.9898 + int(t * 14) * 78.233) * 43758.5453
+        lvl[flick] *= ((hsh[flick] - np.floor(hsh[flick])) > 0.45).astype(np.float32)
+    lvl[0] = 1.0
+    return lvl[G["light_lab"]]
+
+
+def setup_vines(cfg):
+    """Ivy that has crept over the near buildings and the bridge rail by Year 1."""
+    W, H, sc = G["W"], G["H"], G["sc"]
+    lay = np.zeros((H, W, 3), np.float32); a = np.zeros((H, W), np.float32)
+    rng = np.random.default_rng(23)
+    for (x0, y0, x1, y1), n in cfg.get("vine_zones", []):
+        for _ in range(n):
+            x = rng.uniform(x0, x1) * sc; y = rng.uniform(y0, y0 + (y1 - y0) * 0.4) * sc
+            L = rng.uniform(0.3, 1.0) * (y1 - y) * 1.0
+            pts = []
+            for k in range(30):
+                pts.append((x + math.sin(k * 0.6 + x) * 3 * sc, y + L * k / 29))
+            pts = np.array(pts, np.int32)
+            col = [(0.16, 0.38, 0.2), (0.2, 0.45, 0.25), (0.12, 0.3, 0.15)][int(rng.integers(3))]
+            cv2.polylines(lay, [pts], False, col, max(1, int(1.6 * sc)), cv2.LINE_AA)
+            cv2.polylines(a, [pts], False, 1.0, max(1, int(1.6 * sc)), cv2.LINE_AA)
+            for q in pts[::3]:
+                r = max(1, int(rng.uniform(1.5, 3.5) * sc))
+                cv2.circle(lay, (int(q[0] + rng.uniform(-3, 3) * sc), int(q[1])), r, col, -1, cv2.LINE_AA)
+                cv2.circle(a, (int(q[0] + rng.uniform(-3, 3) * sc), int(q[1])), r, 1.0, -1, cv2.LINE_AA)
+    G["vines"] = (lay, a * G["outside"] * (1 - G["sky"]))
+
+
+def draw_sprite_at(c, name, x_m, y_m):
+    """A cut-out from the other master (e.g. the road bus) standing at a street point."""
+    spr, ppm = G["extra_sprites"][name]
+    sc = G["sc"] * G["s"](y_m) / ppm
+    w = max(2, int(spr.shape[1] * sc)); h = max(2, int(spr.shape[0] * sc))
+    s = cv2.resize(spr, (w, h), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+    X = int(x_m * G["sc"] - w / 2); Y = int(y_m * G["sc"] - h)
+    xa, ya = max(0, X), max(0, Y); xb, yb = min(G["W"], X + w), min(G["H"], Y + h)
+    sub = s[ya - Y:yb - Y, xa - X:xb - X]
+    a = sub[..., 3:4] * G["outside"][ya:yb, xa:xb, None]
+    c.canvas[ya:yb, xa:xb] = c.canvas[ya:yb, xa:xb] * (1 - a) + sub[..., :3] * a
+    rows = np.arange(ya, yb, dtype=np.float32)[:, None]
+    hv = np.broadcast_to((Y + h - rows) / (G["s"](y_m) * G["sc"]), a.shape[:2])
+    c.height[ya:yb, xa:xb] = np.where(a[..., 0] > 0.4, hv, c.height[ya:yb, xa:xb])
+
+
 # ---------------------------------------------------------------- pieces
 
-def grade_city(img, p):
+def grade_city(img, p, lights):
+    """Overcast daylight, natural colours: cooler white balance, the sunset glow gone, gentle haze."""
     w = p["wet"]
     lum = (img @ np.array([0.114, 0.587, 0.299], np.float32))[..., None]
-    grey = np.array(p["tint"], np.float32)  # BGR overcast tint
-    warm = np.clip((img[..., 2:3] - img[..., 0:1]) * 2.5, 0, 1)   # sunset orange/pink (R - B)
-    k = np.clip(0.88 + 0.4 * warm, 0, 1) * w                       # warm light goes fully grey
-    out = img * (1 - k) + lum * grey * k
-    out = (out - 0.5) * (1 - 0.25 * w) + 0.5 - 0.06 * w
+    warm = np.clip((img[..., 2:3] - img[..., 0:1]) * 2.0, 0, 1)
+    out = img * np.array([1 + 0.10 * w, 1.0, 1 - 0.10 * w], np.float32)
+    k = (0.25 + 0.35 * warm) * w
+    out = out * (1 - k) + lum * np.array(p["tint"], np.float32) * k
+    out = (out - 0.5) * (1 - 0.12 * w) + 0.5
+    em = G["emissive"][..., None]
+    hi = np.clip(lum - 0.62, 0, 1) * (1 - em)
+    out = out - hi * 0.5 * w
     out *= 1 - p["dark"]
-    # haze: far things fade into the rain
     far = smoothstep(0.62, 0.30, G["rows"])[..., None]
-    hi = np.clip(lum - 0.55, 0, 1) * (1 - G["emissive"][..., None])   # no sun: flatten the lit faces
-    out = out - hi * 0.9 * w * (0.4 + 0.6 * far)
-    out = out * (1 - far * 0.45 * w) + np.array(p["haze"], np.float32) * far * 0.45 * w
-    out += G["emissive"][..., None] * img * p["lights"] * 0.8
+    out = out * (1 - far * 0.3 * w) + np.array(p["haze"], np.float32) * far * 0.3 * w
+    lv = lights[..., None]
+    out = out * (1 - em * (1 - lv) * 0.72)                   # dead windows and lamps go dark
+    out += em * img * lv * 0.35 * w                           # lit ones glow against the grey
+    glow = cv2.GaussianBlur(G["em_lamp"] * lights, (0, 0), 5 * G["sc"])[..., None]
+    out += glow * np.array([0.45, 0.75, 1.0], np.float32) * 0.5 * (0.3 + w)
     return out
+
+
+def sway(city, t, p):
+    """Wind in the trees; in Month 6 one big tree bends hard in the gusts."""
+    H = G["H"]
+    y0 = int(0.42 * H)
+    cm = G["canopy"][y0:]
+    xx, yy = G["xx"][y0:], G["yy"][y0:]
+    wind = 0.6 + 0.8 * p["rain"]
+    dx = cm * wind * 0.9 * G["sc"] * np.sin(2 * np.pi * 0.45 * t + xx * 0.013 + yy * 0.005)
+    if 88 < t < 112:
+        g = ease((t - 90) / 2) * ease((112 - t) / 2)
+        gust = 0.65 + 0.35 * math.sin(2 * np.pi * 0.23 * t) + 0.15 * math.sin(2 * np.pi * 0.9 * t)
+        dx = dx + G["big_tree"][y0:] * 9 * G["sc"] * g * gust
+    if np.abs(dx).max() < 0.05:
+        return city
+    sub = city[y0:]
+    warped = cv2.remap(sub, xx - dx, yy - y0, cv2.INTER_LINEAR)
+    wm = np.maximum(cm, cv2.remap(cm, xx - dx, yy - y0, cv2.INTER_LINEAR))[..., None]
+    city[y0:] = sub * (1 - wm) + warped * wm
+    return city
 
 
 def sky_layer(t, p):
@@ -193,7 +317,10 @@ def traffic(canvas, t, p, height_out):
             x = bx0 - 80 + (ph + t * v * spd) % span
             draw_sprite(canvas, name, x, bridge_y(x) + dy, flip=flip, lights=p["headlights"])
     else:
+        cl = cfg.get("collapse")
         for name, x, flip, dy in cfg["bridge_parked"]:
+            if cl and t >= COLLAPSE["fall"] and cl["x0"] - 20 <= x <= cl["x1"] + 20:
+                continue
             draw_sprite(canvas, name, x, bridge_y(x) + dy, flip=flip)
     G["lane_clip"] = G["outside"]
     for name, v in cfg.get("boats", []):
@@ -286,23 +413,166 @@ def moss(city, p, height):
     return city * (1 - m * 0.7) + green * m * 0.7
 
 
-def debris(city, t, p):
-    if p["debris"] <= 0 or "water_mask" not in G:
+def bridge(city, t, p, height):
+    """Month 11: cracks spread across one span, it sags, breaks and falls into the flood."""
+    cfg = G["cfg"].get("collapse")
+    if not cfg or t < COLLAPSE["cracks"]:
         return city
-    rng = np.random.default_rng(7)
-    on = G["water_mask"]
-    for i in range(int(40 * p["debris"])):
-        x0, y0 = rng.random() * G["W"], (0.5 + 0.35 * rng.random()) * G["H"]
-        x = (x0 + t * (4 + 6 * rng.random()) * G["sc"]) % G["W"]
-        y = y0 + math.sin(t * 0.7 + i) * 2
-        if not on[int(min(y, G["H"] - 1)), int(x)]:
-            continue
-        L = G["s"](y / G["sc"]) * G["sc"] * (0.6 + rng.random())
-        ang = rng.random() * math.pi
-        p1 = (int(x - math.cos(ang) * L), int(y - math.sin(ang) * L * 0.3))
-        p2 = (int(x + math.cos(ang) * L), int(y + math.sin(ang) * L * 0.3))
-        cv2.line(city, p1, p2, (0.12, 0.16, 0.2), max(1, int(G["sc"] * 1.5)), cv2.LINE_AA)
+    sc = G["sc"]
+    x0, x1, y0, y1 = (np.array([cfg["x0"], cfg["x1"], cfg["y0"], cfg["y1"]]) * sc).astype(int)
+    px0, py0, px1, py1 = (np.array(cfg["pier"]) * sc).astype(int)
+    ws = int((490 - (p["level"] + 1.2) * G["s"](490)) * sc)   # flood surface at the bridge
+    rng = np.random.default_rng(3)
+    fall_k = max(0.0, (t - COLLAPSE["fall"]) / (COLLAPSE["hit"] - COLLAPSE["fall"]))
+    if t < COLLAPSE["fall"]:
+        g = ease((t - COLLAPSE["cracks"]) / (COLLAPSE["crack"] - COLLAPSE["cracks"]))
+        for i in range(9):  # cracks grow across the deck face
+            cx = rng.uniform(x0, x1); cy = rng.uniform(y0 + 0.45 * (y1 - y0), y1 - 2)
+            pts = [(cx, cy)]
+            for k in range(int(2 + 10 * g * rng.uniform(0.5, 1))):
+                pts.append((pts[-1][0] + rng.uniform(-4, 4) * sc, pts[-1][1] - rng.uniform(1, 3) * sc))
+            cv2.polylines(city, [np.array(pts, np.int32)], False, (0.12, 0.12, 0.13), max(1, int(1.2 * sc)), cv2.LINE_AA)
+        if t > COLLAPSE["groan"]:  # chips fall off the underside
+            for i in range(14):
+                t0 = COLLAPSE["groan"] + rng.uniform(0, COLLAPSE["fall"] - COLLAPSE["groan"])
+                if t > t0:
+                    dt = t - t0
+                    x = rng.uniform(x0, x1); y = y1 + 0.5 * 300 * sc * dt * dt
+                    if y < ws:
+                        cv2.circle(city, (int(x), int(y)), max(1, int(1.2 * sc)), (0.55, 0.56, 0.58), -1, cv2.LINE_AA)
+        if t > COLLAPSE["crack"]:  # the span sags
+            k = ease((t - COLLAPSE["crack"]) / (COLLAPSE["fall"] - COLLAPSE["crack"]))
+            sub = city[y0 - 10:py1, x0:x1].copy()
+            xx = np.arange(x1 - x0, dtype=np.float32)[None, :]
+            dy = 4 * sc * k * np.sin(np.pi * xx / (x1 - x0))
+            yy = np.arange(sub.shape[0], dtype=np.float32)[:, None] - dy
+            city[y0 - 10:py1, x0:x1] = cv2.remap(sub, np.broadcast_to(xx, sub.shape[:2]).astype(np.float32),
+                                                 yy.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        return city
+    # ---- after the break: snapshot the span, open the gap, drop the piece
+    piece = city[y0:py1, x0:x1].copy()
+    pa = np.zeros(piece.shape[:2], np.float32)
+    pa[: y1 - y0] = 1.0
+    pa[y1 - y0:, px0 - x0:px1 - x0] = 1.0
+    band = city[y0 - int(14 * sc):y0, x0:x1]                    # far bank just above the deck
+    mid = int((y0 + y1) / 2)
+    gy0 = y0 + int(11 * sc)                                       # the gap starts at the road surface
+    top = cv2.GaussianBlur(city[gy0 - int(6 * sc):gy0, x0:x1], (0, 0), 2 * sc).mean(axis=0)
+    bot = cv2.GaussianBlur(city[y1 + int(4 * sc):y1 + int(10 * sc), x0:x1], (0, 0), 2 * sc).mean(axis=0)
+    k = np.linspace(0, 1, y1 - gy0, dtype=np.float32)[:, None, None]
+    city[gy0:y1, x0:x1] = top[None] * (1 - k) + bot[None] * k          # the far bank seen through the gap
+    deck = city[y0:y1, x0 - int(8 * sc):x0].mean(axis=(0, 1))
+    for ex, sg in ((x0, 1), (x1, -1)):  # broken slabs hang from both ends into the water
+        poly = np.array([(ex, y0 + 0.3 * (y1 - y0)), (ex + sg * 10 * sc, y0 + 0.4 * (y1 - y0)),
+                         (ex + sg * 30 * sc, ws + 6), (ex + sg * 20 * sc, ws + 6), (ex, y1)], np.int32)
+        cv2.fillPoly(city, [poly], (deck * 0.85).tolist(), cv2.LINE_AA)
+        cv2.polylines(city, [poly], True, (0.15, 0.15, 0.16), max(1, int(sc)), cv2.LINE_AA)
+    city[y1:py1, px0:px1] = city[y1:py1, px0 - (px1 - px0):px0]
+    height[mid - int(2 * sc):py1 + 4, x0:x1] = -1.2              # water fills the bottom of the gap
+    for ex in (x0, x1):  # jagged broken ends and bent rebar
+        for k in range(6):
+            yy = y0 + (y1 - y0) * k / 6
+            dx = rng.uniform(1, 5) * sc * (1 if ex == x0 else -1)
+            cv2.line(city, (ex, int(yy)), (int(ex + dx), int(yy + 3 * sc)), (0.15, 0.15, 0.16), max(1, int(sc)), cv2.LINE_AA)
+    if fall_k < 1.6:
+        k = min(fall_k, 1.6)
+        ang = 32 * k * k
+        drop = 75 * sc * k * k
+        M = cv2.getRotationMatrix2D((float(x1 - x0), 0.0), -ang, 1.0)
+        M[1, 2] += drop
+        M[0, 2] += x0; M[1, 2] += y0
+        Wd, Hd = G["W"], G["H"]
+        warped = cv2.warpAffine(piece, M, (Wd, Hd))
+        wa = cv2.warpAffine(pa, M, (Wd, Hd))
+        wa[ws:] = 0                                              # what is under water is hidden
+        city = city * (1 - wa[..., None]) + warped * wa[..., None]
     return city
+
+
+def splash(img, t, p):
+    """The span hits the water: spray, a mist cloud and rings rushing out."""
+    cfg = G["cfg"].get("collapse")
+    if not cfg:
+        return img
+    th = COLLAPSE["hit"] - 0.5
+    if not th <= t < th + 5:
+        return img
+    sc = G["sc"]
+    dt = t - th
+    cx = (cfg["x0"] + cfg["x1"]) / 2 * sc
+    ws = (490 - (p["level"] + 1.2) * G["s"](490)) * sc
+    rng = np.random.default_rng(11)
+    lay = np.zeros(img.shape[:2], np.float32)
+    for i in range(260):
+        vx = rng.uniform(-70, 70) * sc; vy = -rng.uniform(40, 150) * sc; x0 = cx + rng.uniform(-80, 80) * sc
+        d0 = rng.uniform(0, 0.4)
+        tt = dt - d0
+        if tt < 0:
+            continue
+        x = x0 + vx * tt; y = ws + vy * tt + 0.5 * 260 * sc * tt * tt
+        if y > ws or tt > 2.5:
+            continue
+        cv2.circle(lay, (int(x), int(y)), max(1, int(rng.uniform(0.8, 2.2) * sc)), 1.0 - tt / 2.5, -1, cv2.LINE_AA)
+    mist = np.zeros(img.shape[:2], np.float32)
+    r = (20 + 60 * min(dt, 2)) * sc
+    cv2.ellipse(mist, (int(cx), int(ws - r * 0.35)), (int(r * 1.3), int(r * 0.6)), 0, 0, 360, 1.0, -1)
+    mist = cv2.GaussianBlur(mist, (0, 0), 14 * sc) * max(0, 1 - dt / 4.5) * 0.55
+    for k in range(3):
+        rr = (40 + 120 * dt - 30 * k) * sc
+        if rr > 0:
+            cv2.ellipse(lay, (int(cx), int(ws + 2 * sc)), (int(rr * 1.5), int(rr * 0.18)), 0, 0, 360,
+                        max(0.0, 0.8 - dt / 4), max(1, int(1.5 * sc)), cv2.LINE_AA)
+    lay = np.clip(lay + mist, 0, 1)[..., None] * G["outside"][..., None]
+    return img * (1 - lay * 0.85) + np.array([0.86, 0.87, 0.86], np.float32) * lay * 0.85
+
+
+def wreckage(img, t, p):
+    """After the collapse, chunks and planks drift away downstream."""
+    if t < COLLAPSE["hit"] or "water_mask" not in G:
+        return img
+    cfg = G["cfg"]["collapse"]; sc = G["sc"]
+    rng = np.random.default_rng(13)
+    ws = (490 - (p["level"] + 1.2) * G["s"](490))
+    for i in range(16):
+        x = (cfg["x0"] + rng.uniform(0, cfg["x1"] - cfg["x0"]) + (t - COLLAPSE["hit"]) * rng.uniform(4, 14)) * sc
+        y = (ws + rng.uniform(3, 40)) * sc
+        if x >= G["W"] or not G["water_mask"][min(int(y), G["H"] - 1), int(x)]:
+            continue
+        L = rng.uniform(3, 9) * sc * (1 + (y / sc - ws) / 40)
+        col = (0.5, 0.52, 0.55) if i % 3 else (0.18, 0.28, 0.38)
+        cv2.line(img, (int(x - L), int(y)), (int(x + L), int(y + rng.uniform(-2, 2) * sc)), col, max(1, int(2 * sc)), cv2.LINE_AA)
+    return img
+
+
+def vines(city, p):
+    if p["vines"] <= 0:
+        return city
+    lay, a = G["vines"]
+    a = (a * p["vines"])[..., None]
+    return city * (1 - a) + lay * (1 - p["dark"]) * a
+
+
+def closeup(frame, t, p):
+    """The loop: cut to a close-up of the mug, one drop falls from the frame into it, cut to black."""
+    if p["black"]:
+        return np.zeros_like(frame)
+    cfg = G["cfg"]; sc = G["sc"]
+    x0, y0, w, h = (np.array(cfg["closeup"]) * sc).astype(int)
+    crop = frame[y0:y0 + h, x0:x0 + w]
+    big = cv2.resize(crop, (G["W"], G["H"]), interpolation=cv2.INTER_CUBIC)
+    oc = cv2.resize(G["outside"][y0:y0 + h, x0:x0 + w], (G["W"], G["H"]))[..., None]
+    big = cv2.GaussianBlur(big, (0, 0), 1.5) * (1 - oc) + cv2.GaussianBlur(big, (0, 0), 6) * oc
+    z = G["W"] / w
+    mg = cfg["mug"]
+    cx = (mg["cx"] * sc - x0) * z; rim = (mg["cy"] * sc - y0) * z
+    k = np.clip((t - CLOSEUP - 0.5) / (DROP_LANDS - CLOSEUP - 0.5), 0, 1)
+    y = -40 + (rim + 40) * k * k
+    if t > CLOSEUP + 0.5:
+        r = 9 * z / 5
+        cv2.ellipse(big, (int(cx), int(y)), (int(r), int(r * 1.5)), 0, 0, 360, (0.78, 0.8, 0.82), -1, cv2.LINE_AA)
+        cv2.line(big, (int(cx), int(y - r * 6 * k)), (int(cx), int(y - r)), (0.72, 0.74, 0.76), max(1, int(r * 0.5)), cv2.LINE_AA)
+        cv2.circle(big, (int(cx - r * 0.35), int(y - r * 0.5)), max(1, int(r * 0.3)), (1, 1, 1), -1, cv2.LINE_AA)
+    return big
 
 
 def rain(img, t, p):
@@ -321,7 +591,7 @@ def rain(img, t, p):
 
 def glass(frame, t, p):
     """Drops on the window: beads that build up, some slide down leaving trails."""
-    if p["drops"] <= 0 and not p["final_drop"]:
+    if p["drops"] <= 0 and t > 5:
         return frame
     x0, y0, x1, y1 = G["glass_box"]
     rng = np.random.default_rng(99)
@@ -330,14 +600,14 @@ def glass(frame, t, p):
     trails = np.zeros(frame.shape[:2], np.float32)
     N = 420
     for i in range(N):
-        born = rng.random() * DURATION if i > 6 else 1.0 + i * 0.45  # first few = the opening taps
+        born = rng.random() * DURATION if i > 6 else 2.0 + i * 0.33  # first few = the opening taps
         x = x0 + rng.random() * (x1 - x0); y = y0 + rng.random() * (y1 - y0)
         r = (2.5 + rng.random() ** 3 * 7) * G["sc"]
         slide = rng.random() < 0.35
         life = 4 + rng.random() * 10
         if i <= 6:
             born, x, y, r, slide = born, x0 + (0.30 + 0.07 * i) * (x1 - x0), y0 + (0.18 + 0.06 * (i % 4)) * (y1 - y0), (12 if i == 0 else 8) * G["sc"], False
-        if born > t or rng.random() > p["drops"] and i > 6:
+        if born > t or (i > 6 and rng.random() > p["drops"]):
             continue
         age = t - born
         if age > life and i > 6:
@@ -353,11 +623,6 @@ def glass(frame, t, p):
             k = 1 - age / 0.18
             cv2.ellipse(trails, (int(x), int(yy)), (int(r * (1 + 1.6 * k)), int(r * (0.6 + 0.6 * k))), 0, 0, 360, 0.8 * k, -1, cv2.LINE_AA)
         out = bead(out, blur, x, yy, r)
-    if p["final_drop"]:
-        ft = p["final_drop"]
-        fx = x0 + 0.5 * (x1 - x0); fy = y0 + 0.2 * (y1 - y0) + ft * 0.45 * (y1 - y0)
-        cv2.line(trails, (int(fx), int(y0 + 0.2 * (y1 - y0))), (int(fx), int(fy)), 0.6, max(1, int(6 * G["sc"])), cv2.LINE_AA)
-        out = bead(out, blur, fx, fy, 13 * G["sc"])
     tr = cv2.GaussianBlur(trails, (0, 0), 1.0)[..., None] * G["outside"][..., None]
     out = out * (1 - tr * 0.5) + (blur * 1.15 + 0.03) * tr * 0.5
     return out
@@ -407,49 +672,15 @@ def room(t, p):
         sick = lum * np.array([0.35, 0.72, 0.85], np.float32) * 1.05
         m = (pl * k)[..., None]
         img = img * (1 - m * 0.9) + sick * m * 0.9
-    # wet sill and the mug filling with drips from a leak in the frame
-    if p["sill_wet"] > 0:
-        cfg = G["cfg"]
-        sp = np.zeros(img.shape[:2], np.float32)
-        cv2.fillPoly(sp, [(np.array(cfg["sill_puddle"]) * G["sc"]).astype(np.int32)], 1.0)
-        sp = cv2.GaussianBlur(sp, (0, 0), 10 * G["sc"]) * p["sill_wet"]
-        sheen = (0.85 + 0.3 * G["puddle"])[..., None]
-        img = img * (1 - sp[..., None] * 0.35) + img * sheen * 0.35 * sp[..., None] * 0.6 + sp[..., None] * 0.04
-    if p["mug"] > 0:
-        mg = G["cfg"]["mug"]; sc = G["sc"]
-        cx, cy, ax, ay = mg["cx"] * sc, mg["cy"] * sc, mg["ax"] * sc, mg["ay"] * sc
-        lvl = p["mug"]
-        ov = np.zeros(img.shape[:2], np.float32)
-        cv2.ellipse(ov, (int(cx), int(cy + (1 - lvl) * 6 * sc)), (int(ax * (0.85 + 0.15 * lvl)), int(ay * 0.9)), 0, 0, 360, 1.0, -1, cv2.LINE_AA)
-        ov = cv2.GaussianBlur(ov, (0, 0), 1)[..., None]
-        water_col = np.array([0.52, 0.5, 0.46], np.float32) * (1 - p["dark"] * 0.5)
-        img = img * (1 - ov * 0.8) + water_col * ov * 0.8
     # light: warm sunset -> cool grey daylight
     w = p["wet"]
     lum = (img @ np.array([0.114, 0.587, 0.299], np.float32))[..., None]
     cool = lum * np.array(p["room_tint"], np.float32)
-    img = img * (1 - 0.75 * w) + cool * 0.75 * w
+    img = img * np.array([1 + 0.06 * w, 1.0, 1 - 0.08 * w], np.float32)
+    img = img * (1 - 0.3 * w) + cool * 0.3 * w
     img *= 1 - p["room_dark"]
     img += p["flash"] * 0.18
     return img, a
-
-
-def drip(img, p):
-    """A drip from a leak in the window head falls into the mug (in front of the glass)."""
-    if p["drip"] is None or p["mug"] <= 0:
-        return img
-    mg = G["cfg"]["mug"]; sc = G["sc"]
-    cx, cy, ax, ay = mg["cx"] * sc, mg["cy"] * sc, mg["ax"] * sc, mg["ay"] * sc
-    ph = p["drip"]
-    if ph < 0.6:
-        yy = int((ph / 0.6) ** 2 * cy)
-        cv2.line(img, (int(cx), max(0, yy - int(22 * sc))), (int(cx), yy), (0.78, 0.8, 0.82), max(2, int(3 * sc)), cv2.LINE_AA)
-        cv2.circle(img, (int(cx), yy), max(2, int(3 * sc)), (0.85, 0.87, 0.9), -1, cv2.LINE_AA)
-    else:
-        rr = (ph - 0.6) / 0.4
-        cv2.ellipse(img, (int(cx), int(cy)), (int(ax * 0.8 * rr) + 1, int(ay * 0.8 * rr) + 1), 0, 0, 360,
-                    (0.9, 0.9, 0.9), max(1, int(1.5 * sc)), cv2.LINE_AA)
-    return img
 
 
 def counter(frame, p):
@@ -469,28 +700,40 @@ def counter(frame, p):
 
 def render(t):
     p = params(t)
+    if p["black"]:
+        return np.zeros((G["H"], G["W"], 3), np.uint8)
     city = G["city_img"].copy()
     height = G["height"].copy()
     G["float_mask"] = np.zeros(height.shape, np.float32)
     traffic(city, t, p, height)
-    city = grade_city(city, p)
+    story.play(G, t, p, city, height, G["float_mask"], pre=True)
+    city = sway(city, t, p)
+    city = grade_city(city, p, light_levels(t))
     sky = sky_layer(t, p)
     sa = (G["sky"] * p["overcast"])[..., None]
     city = city * (1 - sa) + sky * sa
     if p["flash"] > 0:
-        city = city + p["flash"] * (0.35 + lightning_bolt(p["bolt"], G["sky"])[..., None] * 0.9)
+        city = city + p["flash"] * (0.3 + lightning_bolt(p["bolt"], G["sky"])[..., None] * 0.9)
+    actors = city.copy()
+    story.play(G, t, p, actors, height, G["float_mask"])          # people and boats keep their colours
+    city = city + (actors - city) * (1 - p["dark"] * 0.5)
     city = moss(city, p, height)
+    city = vines(city, p)
+    city = bridge(city, t, p, height)
     city = water(city, t, p, height)
-    city = debris(city, t, p)
+    city = wreckage(city, t, p)
+    city = splash(city, t, p)
     city = lamps(city, p)
     city = rain(city, t, p)
     city = glass(city, t, p)
     rm, a = room(t, p)
     a = a[..., None]
     frame = city * (1 - a) + rm * a
-    frame = drip(frame, p)
-    frame = frame * (1 - p["jump"] * 0.25)
-    frame = counter(frame, p)
+    frame = frame * (1 - p["jump"] * 0.2)
+    if p["closeup"]:
+        frame = closeup(frame, t, p)
+    else:
+        frame = counter(frame, p)
     return (np.clip(frame, 0, 1) * 255).astype(np.uint8)
 
 

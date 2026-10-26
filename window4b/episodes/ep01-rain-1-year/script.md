@@ -1,79 +1,23 @@
-# Window 4B — Episode 1: What If It Rained for 1 Year?
+# Window 4B — Episode 1: What If It Rained for 1 Year? (script v2, owner, 26 Oct 2026)
 
-2 min 30 s · Fixed camera · No narration · Minimal on-screen text · Cinematic sound design
-(Owner's script, 26 Oct 2026. Production notes and agreed fixes are in `production.md`.)
+2:30 · 2D · fixed camera · no narration · cinematic sound. Every time jump shows a meaningful
+consequence: disruption, evacuation, infrastructure failure, collapse, survival, abandonment.
+Long-form 16:9 only for now (no vertical version).
 
-| # | Scene | Time | Counter |
-|---|---|---|---|
-| 1 | The First Drop | 0:00–0:10 | DAY 1 |
-| 2 | The Rain Doesn't Stop | 0:10–0:30 | WEEK 1 |
-| 3 | The River Is Rising | 0:30–0:55 | MONTH 1 |
-| 4 | The Street Disappears | 0:55–1:20 | MONTH 3 |
-| 5 | A City Underwater | 1:20–1:45 | MONTH 6 |
-| 6 | Nature Takes Over | 1:45–2:10 | MONTH 11 |
-| 7 | One Year Later | 2:10–2:30 | 1 YEAR LATER |
+| # | Counter | Time | What happens | Sound |
+|---|---|---|---|---|
+| 1 | DAY 1 | 0:00–0:12 | Sunset; cars on the bridge, people on the riverside, lights come on. First drops on the window, people look up, sunset swallowed by clouds | Birds, traffic, wind, first drops, rain builds |
+| 2 | 1 WEEK LATER | 0:12–0:30 | Grey sky; walkway empty, puddles; cars slow with headlights; a man pushes a stalled scooter; first rescue boat with people and supplies | Rain, wet tyres, splashes, distant thunder, faint boat engine |
+| 3 | 1 MONTH LATER | 0:30–0:50 | River above its banks; benches and path under; abandoned cars; people leave with bags; a passenger helped from a stranded bus into a rescue boat | Heavy rain, drains, splashes, distant sirens, boat engines |
+| 4 | 2 MONTHS LATER | 0:50–1:10 | Road under water; bus half submerged; cars trapped; rescue boats between buildings; windows go dark – the power is failing | Rain on glass, wind, boats, sirens fading |
+| 5 | 3 MONTHS LATER | 1:10–1:30 | Lower floors flooded; streetlights flicker and die; bridge standing, approaches flooded, traffic stopped; a boat passes a dead traffic signal; trees half under | Heavy rain, rushing water, electrical crackle, the city falls silent |
+| 6 | 6 MONTHS LATER | 1:30–1:50 | Road gone; only lamp and sign tops; debris caught at the bridge; a big tree bends in the wind; nobody left | Deep rain, strong wind, water on concrete, creaks |
+| 7 | 11 MONTHS LATER | 1:50–2:05 | One vast body of water; cracks spread on a bridge span, a crack, the span collapses with a huge splash, debris drifts | Groan, cracking concrete, collapse, rushing water, thunder |
+| 8 | 1 WEEK LATER | 2:05–2:18 | Small boats between buildings with people and bags; a family taken from a balcony; a helicopter in the distance; the broken bridge behind | Boat engines, splashing, helicopter, rain |
+| 9 | 1 YEAR LATER | 2:18–2:28 | Abandoned city, roads under, bridge broken, lower floors submerged, plants grown wild, no movement; the plant droops, the mug untouched | Softer rain, gentle water, distant thunder, near silence |
+| 10 | – | 2:28–2:30 | Close-up: one drop falls from the window frame into the mug – cut to black as it lands | One plink that loops into the first raindrop |
 
-## Scene 1 — The First Drop (0:00–0:10, DAY 1)
-**Visual:** The city is peaceful at sunset. Cars cross the bridge, the river reflects the orange sky, and trees sway
-gently. A single raindrop hits the window. Another follows. Within seconds, rain begins falling across the entire city.
-Clouds slowly cover the sun.
-**Sound:** Distant traffic, soft wind and birdsong. A distinct raindrop taps the glass, followed by several lighter
-drops. Rain gradually builds into a steady shower. Birds fade naturally into the background.
-
-## Scene 2 — The Rain Doesn't Stop (0:10–0:30, WEEK 1)
-**Visual:** The sky is now completely grey. Water streams down the window. The bridge glistens under the rain, vehicle
-headlights switch on, and puddles spread along the riverside road. The river grows darker and begins to rise against
-its banks. The sun is no longer visible.
-**Sound:** Continuous rainfall against the window and rooftops. Wet tyres hiss as vehicles cross the road. A distant
-rumble of thunder. A subtle, signature whoosh and tick as time jumps forward, blending directly back into the rainfall.
-
-## Scene 3 — The River Is Rising (0:30–0:55, MONTH 1)
-**Visual:** The river has risen noticeably. Water begins covering the lowest sections of the riverside walkway.
-Benches stand partly submerged, and puddles merge along the road. The trees closest to the water have their trunks
-surrounded by floodwater. Traffic slows, and the bus shelter stands beside a growing pool of water.
-**Sound:** Rain becomes heavier and fuller. Water gurgles through drains, occasional splashes from passing vehicles.
-Thunder rolls softly. Finish with the recurring whoosh and tick, followed by uninterrupted rainfall.
-
-## Scene 4 — The Street Disappears (0:55–1:20, MONTH 3)
-**Visual:** Floodwater spills across the riverside road. The bus shelter is surrounded by water, and parked vehicles
-are partially submerged. The walkway disappears beneath muddy water. The bridge remains visible, but its approaches are
-flooded. Reflections of buildings and streetlights ripple across the expanding water surface.
-**Sound:** Heavy rain dominates. Water rushes along the flooded street, splashes against walls and bridge supports.
-Vehicle engines become increasingly distant and eventually disappear. City ambience fades away, leaving rain, rushing
-water and occasional thunder.
-
-## Scene 5 — A City Underwater (1:20–1:45, MONTH 6)
-**Visual:** The river and flooded streets have merged into one enormous body of water. The riverside road is completely
-hidden. Only the upper sections of some trees remain above the surface. The bridge stands over the water, but the roads
-leading to it are submerged. The nearby buildings remain standing, surrounded by the grey, rain-soaked city.
-**Sound:** Rain continues without interruption. Water sloshes against bridge pillars and building walls. Wind moves
-between the buildings. Thunder less frequent but deeper. Remove all remaining traffic sounds.
-
-## Scene 6 — Nature Takes Over (1:45–2:10, MONTH 11)
-**Visual:** The water reaches the lower floors of the nearest riverside buildings. Branches and debris drift across the
-surface. Green growth spreads over damp walls and neglected structures. Trees bend in the wind, and the bridge appears
-increasingly isolated against the flooded skyline. The sky remains dark and overcast.
-**Sound:** A dense curtain of rain, occasional gusts of wind. Branches creak softly, water laps against the buildings.
-Deep thunder in the distance. Gradually soften the sharper rain sounds into a vast, continuous storm ambience.
-
-## Scene 7 — One Year Later (2:10–2:30, 1 YEAR LATER)
-**Visual:** Return to the exact composition of the opening scene. The road and riverside are underwater, the bridge
-stands surrounded by floodwater, and the lower floors of nearby buildings are submerged. The skyline looks dim beneath
-the endless rain. In the foreground, the potted plant is drooping, and rainwater has collected inside the mug. A final
-droplet slowly travels down the window glass. Hold on the transformed city for several seconds – quiet, vast, almost
-unrecognisable compared with Day 1.
-**Sound:** The storm softens slightly, revealing the gentle movement of water beneath the rainfall. A very subtle
-atmospheric musical tone. End with a single raindrop tapping the glass, echoing the opening. Rain continues into the
-final frame so the video loops back to the beginning.
-
-## Sound and editing rules
-- **Camera:** never moves. Same window, bridge, river and buildings in the same positions.
-- **Time transitions:** the same soft whoosh and tick between stages, blended into the rain, not loud.
-- **Text:** only `DAY 1`, `WEEK 1`, `MONTH 1`, `MONTH 3`, `MONTH 6`, `MONTH 11`, `1 YEAR LATER`. Clean white
-  lettering, subtle shadow, same position in the upper-left sky.
-- **Music:** almost none until the final scene. Natural sound carries the episode.
-- **Visual progression:** every time jump makes a noticeable change in water level, vegetation, traffic or buildings.
-- **Ending:** match the opening raindrop sound so the cycle feels continuous.
-
-**Creative direction:** The rain is the main character. The audience should feel the city slowly losing its familiar
-identity without a single spoken word.
+Rules: fixed window viewpoint; subtle whoosh-and-tick at each marker; text = time markers only (white,
+slight shadow); keep bridge, skyline, river, buildings, plant, mug and books in place; minimal music.
+Key moments: first rescue boat (Week 1), power loss (Month 2), bridge collapse (Month 11), the empty city.
+Owner feedback on v1: keep natural colours (v1 was graded too grey/dark).
