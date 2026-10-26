@@ -61,7 +61,7 @@
     ]
    ],
    "grin": true,
-   "image": "frames/f_sphone.png"
+   "image": "frames/up/f_sphone.png"
   },
   "f_slate": {
    "mouth": [
@@ -124,7 +124,7 @@
     ]
    ],
    "grin": true,
-   "image": "frames/f_slate.png"
+   "image": "frames/up/f_slate.png"
   },
   "f_slist": {
    "mouth": [
@@ -187,10 +187,10 @@
     ]
    ],
    "grin": true,
-   "image": "frames/f_slist.png"
+   "image": "frames/up/f_slist.png"
   },
   "f_sstand": {
-   "image": "frames/f_sstand.png",
+   "image": "frames/up/f_sstand.png",
    "mouth": [
     [
      300.3,
