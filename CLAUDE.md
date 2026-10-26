@@ -176,8 +176,12 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Doubt Ep 8 ("Mazhai Peinja Mann Vaasana Yen Varudhu?" – petrichor/geosmin; owner changed the topic from naatu
   food; rainy semman kaadu field, storm sky + rain + scent in code, rain sound synthesised): done without GPU, waiting
   for review (`series/02-thatha-oru-doubt/ep08/final/doubt_ep08.mp4`, 48.7 s). Season 1's 8 episodes are done.
-- Series 03 "Maaran Thatha – Day N" (owner, 2026-10-26: everyday-life comedy with a second character, a young man
-  "Thambi"; courtyard): episodes in `series/03-thatha-days/dayNN/final/`. Thambi's voice = owner's Gemini "Puck" clip
-  (`assets/voice/thambi_ref.*`, f5_voice.py `--ref-wav/--ref-txt`); his look = owner's 2D art (prompts in
-  `day01/final/thambi_requests.md`), expected in `assets/2d/source/thambi/`. Day 1 ("Phone Irukku, Neram Illai!"):
-  voices generating; waiting for Thambi's art.
+- Series 03 "Maaran Thatha – Day N" (owner, 2026-10-26: everyday-life comedy with a second character, the boy
+  "Thambi"; village courtyard): episodes in `series/03-thatha-days/dayNN/final/`. The boy = the owner's character sheet
+  `assets/2d/source/thambi/00_sheet.png` (owner: "use this image for the small boy"; x4 upscale in
+  `~/.maaran/cache/up/00_sheet_x4.png`, regenerate with `tools/upscale.py ... --scale 4`; tile boxes in
+  `day01/final/make_frames.py`). Do NOT make him from Thatha's art (tried, owner replaced it with the sheet). His voice =
+  owner's Gemini "Puck" clip (`assets/voice/thambi_ref.*`, f5_voice.py `--ref-wav/--ref-txt`).
+- Day 1 ("Phone Irukku, Neram Illai!"): done without GPU, waiting for review
+  (`series/03-thatha-days/day01/final/thatha_day01.mp4`, 47.2 s).
+- Next: wait for the owner's Day 2 script.

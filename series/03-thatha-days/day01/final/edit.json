@@ -21,14 +21,30 @@
   {
    "video": "shots/B.mp4",
    "start": 3.3,
-   "end": 6.4,
+   "end": 4.9,
    "src_start": 0.0
+  },
+  {
+   "video": "shots/A.mp4",
+   "start": 4.9,
+   "end": 6.4,
+   "src_start": 3.9,
+   "zoom": 1.15,
+   "focus": [
+    0.45,
+    0.45
+   ]
   },
   {
    "video": "shots/C.mp4",
    "start": 6.4,
    "end": 8.4,
-   "src_start": 0.0
+   "src_start": 0.0,
+   "zoom": 1.35,
+   "focus": [
+    0.3,
+    0.28
+   ]
   },
   {
    "video": "shots/D.mp4",
@@ -168,7 +184,7 @@
    "video": "cut_lock.mp4",
    "start": 39.0,
    "end": 40.2,
-   "src_start": 0.1
+   "src_start": 0.0
   },
   {
    "video": "shots/O.mp4",
