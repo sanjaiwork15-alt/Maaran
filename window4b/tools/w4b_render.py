@@ -733,7 +733,8 @@ def render(t):
     if p["closeup"]:
         frame = closeup(frame, t, p)
     else:
-        frame = counter(frame, p)
+        if not os.environ.get("W4B_NO_COUNTER"):
+            frame = counter(frame, p)
     return (np.clip(frame, 0, 1) * 255).astype(np.uint8)
 
 
