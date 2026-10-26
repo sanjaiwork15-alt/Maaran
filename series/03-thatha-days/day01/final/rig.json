@@ -615,5 +615,203 @@
    "grin": true
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_bfrown",
+   "audio": "voice_A.wav",
+   "duration": 5.4,
+   "seed": 100,
+   "jaw": 16,
+   "gaze": [
+    [
+     0.0,
+     0.25,
+     0,
+     14
+    ]
+   ]
+  },
+  "B": {
+   "frame": "f_two_b",
+   "audio": "voice_B.wav",
+   "duration": 3.2,
+   "seed": 101,
+   "jaw": 5
+  },
+  "C": {
+   "frame": "f_two_t",
+   "audio": "voice_C.wav",
+   "duration": 4.1,
+   "seed": 102
+  },
+  "D": {
+   "frame": "f_tfront",
+   "audio": "voice_D.wav",
+   "duration": 4.1,
+   "seed": 103
+  },
+  "E": {
+   "frame": "f_bsmile",
+   "audio": "voice_E.wav",
+   "duration": 1.7,
+   "seed": 104,
+   "jaw": 16,
+   "gaze": [
+    [
+     0.0,
+     1.7,
+     0,
+     14
+    ]
+   ]
+  },
+  "F": {
+   "frame": "f_bclose",
+   "audio": "voice_F.wav",
+   "duration": 2.7,
+   "seed": 105,
+   "jaw": 9,
+   "gaze": [
+    [
+     1.4,
+     2.7,
+     0,
+     12
+    ]
+   ]
+  },
+  "G": {
+   "frame": "f_tcross",
+   "audio": "voice_G.wav",
+   "duration": 2.8,
+   "seed": 106
+  },
+  "H": {
+   "frame": "f_tfront",
+   "audio": "voice_H.wav",
+   "duration": 2.7,
+   "seed": 107,
+   "brows": [
+    0.4
+   ]
+  },
+  "I": {
+   "frame": "f_bthink",
+   "audio": "voice_I.wav",
+   "duration": 2.4,
+   "seed": 108,
+   "jaw": 7,
+   "gaze": [
+    [
+     0.0,
+     2.4,
+     14,
+     -8
+    ]
+   ]
+  },
+  "J": {
+   "frame": "f_blaugh",
+   "audio": "voice_J.wav",
+   "duration": 1.8,
+   "seed": 109,
+   "jaw": 9
+  },
+  "K": {
+   "frame": "f_tfront",
+   "audio": "voice_K.wav",
+   "duration": 1.9,
+   "seed": 110,
+   "brows": [
+    0.5
+   ]
+  },
+  "L": {
+   "frame": "f_tcross",
+   "audio": "voice_L.wav",
+   "duration": 2.3,
+   "seed": 111
+  },
+  "M1": {
+   "frame": "f_two_t",
+   "audio": "voice_M1.wav",
+   "duration": 6.2,
+   "seed": 112
+  },
+  "M2": {
+   "frame": "f_tfront",
+   "audio": "voice_M2.wav",
+   "duration": 6.2,
+   "seed": 113
+  },
+  "N": {
+   "frame": "f_bsmile",
+   "audio": "voice_N.wav",
+   "duration": 3.7,
+   "seed": 114,
+   "jaw": 16,
+   "gaze": [
+    [
+     0.05,
+     0.95,
+     -22,
+     10
+    ]
+   ]
+  },
+  "O": {
+   "frame": "f_tcross",
+   "audio": "voice_O.wav",
+   "duration": 1.4,
+   "seed": 115,
+   "nod": [
+    [
+     0.1,
+     1.0
+    ]
+   ]
+  },
+  "P": {
+   "frame": "f_tfront",
+   "audio": "voice_P.wav",
+   "duration": 4.6,
+   "seed": 116
+  },
+  "Q": {
+   "frame": "f_two_t",
+   "audio": "voice_Q.wav",
+   "duration": 6.0,
+   "seed": 117
+  },
+  "Lf": {
+   "frame": "f_blaugh",
+   "audio": "silence.wav",
+   "duration": 1.6,
+   "seed": 168,
+   "laugh": [
+    [
+     0.15,
+     1.3
+    ]
+   ]
+  },
+  "Bs": {
+   "frame": "f_bsurp",
+   "audio": "silence.wav",
+   "duration": 2.0,
+   "seed": 169,
+   "brows": [
+    0.2
+   ]
+  },
+  "Rh": {
+   "frame": "f_bhappy",
+   "audio": "silence.wav",
+   "duration": 2.0,
+   "seed": 170,
+   "brows": [
+    0.3
+   ]
+  }
+ }
 }
