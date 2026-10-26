@@ -70,16 +70,28 @@ def build(cfg, debug=None):
     clean = im.copy()
     hole = np.zeros((h, w), np.uint8)
     sprites = {}
+    veh_masks = {}
     for name, (x0, y0, x1, y1) in cfg["vehicles"].items():
         crop = im[y0:y1, x0:x1]
         sub_hsv = hsv[y0:y1, x0:x1]
         bgc = grabcut(im, (x0 + 1, y0 + 1, x1 - x0 - 2, y1 - y0 - 2), 4)[y0:y1, x0:x1]
         a = cv2.GaussianBlur(bgc.astype(np.float32), (0, 0), 0.6)
         sprites[name] = np.dstack([crop, (a * 255).astype(np.uint8)])
-        hole[y0:y1, x0:x1] |= cv2.dilate(bgc.astype(np.uint8), np.ones((5, 5), np.uint8))
+        veh_masks[name] = bgc
+        if name not in cfg.get("keep_in_plate", ()):
+            hole[y0:y1, x0:x1] |= cv2.dilate(bgc.astype(np.uint8), np.ones((5, 5), np.uint8))
     for x0, y0, x1, y1 in cfg.get("paint_out", []):
         hole[y0:y1, x0:x1] = 1
-    clean = cv2.inpaint(clean, hole * 255, 5, cv2.INPAINT_TELEA)
+    # the bridge is made of horizontal lines (deck, railing): fill each row from its left and right edges
+    clean = clean.astype(np.float32)
+    for y in range(h):
+        row = hole[y].astype(bool)
+        if row.any():
+            xs = np.arange(w)
+            for c in range(3):
+                clean[y, row, c] = np.interp(xs[row], xs[~row], clean[y, ~row, c])
+    clean = cv2.GaussianBlur(clean, (0, 0), 0.7) * hole[..., None] + clean * (1 - hole[..., None])
+    clean = clean.clip(0, 255).astype(np.uint8)
 
     im_master = im
     im = clean
@@ -164,6 +176,16 @@ def build(cfg, debug=None):
         t = poly((h, w), pts) & (leafy | dark | trunk) & ~river & ~ground
         ys = np.nonzero(t)[0]
         height[t] = (base - ys) / s(base)
+    # vehicles left parked in the street: the water climbs them from their wheels
+    for name in cfg.get("keep_in_plate", ()):
+        x0, y0, x1, y1 = cfg["vehicles"][name]
+        t = np.zeros((h, w), bool); t[y0:y1, x0:x1] = veh_masks[name]
+        ys = np.nonzero(t)[0]
+        height[t] = (y1 - ys) / s(y1)
+    # the bridge deck stays above the flood (its far end may read low in perspective)
+    for pts, v in cfg.get("min_height", []):
+        t = poly((h, w), pts)
+        height[t] = np.maximum(height[t], v)
     height[sky] = 99.0
 
     out = dict(outside=outside, sky=sky_soft, height=height, river=river, ground=ground,
