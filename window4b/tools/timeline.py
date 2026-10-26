@@ -22,7 +22,7 @@ STAGES = [  # start, counter text, values
     (70, "3 MONTHS LATER", dict(level=2.0, rain=1.0, dark=0.12, plant=0.4, moss=0.25, room_dark=0.17)),
     (90, "6 MONTHS LATER", dict(level=2.45, dark=0.13, plant=0.6, moss=0.55, room_dark=0.18)),
     (110, "11 MONTHS LATER", dict(level=2.6, dark=0.14, plant=0.75, moss=0.75, room_dark=0.19)),
-    (125, "1 WEEK LATER", dict(level=2.65, plant=0.82, moss=0.85, room_dark=0.19)),
+    (125, "11 MONTHS, 1 WEEK", dict(level=2.65, plant=0.82, moss=0.85, room_dark=0.19)),
     (138, "1 YEAR LATER", dict(level=2.7, rain=0.55, dark=0.12, drops=0.6, rings=0.55, plant=1.0, moss=1.0,
                                vines=1.0, room_dark=0.17)),
 ]
