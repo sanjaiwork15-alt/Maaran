@@ -5,4 +5,5 @@ the Maaran rules in `/CLAUDE.md` (Tamil voice, no on-screen text, etc.) do not a
 
 - `bible/master-scene.md` – **the permanent master-scene reference** (landmarks, layers, art rules, master prompt, open issues)
 - `bible/channel-bible.md` – channel bible (converted from the owner's `channel-bible.docx`)
-- `assets/master/window4b_master_v1.png` – locked master image (golden hour)
+- `assets/master/window4b_master_v1.png` – locked 16:9 master (golden hour)
+- `assets/master/window4b_master_vertical_v1.png` – locked 9:16 master for Shorts

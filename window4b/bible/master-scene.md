@@ -1,11 +1,15 @@
 # Window 4B – Master Scene (permanent reference)
 
-**Locked image:** `window4b/assets/master/window4b_master_v1.png` (1672 × 941, 16:9, golden hour, made on seaart.ai).
+**Locked images (golden hour, made on seaart.ai):**
+- 16:9 long video: `window4b/assets/master/window4b_master_v1.png` (1672 × 941)
+- 9:16 Shorts: `window4b/assets/master/window4b_master_vertical_v1.png` (941 × 1672) – a separate vertical master from
+  the same window, not a crop of the 16:9. Each format keeps its own fixed camera.
+
 Every episode uses this exact camera, window, bridge, river, buildings, roads and foreground objects.
 Only weather, environment, lighting and world conditions change. No zoom, pan, tilt or perspective change.
 
-This file **replaces the "world" section of `channel-bible.md`** (that section describes an older street/opposite-building
-design – see "Conflicts with the channel bible" below).
+This file **replaces the "world" and "residents" sections of `channel-bible.md`** (they describe an older street/opposite-building
+design – see "Decisions that override" below).
 
 ## Composition
 
@@ -21,7 +25,7 @@ road lower left; trees, pavement, benches, bus shelter and streetlights along th
 building on the right edge; distant skyline to the horizon; wide sky with layered clouds and a low setting sun.
 *Purpose: big-city feel and a canvas for long-term change.*
 
-## Landmark map (fixed positions)
+## Landmark map – 16:9 master (fixed positions)
 
 Approximate boxes measured on the v1 image, as % of width (x) and height (y) from the top-left. Use them to place
 change layers and to check that a regenerated master still matches.
@@ -45,6 +49,35 @@ change layers and to check that a regenerated master still matches.
 
 Also present but not in the spec: a chair back at the bottom left (4–35 %, 88–100 %), a second small plant and a
 pen holder at the bottom right (86–100 %, 67–97 %). Decide whether they are permanent too.
+
+## Landmark map – 9:16 vertical master (fixed positions)
+
+| Landmark | x % | y % |
+|---|---|---|
+| Curtain + left frame / right frame / top frame | 0–15 / 96–100 / – | full / full / 0–4 |
+| Near-left balcony building | 14–25 | 22–70 |
+| Skyline | 20–95 | 19–46 |
+| Sun | 84–90 | 36–39 |
+| Bridge deck / piers | 24–96 | 48–51 / to 56 |
+| River | 30–96 | 51–76 |
+| Road (with bus, cars) | 24–90 | 60–84 |
+| Bus shelter | 68–77 | 70–77 |
+| Potted plant | 0–30 | 60–93 |
+| Mug | 21–40 | 77–88 |
+| Books | 70–100 | 85–96 |
+| Small plant, right edge | 93–100 | 73–86 |
+| Chair back | 10–55 | 93–100 |
+| Boat on the river | 86–94 | 59–61 |
+
+Differences from the 16:9 master: **no glass office tower on the right** (that side is open sky and the sun), no pen
+holder, an extra boat on the river and a bus on the road. Scenarios that use the glass tower (vines, lights going out)
+must use the skyline towers in the vertical version instead.
+
+## People
+
+No named residents. The street has **random passers-by** (walkers, drivers, people at the bus shelter, a boat on the
+river). They are small, unnamed and change freely between episodes; they show the scenario (umbrellas, empty streets,
+candles) but are never the story.
 
 ## Layers
 
@@ -102,30 +135,23 @@ Each scenario must change at least two or three big areas, not tiny details:
 > **Canvas:** 3840 × 2160, 16:9. Keep the major environmental landmarks in the central composition so a vertical 9:16
 > crop can be produced from the same artwork.
 
-## Open issues with v1 (found on review, 26 Oct 2026)
+## Open issues (reviewed 26 Oct 2026)
 
-1. **9:16 centre crop loses the channel identity.** A centred 9:16 crop keeps only x 34–66 %
-   (`v1_centre_crop_916_check.png`): no window frame, no plant, no mug, no books, no glass tower, no sun. The lower
-   fifth is an empty sill. Options: (a) a separate vertical master drawn from the same viewpoint, (b) recompose the
-   16:9 master with the landmarks pulled toward the centre, or (c) an off-centre or panned crop – but (c) breaks the
-   "no pan" rule.
-2. **Resolution:** v1 is 1672 × 941, not 3840 × 2160. Upscale (Real-ESRGAN) or regenerate at full size before
-   drawing change layers on top, or every layer will be built on a soft base.
-3. **Sun has a notch** cut out of its lower edge (AI artifact) – fix when cleaning up.
-4. **Flattened image, no layers.** The layer list above has to be cut out by hand or regenerated per layer.
+1. ~~9:16 crop loses the channel identity~~ – solved by the separate vertical master.
+2. **Resolution:** both masters are 1672 px on the long side, not 3840 × 2160 / 2160 × 3840. Upscale (Real-ESRGAN) or
+   regenerate at full size before drawing change layers on top.
+3. **Sun has a notch** on its lower edge in both masters (AI artifact) – fix in clean-up.
+4. **Flattened images, no layers.** The layer list has to be cut out by hand or generated per layer, for each master.
 5. **Licence:** confirm seaart.ai's terms allow commercial use on a monetised channel.
+6. **Changes must stay consistent across the two masters.** The same stage (say, Year 1 of rain) has to show the same
+   water level on the bridge piers, the same plant state, and so on, in both formats.
 
-## Conflicts with the channel bible (`channel-bible.md`) – decide which wins
+## Decisions that override `channel-bible.md`
 
-| Bible says | Master scene shows |
+| Bible said | Decided |
 |---|---|
-| Street below with tea/snack stall, lamp post, big tree, parked **yellow car** | Riverfront road; no stall, no yellow car |
-| Building opposite with windows **2A, 2B, 3A, 3B** and a rooftop water tank | Skyline and towers far away; no readable neighbour windows |
-| Residents Mr Bose (2A), Kim family (3B), Tara (stall) | Nowhere to place them at a readable size |
-| Sill: plant, **cracked** mug, **wall calendar** | Plant, **plain** mug, books; no calendar |
-| "Calm and cosy" flat 2D, soft colours, simple shapes | Highly detailed, painterly, busy skyline |
-| Mix of Asian and Western details ("placeless") | Reads as a Western downtown |
-| Tiny "4B" easter egg and hidden cat each episode | No place defined yet |
-
-The residents and the yellow car were the bible's main differentiators against AI-template channels; the master scene
-spec makes characters optional. That is the biggest decision to confirm.
+| Street with tea stall, lamp post, big tree, parked yellow car | Riverfront road, bridge, river and skyline as in the masters |
+| Building opposite with windows 2A–3B, rooftop tank | Dropped |
+| Named residents Mr Bose, Kim family, Tara; yellow car as decay clock | Dropped – random passers-by only |
+| Sill: plant, cracked mug, wall calendar | Plant, plain mug, books (no calendar) |
+| 9:16 Short = centre crop of the 16:9 | Separate vertical master |
