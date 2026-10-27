@@ -139,8 +139,6 @@ def main(out):
     # ---------------- Scene 6: futuristic hum, billboard
     fut = sum(np.sin(2 * np.pi * f * t + rng.uniform(0, 6)) for f in (55, 82.5, 110)) / 3
     mix += stereo(bp(fut, 40, 300), 0) * (env([(0, 0), (104, 0), (108, 1), (138, 1), (147.3, 0.6), (150, 0), (DURATION, 0)]) * db(-30))[:, None]
-    buzz = np.sign(np.sin(2 * np.pi * 120 * t)) * 0.2
-    mix += stereo(bp(buzz, 100, 3000), -0.2) * (env([(0, 0), (112, 0), (112.6, 1), (119.1, 1), (119.2, 0), (DURATION, 0)]) * db(-38))[:, None]
     place(mix, tap(900, 0.05, 0.4), 119.2, -0.2, db(-24))
 
     # ---------------- Scene 7: the last machine

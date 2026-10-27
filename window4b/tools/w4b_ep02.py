@@ -531,9 +531,8 @@ def big_machine(L, t, night):
 
 
 def billboard(L, t, s):
-    """Year 80: a huge screen on a colossal tower, on, then off."""
-    if not 112 <= t < 119.2:
-        return
+    """Removed at the owner's request (read as a glitch); kept for reference."""
+    return
     x0, x1, y0, y1 = 600, 860, 145, 270
     on = ramp(t, 112, 112.6) * (1 - ramp(t, 119.0, 119.2))
     L.rect(x0 - 4, y0 - 4, x1 + 4, y1 + 4, (0.08, 0.08, 0.1))
