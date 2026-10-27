@@ -534,14 +534,18 @@ def billboard(L, t, s):
     """Year 80: a huge screen on a colossal tower, on, then off."""
     if not 112 <= t < 119.2:
         return
-    x0, x1, y0, y1 = s["x0"] + 8, s["x1"] - 30, 150, 250
+    x0, x1, y0, y1 = 600, 860, 145, 270
     on = ramp(t, 112, 112.6) * (1 - ramp(t, 119.0, 119.2))
-    hues = [(1.0, 0.3, 0.6), (0.3, 0.9, 1.0), (0.9, 0.5, 0.2), (0.5, 1.0, 0.4)]
-    k = int(t * 1.2) % 4
-    c = hues[k]
-    L.rect(x0, y0, x1, y1, (0.08, 0.08, 0.1))
-    L.light_rect(x0 + 2, y0 + 2, x1 - 2, y1 - 2, c, on * 0.8)
-    L.light_rect(x0 + 10, y0 + 40, x1 - 10, y0 + 55, (1.0, 1.0, 1.0), on * 0.6)
+    L.rect(x0 - 4, y0 - 4, x1 + 4, y1 + 4, (0.08, 0.08, 0.1))
+    import colorsys
+    for i in range(26):   # a slowly shifting colour gradient with a light sweep (no text, no logos)
+        u = i / 26
+        h = (0.55 + 0.35 * u + 0.08 * t) % 1.0
+        r, g, b = colorsys.hsv_to_rgb(h, 0.55, 1.0)
+        xa = x0 + (x1 - x0) * u
+        L.light_rect(xa, y0, xa + (x1 - x0) / 26 + 0.5, y1, (b, g, r), on * 0.55)
+    sx = x0 + (x1 - x0) * (((t - 112) * 0.35) % 1.0)
+    L.light_rect(sx - 12, y0, sx + 12, y1, (1.0, 1.0, 1.0), on * 0.35)
 
 
 # ------------------------------------------------------------------ frame
@@ -644,6 +648,7 @@ def compose(t):
     d = dust(L5, t)
     if d is not None:
         city = city * (1 - d[..., None]) + np.array([0.62, 0.66, 0.7], np.float32) * d[..., None]
+        G["dust_lit"] = d
         CE = CE * (1 - d[..., None] * 0.6)
         E = E * (1 - d[..., None])
     # 2026 window lights and street lamps at night
@@ -663,11 +668,14 @@ def compose(t):
     skyimg = sky(t, day, night, sunset, city)
     graded = graded * (1 - skyw[..., None]) + skyimg * skyw[..., None]
     out = graded + E_night + CE * 1.4
+    if d is not None:   # dust catches the machine's work lights
+        out = out + G["dust_lit"][..., None] * np.array([0.35, 0.4, 0.45], np.float32) * nl
     # a passing transit's light band (Year 80)
     if 121.0 < t < 124.5:
         bx = (1500 - (t - 121) * 360) * G["sc"]
-        band = np.exp(-((G["xx"] - bx) / (60 * G["sc"])) ** 2)[..., None] * G["outside"][..., None]
-        out = out + band * city * 0.5 * (1 - skyw[..., None])
+        by = (396 + (bx / G["sc"] - 300) * 0.024) * G["sc"]
+        band = np.exp(-((G["xx"] - bx) / (110 * G["sc"])) ** 2 - ((G["yy"] - by) / (34 * G["sc"])) ** 2)
+        out = out + (band * G["outside"])[..., None] * (city * 1.2 + 0.06) * (1 - skyw[..., None])
     # bloom on the old window and lights
     glow = cv2.GaussianBlur(CE, (0, 0), 6 * sc) * 1.6 + cv2.GaussianBlur(E_night, (0, 0), 3 * sc) * 0.5
     out = out + glow
