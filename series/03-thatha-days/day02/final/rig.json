@@ -342,5 +342,83 @@
    "image": "frames/up/f_gflood.png"
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_gwater",
+   "audio": "voice_A.wav",
+   "duration": 7.3,
+   "seed": 465,
+   "brows": [
+    1.0,
+    5.6
+   ]
+  },
+  "B": {
+   "frame": "f_gflood",
+   "audio": "voice_B.wav",
+   "duration": 3.6,
+   "seed": 466,
+   "brows": [
+    0.4
+   ]
+  },
+  "C": {
+   "frame": "f_gproud",
+   "audio": "voice_C.wav",
+   "duration": 4.3,
+   "seed": 467,
+   "laugh": [
+    [
+     1.0,
+     0.9
+    ]
+   ]
+  },
+  "D": {
+   "frame": "f_gsoil",
+   "audio": "voice_D.wav",
+   "duration": 8.0,
+   "seed": 468,
+   "jaw": 9,
+   "brows": [
+    0.2,
+    4.2
+   ]
+  },
+  "E": {
+   "frame": "f_gpoint",
+   "audio": "voice_E.wav",
+   "duration": 13.3,
+   "seed": 469,
+   "nod": [
+    [
+     9.0,
+     1.0
+    ]
+   ]
+  },
+  "F": {
+   "frame": "f_gstand",
+   "audio": "voice_F.wav",
+   "duration": 11.0,
+   "seed": 470,
+   "gaze": [
+    [
+     0.3,
+     1.6,
+     -16,
+     12
+    ]
+   ],
+   "laugh": [
+    [
+     4.6,
+     0.9
+    ]
+   ],
+   "brows": [
+    6.2
+   ]
+  }
+ }
 }

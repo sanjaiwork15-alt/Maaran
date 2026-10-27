@@ -1,0 +1,238 @@
+{
+ "voice": "voice.wav",
+ "ambience_seed": 212,
+ "shots": [
+  {
+   "video": "shots/A.mp4",
+   "start": 0.0,
+   "end": 2.6,
+   "src_start": 0.0,
+   "zoom": [
+    1.0,
+    1.08
+   ]
+  },
+  {
+   "video": "shots/A.mp4",
+   "start": 2.6,
+   "end": 4.6,
+   "src_start": 2.6,
+   "zoom": 1.6,
+   "focus": [
+    0.6,
+    0.38
+   ]
+  },
+  {
+   "video": "shots/A.mp4",
+   "start": 4.6,
+   "end": 7.0,
+   "src_start": 4.6,
+   "zoom": 1.7,
+   "focus": [
+    0.27,
+    0.8
+   ]
+  },
+  {
+   "video": "cut_pour.mp4",
+   "start": 7.0,
+   "end": 8.6,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/B.mp4",
+   "start": 8.6,
+   "end": 10.4,
+   "src_start": 1.6,
+   "zoom": 1.5,
+   "focus": [
+    0.6,
+    0.4
+   ]
+  },
+  {
+   "video": "cut_pour.mp4",
+   "start": 10.4,
+   "end": 11.6,
+   "src_start": 1.6
+  },
+  {
+   "video": "shots/C.mp4",
+   "start": 11.6,
+   "end": 13.0,
+   "src_start": 1.2,
+   "zoom": [
+    1.0,
+    1.06
+   ]
+  },
+  {
+   "video": "shots/C.mp4",
+   "start": 13.0,
+   "end": 14.4,
+   "src_start": 2.6,
+   "zoom": 1.5,
+   "focus": [
+    0.53,
+    0.37
+   ]
+  },
+  {
+   "video": "cut_pour.mp4",
+   "start": 14.4,
+   "end": 15.6,
+   "src_start": 2.8,
+   "zoom": 1.3,
+   "focus": [
+    0.5,
+    0.82
+   ]
+  },
+  {
+   "video": "shots/D.mp4",
+   "start": 15.6,
+   "end": 17.0,
+   "src_start": 1.2,
+   "zoom": 1.5,
+   "focus": [
+    0.47,
+    0.42
+   ]
+  },
+  {
+   "video": "cut_finger.mp4",
+   "start": 17.0,
+   "end": 18.5,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/B.mp4",
+   "start": 18.5,
+   "end": 19.7,
+   "src_start": 11.5,
+   "zoom": 1.9,
+   "focus": [
+    0.27,
+    0.86
+   ]
+  },
+  {
+   "video": "shots/D.mp4",
+   "start": 19.7,
+   "end": 22.3,
+   "src_start": 5.3,
+   "zoom": [
+    1.0,
+    1.1
+   ]
+  },
+  {
+   "video": "cut_tilt.mp4",
+   "start": 22.3,
+   "end": 24.6,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/E.mp4",
+   "start": 24.6,
+   "end": 26.3,
+   "src_start": 2.3,
+   "zoom": 1.45,
+   "focus": [
+    0.6,
+    0.4
+   ]
+  },
+  {
+   "video": "cut_section.mp4",
+   "start": 26.3,
+   "end": 31.0,
+   "src_start": 0.0
+  },
+  {
+   "video": "shots/E.mp4",
+   "start": 31.0,
+   "end": 32.6,
+   "src_start": 8.7,
+   "zoom": [
+    1.0,
+    1.06
+   ]
+  },
+  {
+   "video": "cut_finger.mp4",
+   "start": 32.6,
+   "end": 34.0,
+   "src_start": 0.4
+  },
+  {
+   "video": "shots/E.mp4",
+   "start": 34.0,
+   "end": 35.6,
+   "src_start": 11.7,
+   "zoom": 1.6,
+   "focus": [
+    0.24,
+    0.72
+   ]
+  },
+  {
+   "video": "shots/F.mp4",
+   "start": 35.6,
+   "end": 37.4,
+   "src_start": 0.1,
+   "zoom": [
+    1.0,
+    1.06
+   ]
+  },
+  {
+   "video": "shots/F.mp4",
+   "start": 37.4,
+   "end": 39.4,
+   "src_start": 1.9,
+   "zoom": 1.6,
+   "focus": [
+    0.55,
+    0.2
+   ]
+  },
+  {
+   "video": "shots/F.mp4",
+   "start": 39.4,
+   "end": 41.0,
+   "src_start": 3.9,
+   "zoom": 1.9,
+   "focus": [
+    0.14,
+    0.9
+   ]
+  },
+  {
+   "video": "shots/F.mp4",
+   "start": 41.0,
+   "end": 43.2,
+   "src_start": 5.5,
+   "zoom": 1.35,
+   "focus": [
+    0.55,
+    0.28
+   ]
+  },
+  {
+   "video": "shots/F.mp4",
+   "start": 43.2,
+   "end": 46.5,
+   "src_start": 7.7,
+   "zoom": [
+    1.2,
+    1.0
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ]
+  }
+ ]
+}
