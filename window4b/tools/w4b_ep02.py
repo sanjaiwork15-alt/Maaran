@@ -734,6 +734,8 @@ def room(frame_city, day, night, t):
 
 
 def text(frame, t):
+    if os.environ.get("W4B_NO_TEXT"):      # clean plate for the Shorts editor
+        return frame
     i = max(k for k, s in enumerate(SCENES) if s[0] <= t)
     start, label = SCENES[i]
     nxt = SCENES[i + 1][0] if i + 1 < len(SCENES) else DURATION
