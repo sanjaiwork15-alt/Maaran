@@ -116,6 +116,8 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
 - The container restarts sometimes (uptime resets); background jobs die with it. Check `pgrep` before waiting on one.
 - Background Bash jobs stop at their timeout (default 30 min): pass a long `timeout` for upscales/renders, and
   `renice 19` an upscale that runs beside the voice (IndicF5 slowed to ~10 min/line with ESRGAN on the same 4 CPUs).
+- Edit lists: reusing a talk.py shot later in the edit needs an explicit `src_start` inside that shot's length –
+  check every piece's src_start + length against its clip (Day 2 had one pointing past the end).
 - No rain/storm recordings in `assets/sound/nature` and Wikimedia Commons is blocked here: `tools/ambience.py
   --rain/--thunder` synthesises them (Doubt Ep 8).
 - Waiting on a process with `pgrep -f "pattern"` inside `bash -c` matches its own command line – use a bracket
@@ -182,4 +184,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   the two-character cut is kept in `day01/v1_two_characters/`.
 - Day 1 ("Phone Irukku, Neram Illai!", solo, thinnai): done without GPU, waiting for review
   (`series/03-thatha-days/day01/final/thatha_day01.mp4`, 46.0 s).
-- Next: wait for the owner's Day 2 script.
+- Day 2 ("Chedikku Thanni Oothuradhula Oru Alavu Irukku!", home garden, overwatering): done without GPU, waiting for
+  review (`series/03-thatha-days/day02/final/thatha_day02.mp4`, 46.5 s).
+- Next: wait for the owner's Day 3 script.

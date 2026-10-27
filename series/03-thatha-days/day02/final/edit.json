@@ -110,7 +110,7 @@
    "video": "shots/B.mp4",
    "start": 18.5,
    "end": 19.7,
-   "src_start": 11.5,
+   "src_start": 0.3,
    "zoom": 1.9,
    "focus": [
     0.27,
@@ -147,8 +147,22 @@
   {
    "video": "cut_section.mp4",
    "start": 26.3,
-   "end": 31.0,
+   "end": 28.5,
    "src_start": 0.0
+  },
+  {
+   "video": "cut_section.mp4",
+   "start": 28.5,
+   "end": 31.0,
+   "src_start": 2.2,
+   "zoom": [
+    1.15,
+    1.4
+   ],
+   "focus": [
+    0.5,
+    0.62
+   ]
   },
   {
    "video": "shots/E.mp4",
