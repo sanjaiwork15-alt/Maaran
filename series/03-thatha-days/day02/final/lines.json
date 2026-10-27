@@ -1,0 +1,74 @@
+[
+ {
+  "id": "L1a",
+  "tanglish": "En chella kutti chedi!",
+  "tamil": "என் செல்லக் குட்டிச் செடி!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1b",
+  "tanglish": "Unna nalla valarkkanum-na, dhinamum thanni oothanum... appadithaaney?",
+  "tamil": "உன்ன நல்லா வளக்கணும்னா, தினமும் தண்ணி ஊத்தணும்... அப்படித்தானே?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2a",
+  "tanglish": "Konjam thanni... innum konjam... sari, innoru konjam!",
+  "tamil": "கொஞ்சம் தண்ணி... இன்னும் கொஞ்சம்... சரி, இன்னொரு கொஞ்சம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2b",
+  "tanglish": "Ippo paaru, en chedi evlo santhoshamaa irukkumnu!",
+  "tamil": "இப்போ பாரு, என் செடி எவ்ளோ சந்தோஷமா இருக்கும்னு!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3a",
+  "tanglish": "Aana oru nimisham!",
+  "tamil": "ஆனா ஒரு நிமிஷம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3b",
+  "tanglish": "Mannu eeramaa irukku... keezhayum thanni nikkudhu!",
+  "tamil": "மண்ணு ஈரமா இருக்கு... கீழயும் தண்ணி நிக்குது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3c",
+  "tanglish": "Appo innum thanni thevaiyaa? Illa, konjam niruthanuma?",
+  "tamil": "அப்போ இன்னும் தண்ணி தேவையா? இல்ல, கொஞ்சம் நிறுத்தணுமா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4a",
+  "tanglish": "Chedikku thanni mukkiyam dhaan makkaley.",
+  "tamil": "செடிக்கு தண்ணி முக்கியம் தான் மக்களே.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4b",
+  "tanglish": "Aana thevaikku adhigamaa oothinaa, mannula kaathoda idam koraiyalaam; vergalukkum prachanai varalaam.",
+  "tamil": "ஆனா தேவைக்கு அதிகமா ஊத்தினா, மண்ணுல காத்தோட இடம் குறையலாம்; வேர்களுக்கும் பிரச்சனை வரலாம்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4c",
+  "tanglish": "Adhanaala mannoda eerathai paarthu, thevaippadumbodhu thanni oothanum!",
+  "tamil": "அதனால மண்ணோட ஈரத்தை பார்த்து, தேவைப்படும்போது தண்ணி ஊத்தணும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5a",
+  "tanglish": "Chediya valarkkuradhukku paasam mattum podhaadhu makkaley... konjam arivum venum!",
+  "tamil": "செடிய வளக்குறதுக்கு பாசம் மட்டும் போதாது மக்களே... கொஞ்சம் அறிவும் வேணும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5b",
+  "tanglish": "Illenna chediyai vida namma thanni can dhaan seekiram kaaliyaagum!",
+  "tamil": "இல்லன்னா செடியை விட நம்ம தண்ணி கேன் தான் சீக்கிரம் காலியாகும்!",
+  "pause_after": 0.5
+ }
+]
