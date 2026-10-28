@@ -12,6 +12,7 @@ Layers, all quiet so the voice stays clear:
   crow     one distant crow; rooster  one far-off cockcrow near the start
   rain     (Doubt Ep 8) synthesised in code, no recording: band-passed hiss, Poisson-timed drop ticks, a few
            louder near drips; --rain is a level curve "t:level,..." (0..1); the birds duck while it rains
+  night    (Day 3) --night "t:level,..." – birds fade out, crickets come up
   thunder  far-off rumbles (low-passed brown noise, slow swell and long tail) at the given times
 Credits for CC BY clips: assets/sound/nature/CREDITS.md (put them in the video description).
 """
@@ -131,7 +132,7 @@ def thunder(rng, dur=5.0):
     return at_level(b * env, -34)
 
 
-def build(dur, seed=3, rooster=True, rain_curve=None, thunders=()):
+def build(dur, seed=3, rooster=True, rain_curve=None, thunders=(), night_curve=None):
     rng = np.random.default_rng(seed)
     n = int(dur * SR)
     st = np.zeros((n, 2), np.float32)
@@ -182,6 +183,12 @@ def build(dur, seed=3, rooster=True, rain_curve=None, thunders=()):
         level = np.interp(np.arange(n) / SR, pts[:, 0], pts[:, 1]).astype(np.float32)
         st *= (1 - 0.75 * level)[:, None]                         # birds go quiet in the rain
         st += rain(n, level, rng)
+    if night_curve:                                           # night: the birds go quiet, crickets come up (Day 3)
+        pts = np.array(night_curve, float)
+        nl = np.interp(np.arange(n) / SR, pts[:, 0], pts[:, 1]).astype(np.float32)[:, None]
+        cr = at_level(filt(load("crickets_kollam"), lo=2200, hi=7500), -37)
+        cr2 = np.stack([loop(cr, n), np.roll(loop(cr, n), SR // 2)], 1)
+        st = st * (1 - 0.9 * nl) + cr2 * nl
     for tt in thunders:
         place(st, thunder(rng), tt, rng.uniform(-0.5, 0.5))
 
@@ -202,10 +209,12 @@ def main():
     ap.add_argument("--no-rooster", action="store_true")
     ap.add_argument("--rain", default="", help='level curve "t:level,t:level,..."')
     ap.add_argument("--thunder", default="", help="comma-separated times")
+    ap.add_argument("--night", default="", help='night level curve "t:level,..." (0..1)')
     a = ap.parse_args()
     curve = [[float(v) for v in p.split(":")] for p in a.rain.split(",")] if a.rain else None
     th = [float(v) for v in a.thunder.split(",")] if a.thunder else []
-    sf.write(a.out, build(a.duration, a.seed, not a.no_rooster, curve, th), SR)
+    nc = [[float(v) for v in p.split(":")] for p in a.night.split(",")] if a.night else None
+    sf.write(a.out, build(a.duration, a.seed, not a.no_rooster, curve, th, nc), SR)
     print("saved", a.out)
 
 

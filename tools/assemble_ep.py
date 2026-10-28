@@ -119,7 +119,8 @@ def main():
     subprocess.run([py, str(ROOT / "tools/ambience.py"), str(tmp / "amb.wav"), str(total + 1),
                     "--seed", str(cfg.get("ambience_seed", 3))] +
                    (["--rain", ",".join(f"{a}:{b}" for a, b in cfg["rain"])] if cfg.get("rain") else []) +
-                   (["--thunder", ",".join(str(v) for v in cfg["thunder"])] if cfg.get("thunder") else []), check=True)
+                   (["--thunder", ",".join(str(v) for v in cfg["thunder"])] if cfg.get("thunder") else []) +
+                   (["--night", ",".join(f"{a}:{b}" for a, b in cfg["night"])] if cfg.get("night") else []), check=True)
     subprocess.run([py, str(ROOT / "tools/mix.py"), str(base / cfg["voice"]), str(tmp / "amb.wav"), str(tmp / "mix.wav"),
                     "--bed-db", "-2", "--tail", str(max(0.0, total - float(subprocess.run(
                         ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(base / cfg["voice"])],

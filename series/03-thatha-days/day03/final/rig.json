@@ -349,5 +349,76 @@
    "image": "frames/up/f_dtemple.png"
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_dsun",
+   "audio": "voice_A.wav",
+   "duration": 10.4,
+   "seed": 565,
+   "yawn": [
+    [
+     0.15,
+     1.5
+    ]
+   ],
+   "brows": [
+    8.6
+   ]
+  },
+  "B": {
+   "frame": "f_dpoint",
+   "audio": "voice_B.wav",
+   "duration": 4.2,
+   "seed": 566
+  },
+  "C": {
+   "frame": "f_dup",
+   "audio": "voice_C.wav",
+   "duration": 7.5,
+   "seed": 567,
+   "brows": [
+    0.1,
+    0.5
+   ],
+   "shake": [
+    [
+     5.6,
+     0.9
+    ]
+   ]
+  },
+  "D": {
+   "frame": "f_dpointr",
+   "audio": "voice_D.wav",
+   "duration": 2.9,
+   "seed": 568,
+   "brows": [
+    0.3
+   ]
+  },
+  "E": {
+   "frame": "f_dstand",
+   "audio": "voice_E.wav",
+   "duration": 8.7,
+   "seed": 569,
+   "laugh": [
+    [
+     6.5,
+     1.0
+    ]
+   ]
+  },
+  "F": {
+   "frame": "f_dtemple",
+   "audio": "voice_F.wav",
+   "duration": 2.1,
+   "seed": 570,
+   "laugh": [
+    [
+     1.8,
+     0.3
+    ]
+   ]
+  }
+ }
 }
