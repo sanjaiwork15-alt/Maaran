@@ -186,4 +186,7 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   (`series/03-thatha-days/day01/final/thatha_day01.mp4`, 46.0 s).
 - Day 2 ("Chedikku Thanni Oothuradhula Oru Alavu Irukku!", home garden, overwatering): done without GPU, waiting for
   review (`series/03-thatha-days/day02/final/thatha_day02.mp4`, 46.5 s).
-- Next: wait for the owner's Day 3 script.
+- Day 3 ("Thatha-voda Thookkamum Kozhi Koovuradhum!", sunset thinnai + kattil night-to-morning): done without GPU,
+  waiting for review (`series/03-thatha-days/day03/final/thatha_day03.mp4`, 47.0 s). New: sleeping Thatha from the
+  head sheet (eyes painted shut), `tools/toon/morning.py`, `tools/sfx.py`.
+- Next: wait for the owner's Day 4 script.

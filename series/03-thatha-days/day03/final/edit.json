@@ -98,17 +98,25 @@
    "start": 14.1,
    "end": 16.2,
    "src_start": 1.1,
-   "zoom": 1.5,
+   "zoom": 1.45,
    "focus": [
-    0.45,
-    0.76
+    0.42,
+    0.83
    ]
   },
   {
    "video": "cut_set.mp4",
    "start": 16.2,
    "end": 18.0,
-   "src_start": 2.6
+   "src_start": 2.6,
+   "zoom": [
+    1.4,
+    1.6
+   ],
+   "focus": [
+    0.44,
+    0.6
+   ]
   },
   {
    "video": "s_night_c.mp4",
