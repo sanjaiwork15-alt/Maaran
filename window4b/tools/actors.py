@@ -9,7 +9,13 @@ import cv2
 import numpy as np
 
 OUTLINE = (0.13, 0.12, 0.14)
+MASKING = False   # True while Layer.draw paints the coverage mask (outlines must count as coverage)
+OL = 1.0          # outline thickness multiplier (raise it for big foreground figures)
 AA = cv2.LINE_AA
+
+
+def _ol():
+    return (1.0, 1.0, 1.0) if MASKING else OUTLINE
 
 
 def _pt(x, y):
@@ -19,26 +25,26 @@ def _pt(x, y):
 def _line(img, p0, p1, col, w, outline=True):
     wp = max(1, int(round(w)))
     if outline:
-        cv2.line(img, _pt(*p0), _pt(*p1), OUTLINE, wp + 2, AA, 2)
+        cv2.line(img, _pt(*p0), _pt(*p1), _ol(), wp + int(2 * OL), AA, 2)
     cv2.line(img, _pt(*p0), _pt(*p1), col, wp, AA, 2)
 
 
 def _circle(img, c, r, col, outline=True):
     if outline:
-        cv2.circle(img, _pt(*c), int(r * 4) + 4, OUTLINE, -1, AA, 2)
+        cv2.circle(img, _pt(*c), int(r * 4 + 4 * OL), _ol(), -1, AA, 2)
     cv2.circle(img, _pt(*c), max(1, int(r * 4)), col, -1, AA, 2)
 
 
 def _ellipse(img, c, ax, ay, col, ang=0, outline=True):
     if outline:
-        cv2.ellipse(img, _pt(*c), (int(ax * 4) + 4, int(ay * 4) + 4), ang, 0, 360, OUTLINE, -1, AA, 2)
+        cv2.ellipse(img, _pt(*c), (int(ax * 4 + 4 * OL), int(ay * 4 + 4 * OL)), ang, 0, 360, _ol(), -1, AA, 2)
     cv2.ellipse(img, _pt(*c), (max(1, int(ax * 4)), max(1, int(ay * 4))), ang, 0, 360, col, -1, AA, 2)
 
 
 def _poly(img, pts, col, outline=True):
     p = np.array([[int(round(x * 4)), int(round(y * 4))] for x, y in pts], np.int32)
     if outline:
-        cv2.polylines(img, [p], True, OUTLINE, 2, AA, 2)
+        cv2.polylines(img, [p], True, _ol(), max(2, int(2 * OL)), AA, 2)
     cv2.fillPoly(img, [p], col, AA, 2)
 
 
@@ -57,7 +63,12 @@ class Layer:
         c = np.zeros((self.h, self.w, 3), np.float32)
         m = np.zeros((self.h, self.w, 3), np.float32)
         fn(_Shift(c, self.x0, self.y0), *args, **kw)
-        fn(_Shift(m, self.x0, self.y0, mask=True), *args, **kw)
+        global MASKING
+        MASKING = True
+        try:
+            fn(_Shift(m, self.x0, self.y0, mask=True), *args, **kw)
+        finally:
+            MASKING = False
         a = m[..., 0]                      # coverage; c is colour premultiplied by it
         self.rgb = self.rgb * (1 - a[..., None]) + c
         self.a = self.a * (1 - a) + a
