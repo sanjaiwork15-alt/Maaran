@@ -23,6 +23,7 @@ pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], .
 "tears": [[t0, t1], ...] watery eyes and tear drops, "laugh": [[t0, dur], ...] a silent chuckle,
 "nod": [[t0, dur], ...] two approving nods,
 "ants": {"path": [[x, y], ...], "n": 14, "size": 1.0, "speed": 60} live ants walking in the scene,
+"yawn": [[t0, dur], ...] a big yawn (Day 3),
 "inhale": [[t0, dur], ...] a slow deep breath through the nose – eyes close, brows lift, head rises a little,
 "rain": {"rate": 0.6, "ground": 700} falling rain + splashes, "scent": {"to": [x, y], "from": [x0, x1, y]} golden
 specks drifting from the soil to his nose (both in tools/toon/rain.py, Doubt Ep 8),
@@ -322,6 +323,14 @@ def main():
                 env_s = math.sin(math.pi * (t - t0) / dur)
                 theta += math.radians(2.6 * env_s * math.sin(2 * math.pi * 2.6 * (t - t0)))
                 tx += 5 * K * env_s * math.sin(2 * math.pi * 2.6 * (t - t0))
+        for t0, dur in shot.get("yawn", []):                 # a big yawn: eyes shut, head back, jaw wide open
+            if t0 <= t <= t0 + dur:
+                e_y = math.sin(math.pi * (t - t0) / dur)
+                close = max(close, min(1.0, e_y * 1.8))
+                jaw = max(jaw, jaw_max * 1.7 * min(1.0, e_y * 1.4))
+                theta += math.radians(-2.5 * e_y)
+                ty -= 4.0 * K * e_y
+                brow += 2.5 * K * e_y
         for t0, dur in shot.get("inhale", []):               # deep breath of the smell: eyes shut, chest up, relax
             if t0 <= t <= t0 + dur:
                 e_in = math.sin(math.pi * (t - t0) / dur)
