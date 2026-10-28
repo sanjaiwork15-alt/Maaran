@@ -30,6 +30,7 @@ FR = HERE / "frames"
 SRC = ROOT / "assets/2d/source"
 GN = ROOT / "series/01-groundnut"
 sys.path.insert(0, str(ROOT / "tools/toon"))
+from morning import rooster  # noqa: E402
 W, H = 720, 1280
 LINE = "#3a1a0a"
 
@@ -119,25 +120,6 @@ def stool(x, base, w=90, h=80):
 
 def phone_flat(x, y):
     return (f'<path d="M {x - 26},{y} L {x + 26},{y} L {x + 22},{y - 9} L {x - 22},{y - 9} Z" fill="#2a2f36" stroke="#0d0f12" stroke-width="2.5"/>')
-
-
-def rooster(x, y, s=1.0, crow=0.0):
-    """Cartoon rooster standing at (x, y) facing left; crow 0..1 opens the beak and lifts the head."""
-    lift = -18 * crow
-    return (f'<g transform="translate({x} {y}) scale({s})">'
-            f'<path d="M 30,-60 Q 95,-120 80,-30 Q 70,-75 40,-50 Z" fill="#1f5b3a" stroke="#0e2e1c" stroke-width="3"/>'
-            f'<path d="M 45,-70 Q 110,-95 85,-20" stroke="#2f8a54" stroke-width="10" fill="none"/>'
-            f'<ellipse cx="10" cy="-40" rx="52" ry="38" fill="#c0461e" stroke="#5a1e0a" stroke-width="3.5"/>'
-            f'<path d="M -10,-40 Q 20,-10 50,-38" fill="#e07a2e" stroke="#5a1e0a" stroke-width="2.5"/>'
-            f'<line x1="-5" y1="-4" x2="-12" y2="0" stroke="#e0a020" stroke-width="5"/><line x1="15" y1="-4" x2="20" y2="0" stroke="#e0a020" stroke-width="5"/>'
-            f'<line x1="-5" y1="-6" x2="-5" y2="-2" stroke="#e0a020" stroke-width="5"/><line x1="15" y1="-6" x2="15" y2="-2" stroke="#e0a020" stroke-width="5"/>'
-            f'<g transform="translate(0 {lift:.1f}) rotate({-14 * crow:.1f} -30 -70)">'
-            f'<path d="M -30,-55 Q -40,-95 -28,-108 Q -10,-100 -12,-60 Z" fill="#d8552a" stroke="#5a1e0a" stroke-width="3"/>'
-            f'<circle cx="-30" cy="-100" r="20" fill="#e06a2e" stroke="#5a1e0a" stroke-width="3"/>'
-            f'<path d="M -42,-118 q 4,-14 10,-2 q 4,-16 10,-2 q 6,-12 8,4" fill="#d81e1e" stroke="#7a0a0a" stroke-width="2"/>'
-            f'<path d="M -48,-102 L {-66 - 4 * crow:.0f},{-98 - 6 * crow:.0f} L -48,-94 Z" fill="#f2b420" stroke="#7a5a0a" stroke-width="2"/>'
-            + (f'<path d="M -48,-96 L {-66 - 4 * crow:.0f},{-88 + 4 * crow:.0f} L -48,-92 Z" fill="#f2b420" stroke="#7a5a0a" stroke-width="2"/>' if crow > 0.2 else "")
-            + f'<path d="M -36,-88 q -4,10 2,16 q 6,-4 2,-16" fill="#d81e1e"/><circle cx="-34" cy="-104" r="3.5" fill="#111"/></g></g>')
 
 
 def grade(img, kind):
@@ -241,6 +223,7 @@ def main():
     # finger at his temple: the bust + the hands sheet's raised index finger
     hands = Image.open(SRC / "03_hands.png").convert("RGB")
     arm = cutout(hands.crop((440, 0, 770, 724)), seg)
+    cutout(hands.crop((900, 0, 1210, 724)), seg).save(FR / "arm_down.png")       # hanging hand: reaches for the alarm
     out = bgm.copy()
     b2 = head_cut.resize((round(head_cut.width * 0.62), round(head_cut.height * 0.62)), Image.LANCZOS)
     out.alpha_composite(b2, (360 - b2.width // 2, H - b2.height + 40))
