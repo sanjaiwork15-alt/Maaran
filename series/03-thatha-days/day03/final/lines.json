@@ -1,0 +1,74 @@
+[
+ {
+  "id": "L1a",
+  "tanglish": "Innikku seekiramaa thoongap poren makkaley!",
+  "tamil": "இன்னிக்கு சீக்கிரமா தூங்கப் போறேன் மக்களே!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1b",
+  "tanglish": "Naalaikku kaalaila sooriyan varradhukku munnadiye ezhundhuruven!",
+  "tamil": "நாளைக்கு காலையில சூரியன் வர்றதுக்கு முன்னாடியே எழுந்துருவேன்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1c",
+  "tanglish": "En discipline-a paarunga!",
+  "tamil": "என் டிசிப்ளின பாருங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2a",
+  "tanglish": "Alarm set pannitten... phone oramaa vechitten... ellaam ready!",
+  "tamil": "அலாரம் செட் பண்ணிட்டேன்... ஃபோன் ஓரமா வெச்சிட்டேன்... எல்லாம் ரெடி!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2b",
+  "tanglish": "Kaalaila seekiram ezhundhaa, evlo velaiya mudikkalaam theriyumaa?",
+  "tamil": "காலையில சீக்கிரம் எழுந்தா, எவ்ளோ வேலைய முடிக்கலாம் தெரியுமா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3a",
+  "tanglish": "Kaalai vandhuduchu! Alarm-um adikkudhu...",
+  "tamil": "காலை வந்துடுச்சு! அலாரமும் அடிக்குது...",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3b",
+  "tanglish": "aana namma Thatha mattum innum kanavaazhkkaila irukkaaru!",
+  "tamil": "ஆனா நம்ம தாத்தா மட்டும் இன்னும் கனவு வாழ்க்கையில இருக்காரு!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4a",
+  "tanglish": "Aiyayo! Ivlo neram thoongittenaa?",
+  "tamil": "ஐயையோ! இவ்ளோ நேரம் தூங்கிட்டேனா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4b",
+  "tanglish": "Indha kozhi konjam late-aa kooviyirukkalaam illa?",
+  "tamil": "இந்த கோழி கொஞ்சம் லேட்டா கூவியிருக்கலாம் இல்ல?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4c",
+  "tanglish": "Adhaan enakku ezhundhirukka mudiyala!",
+  "tamil": "அதான் எனக்கு எழுந்திருக்க முடியல!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5a",
+  "tanglish": "Unmaiya sollanumna... alarm-a naan dhaan niruthinen!",
+  "tamil": "உண்மைய சொல்லணும்னா... அலாரத்த நான் தான் நிறுத்தினேன்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5b",
+  "tanglish": "Naalaikku alarm-a konjam dhooramaa vechukkanum!",
+  "tamil": "நாளைக்கு அலாரத்த கொஞ்சம் தூரமா வெச்சுக்கணும்!",
+  "pause_after": 0.5
+ }
+]
