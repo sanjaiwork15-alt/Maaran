@@ -48,6 +48,9 @@ LAMPS = [(468, 556), (603, 598), (1033, 648), (1352, 547)]
 LAMP_OFF = [999, 64.5, 71.0, 79.0]
 OFFICE_WIN = (686, 84)           # top-floor window of the tall office tower (lit to Day ~29)
 LAST_LAMP = None                 # chosen in init: the streetlight nearest the bridge
+# Extra beats rendered only for the Shorts (w4b_ep03_extras.py sets this): world time is held near
+# EXTRA["world"] while the extra beat plays out on its own local clock G["lt"].
+EXTRA = {}
 
 
 def ease(x):
@@ -275,6 +278,9 @@ def lamps_and_windows(t, nl):
     H, W = G["H"], G["W"]
     Eadd = np.zeros((H, W, 3), np.float32)
     frac = window_fraction(t)
+    lt = G.get("lt", 0.0)
+    if "frac" in EXTRA:
+        frac = EXTRA["frac"](lt)
     on = G["win_r"] < frac
     for (x, y, c), o in zip(G["wins"], on):
         if o:
@@ -286,6 +292,8 @@ def lamps_and_windows(t, nl):
     sc = G["sc"]
     for i, (lx, ly) in enumerate(LAMPS):
         if t < 26.5 + 0.5 * i:
+            continue
+        if "lamps_off_at" in EXTRA and lt > EXTRA["lamps_off_at"] + 0.3 * i:
             continue
         off = LAMP_OFF[i]
         lv = 1.0 if t < off else 0.0
@@ -311,6 +319,8 @@ def lamps_and_windows(t, nl):
     sc = G["sc"]
     ox, oy = OFFICE_WIN[0] * sc, OFFICE_WIN[1] * sc
     lit = t >= 26 and (t < 81.4 or (81.4 <= t < 82.4 and int(t * 10) % 3 == 0))
+    if "office" in EXTRA:
+        lit = EXTRA["office"](lt)
     if lit:
         cv2.rectangle(Eadd, (int(ox - 5 * sc), int(oy - 4 * sc)), (int(ox + 5 * sc), int(oy + 4 * sc)), (0.55, 0.85, 1.0), -1)
     # a ceiling fan and a flickering TV in the near tower (Day 2 night)
@@ -432,7 +442,18 @@ def wildlife(canvas, t, day):
             x = (470 + 300 * ((t * 0.08 + j * 0.3) % 1.0)) * sc
             F.flying_bird(canvas, x, (470 + 6 * math.sin(t * 2 + j)) * sc, 3.5 * sc, t * 1.4 + j, (0.2, 0.2, 0.22))
     # the deer: in from the riverbank, stops by the car, drinks from the pothole (Month 6)
-    if 121 < t < 135:
+    if EXTRA.get("deer_flee"):
+        lt = G["lt"]
+        x0, y0 = POTHOLE[0] + 38, POTHOLE[1] + 2
+        if lt < 2.2:     # drinking, then the head comes up at the sound
+            hd = 0.95 if lt < 1.0 else 0.95 * (1 - ramp(lt, 1.0, 1.4))
+            F.deer(canvas, x0 * sc, y0 * sc, u_at(y0), 0, facing=-1, walking=False, head_down=hd)
+        else:            # turns and bolts back to the riverbank
+            k = ease((lt - 2.2) / 2.4)
+            x, y = lerp((x0, y0), (1010, 708), k)
+            F.deer(canvas, x * sc, y * sc, u_at(y), lt * 16, facing=1, walking=True)
+        F.pigeon(canvas, 606 * sc, 708 * sc, u_at(708) * 1.2, peck=0)
+    elif 121 < t < 135:
         if t < 126:
             k = ease((t - 121) / 5.0)
             x, y = lerp((905, 712), (POTHOLE[0] + 38, POTHOLE[1] + 2), k)
@@ -476,7 +497,48 @@ def storm(img, t, day):
     return img
 
 
+def crumble(out, lt):
+    """A slab of an old far-bank facade breaks away and falls behind the bridge; dust rises."""
+    c = EXTRA.get("crumble")
+    if c is None or lt < c:
+        return out
+    sc = G["sc"]
+    k = lt - c
+    x0, y0, x1, y1 = (np.array([832, 300, 878, 342]) * sc).astype(int)
+    if "slab" not in G:
+        G["slab"] = out[y0:y1, x0:x1].copy()
+    slab = G["slab"]
+    out[y0:y1, x0:x1] = out[y0:y1, x0:x1] * 0.35 + np.array([0.1, 0.1, 0.11], np.float32) * 0.65   # the raw hole
+    bridge_y = int(410 * sc)
+    rng = np.random.default_rng(5)
+    hh, ww = slab.shape[:2]
+    for i, (a, b) in enumerate(((0, ww // 2), (ww // 2, ww))):
+        for j, (cc, dd) in enumerate(((0, hh // 2), (hh // 2, hh))):
+            piece = slab[cc:dd, a:b]
+            dy = int(0.5 * 520 * sc * (k * (1.0 + 0.15 * (i + j))) ** 2)
+            dx = int((i - 0.5) * 30 * sc * k)
+            ang = (i - 0.5) * 80 * k
+            M = cv2.getRotationMatrix2D(((b - a) / 2, (dd - cc) / 2), ang, 1.0)
+            pr = cv2.warpAffine(piece, M, (b - a, dd - cc), borderValue=(0, 0, 0))
+            pm = cv2.warpAffine(np.ones(piece.shape[:2], np.float32), M, (b - a, dd - cc))
+            yy, xx = y0 + cc + dy, x0 + a + dx
+            ya, yb = max(0, yy), min(bridge_y, yy + (dd - cc))
+            if yb <= ya:
+                continue
+            sub = pm[ya - yy:yb - yy, :, None]
+            out[ya:yb, xx:xx + (b - a)] = out[ya:yb, xx:xx + (b - a)] * (1 - sub) + pr[ya - yy:yb - yy] * sub
+    if k > 0.4:                                           # dust rising where it hit
+        d = np.zeros(out.shape[:2], np.float32)
+        r = (12 + 40 * min(k - 0.4, 3)) * sc
+        cv2.ellipse(d, (int(855 * sc), int(400 * sc - r * 0.4)), (int(r * 1.4), int(r * 0.8)), 0, 0, 360, 1.0, -1)
+        d = cv2.GaussianBlur(d, (0, 0), 10 * sc) * max(0.0, 1 - (k - 0.4) / 6) * 0.7
+        out = out * (1 - d[..., None]) + np.array([0.62, 0.66, 0.7], np.float32) * d[..., None]
+    return out
+
+
 def text(frame, t):
+    if os.environ.get("W4B_NO_TEXT"):
+        return frame
     W, H, sc = G["W"], G["H"], G["sc"]
     i = max(k for k, s in enumerate(MARKERS) if s[0] <= t)
     start, label = MARKERS[i]
@@ -525,6 +587,9 @@ def plant_sway(f, t):
 
 
 def render(t):
+    if EXTRA:
+        G["lt"] = t - EXTRA["t0"]
+        t = EXTRA["world"] + G["lt"] * EXTRA.get("rate", 1.0)
     day, night = tod(t)
     sunset = max(0.0, 1 - day - night)
     nl = min(1.0, night * 1.25)
@@ -565,6 +630,8 @@ def render(t):
     pw = dict(level=-1.2, river_mix=0.75, puddles=0.0, water=tuple(wc), water_alpha=0.75, rings=0.0)
     out = R.water(out, t, pw, height)
     out = storm(out, t, day)
+    if EXTRA:
+        out = crumble(out, G["lt"])
     f = E.room(out, day, night, t)
     f = plant_sway(f, t)
     f = text(f, t)
