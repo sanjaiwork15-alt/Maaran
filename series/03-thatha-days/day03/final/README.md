@@ -25,3 +25,8 @@ sleeping head.
 
 Sound credits: "red_vented_bulbul.wav" by soundbytez and "rustling_leaves.wav" by laurenmg95 (freesound.org,
 CC BY 3.0); other ambience and the rooster CC0; alarm, ticks and snoring made in code.
+
+**v2 (2026-10-29, owner: "some frames are not looking good"):** sitting up in bed is now the real seated Thatha
+(Day 1 thinnai frame cut at the waist, hand at his cheek) instead of the head-sheet bust; the blanket is draped
+(body shape, checks, folds, wavy hem over the cot edge, lining turned down at his chin); the finger-at-temple frame
+(arm not attached) is dropped – a laughing standing close-up instead. `rebuild_v2.sh` redoes it.
