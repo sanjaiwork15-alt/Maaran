@@ -349,5 +349,76 @@
    "image": "frames/up/f_fstand.png"
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_fseed",
+   "audio": "voice_A.wav",
+   "duration": 4.9,
+   "seed": 665,
+   "brows": [
+    0.9,
+    3.2
+   ]
+  },
+  "G": {
+   "frame": "f_fgrip",
+   "audio": "voice_G.wav",
+   "duration": 3.5,
+   "seed": 671,
+   "brows": [
+    2.2
+   ]
+  },
+  "B": {
+   "frame": "f_fkneel",
+   "audio": "voice_B.wav",
+   "duration": 8.2,
+   "seed": 666
+  },
+  "C": {
+   "frame": "f_fwater",
+   "audio": "voice_C.wav",
+   "duration": 1.5,
+   "seed": 667
+  },
+  "D": {
+   "frame": "f_fwait",
+   "audio": "voice_D.wav",
+   "duration": 9.9,
+   "seed": 668,
+   "shake": [
+    [
+     1.9,
+     0.8
+    ]
+   ]
+  },
+  "E": {
+   "frame": "f_fgrip",
+   "audio": "voice_E.wav",
+   "duration": 8.6,
+   "seed": 669,
+   "nod": [
+    [
+     4.2,
+     1.0
+    ]
+   ]
+  },
+  "F": {
+   "frame": "f_fstand",
+   "audio": "voice_F.wav",
+   "duration": 10.6,
+   "seed": 670,
+   "nod": [
+    [
+     8.6,
+     1.0
+    ]
+   ],
+   "brows": [
+    0.4
+   ]
+  }
+ }
 }
