@@ -1,0 +1,80 @@
+[
+ {
+  "id": "L1a",
+  "tanglish": "Makkaley, indha chinna vidhaiya paarunga!",
+  "tamil": "மக்களே, இந்த சின்ன விதைய பாருங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L1b",
+  "tanglish": "Idhukkulla oru periya chediya uruvaakkura thiran irukku-nu sonnaa nambuveengalaa?",
+  "tamil": "இதுக்குள்ள ஒரு பெரிய செடிய உருவாக்குற திறன் இருக்குன்னு சொன்னா நம்புவீங்களா?",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2a",
+  "tanglish": "Vidhaiya mannukkulla vechaa mattum podhaadhu.",
+  "tamil": "விதைய மண்ணுக்குள்ள வெச்சா மட்டும் போதாது.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2b",
+  "tanglish": "Sariyaana eeram, veppam, kaathoda soozhal... ellame thevai.",
+  "tamil": "சரியான ஈரம், வெப்பம், காத்தோட சூழல்... எல்லாமே தேவை.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2c",
+  "tanglish": "Appodhaan vidhai mulaikka aarambikkum!",
+  "tamil": "அப்போதான் விதை முளைக்க ஆரம்பிக்கும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3a",
+  "tanglish": "Innikku vidhai pottaa, naalaikke maramaa aagidaadhu!",
+  "tamil": "இன்னிக்கு விதை போட்டா, நாளைக்கே மரமா ஆகிடாது!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3b",
+  "tanglish": "Mudhal-la ver valarum, appuram thalir veliya varum.",
+  "tamil": "முதல்ல வேர் வளரும், அப்புறம் தளிர் வெளிய வரும்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3c",
+  "tanglish": "Konjam konjamaa dhaan valarchi nadakkum!",
+  "tamil": "கொஞ்சம் கொஞ்சமா தான் வளர்ச்சி நடக்கும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4a",
+  "tanglish": "Indha chinna thalirai paarunga!",
+  "tamil": "இந்த சின்ன தளிரை பாருங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4b",
+  "tanglish": "Idhu valaruradhukku porumai mattum illa... sariyaa gavanikkuradhum mukkiyam.",
+  "tamil": "இது வளருறதுக்கு பொறுமை மட்டும் இல்ல... சரியா கவனிக்கிறதும் முக்கியம்.",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4c",
+  "tanglish": "Ovvoru naalum thevaiyaana gavanippu kidaichaa, nalla valara vaaippu adhigam!",
+  "tamil": "ஒவ்வொரு நாளும் தேவையான கவனிப்பு கிடைச்சா, நல்லா வளர வாய்ப்பு அதிகம்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5a",
+  "tanglish": "Vidhai chinnadhaa irukkalaam makkaley... aana adhu valara thevaiyaana vaaippu kudukkanum!",
+  "tamil": "விதை சின்னதா இருக்கலாம் மக்களே... ஆனா அது வளர தேவையான வாய்ப்பு குடுக்கணும்!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5b",
+  "tanglish": "Nalla vishayangalukkum konjam neramum gavanippum thevai!",
+  "tamil": "நல்ல விஷயங்களுக்கும் கொஞ்சம் நேரமும் கவனிப்பும் தேவை!",
+  "pause_after": 0.5
+ }
+]
