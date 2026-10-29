@@ -116,6 +116,10 @@ from the repo; the list and reasons are in `docs/video-pipeline-plan.md`. Do not
 - The container restarts sometimes (uptime resets); background jobs die with it. Check `pgrep` before waiting on one.
 - Background Bash jobs stop at their timeout (default 30 min): pass a long `timeout` for upscales/renders, and
   `renice 19` an upscale that runs beside the voice (IndicF5 slowed to ~10 min/line with ESRGAN on the same 4 CPUs).
+- **Frames that look wrong (owner, Day 4):** pasted busts without a body, arms not attached, boxy code blankets.
+  Prefer approved frames used WHOLE (Groundnut farm frames cover kneeling, watering, seeds in hand, standing…) and
+  add only small props; if a pose must be composited, use a full figure from one image, cut at a natural line
+  (waist under a blanket), never a sheet head or a separate arm. Check every punch-in keeps the whole face.
 - Edit lists: reusing a talk.py shot later in the edit needs an explicit `src_start` inside that shot's length –
   check every piece's src_start + length against its clip (Day 2 had one pointing past the end).
 - No rain/storm recordings in `assets/sound/nature` and Wikimedia Commons is blocked here: `tools/ambience.py
@@ -189,4 +193,7 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Day 3 ("Thatha-voda Thookkamum Kozhi Koovuradhum!", sunset thinnai + kattil night-to-morning): done without GPU,
   waiting for review (`series/03-thatha-days/day03/final/thatha_day03.mp4`, 47.0 s). New: sleeping Thatha from the
   head sheet (eyes painted shut), `tools/toon/morning.py`, `tools/sfx.py`.
-- Next: wait for the owner's Day 4 script.
+- Day 4 ("Vidhaiya Paarthu Mudivu Panna Mudiyaadhu!", groundnut farm, seed to seedling): done without GPU, waiting for
+  review (`series/03-thatha-days/day04/final/thatha_day04.mp4`, 45.4 s). Day 3 frames reworked the same day (owner:
+  "some frames are not looking good") – `day03/final/rebuild_v2.sh`.
+- Next: wait for the owner's Day 5 script.
