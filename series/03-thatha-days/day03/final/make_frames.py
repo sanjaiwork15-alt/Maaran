@@ -96,19 +96,48 @@ def pillow(x, y, w=150, h=62):
             f'<path d="M {x - w * 0.3},{y - h * 0.1} q {w * 0.3},{h * 0.25} {w * 0.6},0" stroke="#d6d0bf" stroke-width="3" fill="none"/>')
 
 
-def blanket(x0, x1, top, base, folded=False):
-    """Checked cotton blanket (maroon/cream) over him on the cot: a long mound from x0 to x1."""
+_BL = [0]
+
+
+def blanket(x0, x1, top, base, folded=False, flat=False):
+    """Checked cotton blanket (maroon with cream checks) draped over him on the cot: the top follows the body
+    (shoulder, hip, knees, feet; low and even when "flat" = over his legs while he sits), it hangs over the cot
+    edge with a wavy hem and soft folds, and the cream lining is turned down at his chin."""
     if folded:
         return (f'<rect x="{x0}" y="{base - 46}" width="{x1 - x0}" height="40" rx="10" fill="#9b2c3c" stroke="#4d1018" stroke-width="3"/>'
                 f'<rect x="{x0}" y="{base - 30}" width="{x1 - x0}" height="8" fill="#e8d7b0"/>')
-    mound = (f'M {x0 + 30},{base} Q {x0 - 30},{(top + base) / 2} {x0},{top + 26} Q {x0 + 20},{top} {x0 + 80},{top + 6} Q {(x0 + x1) / 2},{top - 18} '
-             f'{x1 - 140},{top + 20} Q {x1 - 60},{top + 4} {x1 - 20},{top + 40} L {x1 + 10},{base + 10} Z')
-    stripes = "".join(f'<path d="M {sx},{top} L {sx - 10},{base + 10}" stroke="#e8d7b0" stroke-width="7" opacity="0.8"/>'
-                      for sx in range(int(x0) + 40, int(x1), 70))
-    return (f'<clipPath id="bl"><path d="{mound}"/></clipPath><path d="{mound}" fill="#9b2c3c"/>'
-            f'<g clip-path="url(#bl)">{stripes}<path d="M {x0},{top + 44} L {x1},{top + 52}" stroke="#e8d7b0" stroke-width="7"/></g>'
-            f'<path d="{mound}" fill="none" stroke="#4d1018" stroke-width="4"/>'
-            f'<path d="M {x0},{top + 26} Q {x0 + 20},{top} {x0 + 80},{top + 6}" stroke="#f0e2c0" stroke-width="9" fill="none"/>')
+    _BL[0] += 1
+    cid = f"bl{_BL[0]}"
+    w = x1 - x0
+    hh = (base - top)
+    amp = 0.25 if flat else 1.0
+    def P(fx, fy):
+        return f"{x0 + w * fx:.0f},{top + hh * fy:.0f}"
+    hem = base + hh * 0.45
+    ys = [top + hh * (0.55 - 0.45 * amp)]
+    path = (f"M {x0 + 45:.0f},{hem:.0f} Q {x0 - 25:.0f},{(hem + ys[0]) / 2:.0f} {x0:.0f},{ys[0]:.0f} "
+            f"C {P(0.02, 0.05 + 0.3 * (1 - amp))} {P(0.12, -0.08 * amp + 0.2 * (1 - amp))} {P(0.2, 0.08 * amp + 0.25 * (1 - amp))} "
+            f"S {P(0.42, 0.28 * amp + 0.2 * (1 - amp))} {P(0.55, 0.1 * amp + 0.22 * (1 - amp))} "
+            f"S {P(0.72, 0.3 * amp + 0.2 * (1 - amp))} {P(0.8, 0.18 * amp + 0.22 * (1 - amp))} "
+            f"S {P(0.95, 0.25 * amp + 0.2 * (1 - amp))} {P(1.0, 0.45)} L {x1:.0f},{hem:.0f} ")
+    k = 0
+    xs = np.linspace(x1, x0 + 45, 9)
+    for xa, xb in zip(xs[:-1], xs[1:]):                         # wavy hem
+        k += 1
+        path += f"Q {(xa + xb) / 2:.0f},{hem + (16 if k % 2 else -4):.0f} {xb:.0f},{hem:.0f} "
+    path += "Z"
+    checks = "".join(f'<path d="M {x0 + i * 64:.0f},{top - 40} L {x0 + i * 64 - 12:.0f},{hem + 30:.0f}" stroke="#e8d7b0" stroke-width="7" opacity="0.75"/>'
+                     for i in range(1, int(w / 64) + 1))
+    checks += "".join(f'<path d="M {x0},{y:.0f} Q {x0 + w / 2},{y + 14:.0f} {x1},{y:.0f}" stroke="#e8d7b0" stroke-width="7" opacity="0.7"/>'
+                      for y in np.arange(top + hh * 0.35, hem, 58))
+    folds = "".join(f'<path d="M {x0 + w * fx:.0f},{top + hh * 0.35:.0f} q {-10 + 20 * (i % 2)},{hh * 0.5:.0f} {4 - 8 * (i % 2)},{hem - top - hh * 0.4:.0f}" '
+                    f'stroke="#5e1420" stroke-width="5" fill="none" opacity="0.55"/>' for i, fx in enumerate((0.3, 0.48, 0.66, 0.88)))
+    shade = f'<rect x="{x0 - 20}" y="{base - 4:.0f}" width="{w + 40}" height="{hem - base + 40:.0f}" fill="#3a0a12" fill-opacity="0.32"/>'
+    lining = (f'<path d="M {x0:.0f},{ys[0]:.0f} C {P(0.02, 0.05 + 0.3 * (1 - amp))} {P(0.12, -0.08 * amp + 0.2 * (1 - amp))} {P(0.2, 0.08 * amp + 0.25 * (1 - amp))}" '
+              f'stroke="#f0e2c0" stroke-width="16" fill="none" stroke-linecap="round"/>')
+    return (f'<clipPath id="{cid}"><path d="{path}"/></clipPath><path d="{path}" fill="#9b2c3c"/>'
+            f'<g clip-path="url(#{cid})">{checks}{folds}{shade}</g>'
+            f'<path d="{path}" fill="none" stroke="#4d1018" stroke-width="4" stroke-linejoin="round"/>{lining}')
 
 
 def stool(x, base, w=90, h=80):
@@ -171,7 +200,7 @@ def main():
         out.alpha_composite(svg_layer(pillow(150, 900, 300, 120)))
         hd = lying(which, 0.33)
         out.alpha_composite(hd, (-10, 905 - hd.height + 40))
-        out.alpha_composite(svg_layer(blanket(215, 900, 700, 985)))
+        out.alpha_composite(svg_layer(blanket(225, 900, 745, 985)))
         out.convert("RGB").save(FR / f"{name}.png")
         print("saved", name)
 
@@ -190,14 +219,27 @@ def main():
     out.alpha_composite(p2, (700 - p2.width, 1250 - 760))
     out.convert("RGB").save(FR / "f_dpoint.png")
 
-    # morning, sitting up in bed (close courtyard background)
+    # morning, sitting up in bed: the real seated Thatha (Day 1 thinnai frame, bowl removed; hand at his cheek =
+    # "Aiyayo!") cut at the waist, sitting on the kattil with the blanket over his legs
+    sit = Image.open(ROOT / "series/03-thatha-days/day01/final/frames/lama_clean.png").convert("RGB")
+    sa = np.array(remove(sit, session=seg, only_mask=True)).astype(np.float32)
+    sa = np.clip((sa - 90) * 2.6, 0, 255).astype(np.uint8)
+    srgb = np.array(sit)
+    hsv = cv2.cvtColor(srgb, cv2.COLOR_RGB2HSV).astype(int)
+    yy, xx = np.mgrid[0:H, 0:W]
+    stick = (xx < 150) & (hsv[..., 1] > 80) & (hsv[..., 2] < 200)
+    sa[stick] = 0
+    body = Image.fromarray(np.dstack([srgb, sa])).crop((60, 260, 700, 830))
+    SK, BX, BY = 1.4, -60, 235
+    body = body.resize((round(body.width * SK), round(body.height * SK)), Image.LANCZOS)
     bgm = grade(bg, "morning").convert("RGBA")
-    bust = head_cut.resize((round(head_cut.width * 0.5), round(head_cut.height * 0.5)), Image.LANCZOS)
     out = bgm.copy()
-    out.alpha_composite(svg_layer(kattil(400, 1060, 900, 240) + pillow(130, 900, 240, 100)))
-    out.alpha_composite(bust, (360 - bust.width // 2, 1000 - bust.height))
-    out.alpha_composite(svg_layer(blanket(80, 900, 930, 1045)))
+    out.alpha_composite(svg_layer(kattil(400, 1060, 900, 240) + pillow(95, 905, 220, 96)))
+    out.alpha_composite(body, (BX, BY))
+    out.alpha_composite(svg_layer(blanket(-40, 900, 930, 1045, flat=True)))
     out.convert("RGB").save(FR / "f_dup.png")
+    import json
+    json.dump({"crop": [60, 260], "scale": SK, "off": [BX, BY]}, open(FR / "f_dup_place.json", "w"))
 
     # pointing at the rooster (the pointing pose cut at the waist, sitting in bed)
     out = bgm.copy()
@@ -207,7 +249,7 @@ def main():
     sc = 760 / pc.height
     pc = pc.resize((round(pc.width * sc), 760), Image.LANCZOS)
     out.alpha_composite(pc, (740 - pc.width, 980 - pc.height))
-    out.alpha_composite(svg_layer(blanket(-40, 900, 900, 1045)))
+    out.alpha_composite(svg_layer(blanket(-40, 900, 900, 1045, flat=True)))
     out.convert("RGB").save(FR / "f_dpointr.png")
 
     # morning, standing by the kattil, blanket folded

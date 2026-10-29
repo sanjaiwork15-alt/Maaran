@@ -226,10 +226,15 @@
    ]
   },
   {
-   "video": "shots/F.mp4",
+   "video": "shots/E.mp4",
    "start": 40.2,
    "end": 42.1,
-   "src_start": 0.1
+   "src_start": 1.9,
+   "zoom": 1.75,
+   "focus": [
+    0.66,
+    0.2
+   ]
   },
   {
    "video": "cut_far.mp4",
