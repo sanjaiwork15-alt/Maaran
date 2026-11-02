@@ -365,6 +365,11 @@ def main():
             img = scene_days_img(t, cfg, cfg_path.parent)
         else:
             img = svg_rgba(SCENES[cfg["mode"]](t, cfg))[..., :3]
+            if cfg["mode"] == "section" and cfg.get("bg"):     # the real field (blurred) above the cut
+                if "sky" not in DAYS_BG:
+                    im = np.array(Image.open(cfg_path.parent / cfg["bg"]).convert("RGB").resize((W, H), Image.LANCZOS))
+                    DAYS_BG["sky"] = cv2.GaussianBlur(im[1000:1700], (0, 0), 4).astype(np.float32)
+                img[:690] = DAYS_BG["sky"][10:700]
         cy = float(np.interp(t, [c[0] for c in cams], [c[1] for c in cams]))
         vh = float(np.interp(t, [c[0] for c in cams], [c[2] for c in cams]))
         if vh < H - 0.5:

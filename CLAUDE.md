@@ -202,4 +202,8 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
 - Day 4 ("Vidhaiya Paarthu Mudivu Panna Mudiyaadhu!", groundnut farm, seed to seedling): done without GPU, waiting for
   review (`series/03-thatha-days/day04/final/thatha_day04.mp4`, 45.4 s). Day 3 frames reworked the same day (owner:
   "some frames are not looking good") – `day03/final/rebuild_v2.sh`.
-- Next: wait for the owner's Day 5 script.
+- Series 04 "Maran Thatha: Mannum Manasum – The One-Acre Challenge" (owner 2026-11-02; agricultural comedy + moral,
+  Thatha only, 50–60 s, cliffhanger endings): `series/04-one-acre-challenge/`. Ep 1 ("Indha Mannu Enna Verukkudha?!",
+  dry one-acre field): done without GPU, waiting for review (`ep01/final/thatha_acre01.mp4`, 66.2 s – the script's
+  16 lines are 84 s of speech, voice sped 1.25x, every line kept; owner may want shorter scripts or a 60 s cut).
+- Next: wait for the owner's One-Acre Ep 2 script (or Day 5).
