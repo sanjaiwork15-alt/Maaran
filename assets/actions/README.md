@@ -12,9 +12,9 @@ are rigid sprites). Demo of everything: `demo_reel.mp4` (built from `demo/*.json
 | `turn` / `turn_right` | front → 3/4 → profile (left / right) | 0.6 s | then continue with walk_side (flipped after turn_right) |
 | `idle` | standing, breathing, slow weight shift | 4 s loop | for any standing wide shot without talking |
 | `look` | head turns left, right, back | 3 s | "what's that?" |
-| `laugh` | belly laugh: shoulders shake, head back | 2.4 s | add a chuckle in the voice/sfx |
+| `laugh` | belly laugh: eyes snap shut into crescents (inpainted), mouth opens, head back, shoulders bounce | 2.4 s | v2 after owner review; add a chuckle in the voice/sfx |
 | `bow` | respectful nod-bow (vanakkam) | 1.8 s | |
-| `tap` | tilts the stick out and taps it twice | 1.6 s | add `tools/sfx.py` "tap" at 0.35 s and 0.95 s |
+| `tap` | fist and stick rise together (wrist slides under the sleeve), strike twice, dust puffs | 1.6 s | v2 after owner review; add `tools/sfx.py` "tap" at 0.62 s and 1.22 s |
 
 Files: `<name>.webm` (VP9 with alpha, figure ~1600 px tall at the front size), `<name>.json` (frames, loop, size,
 feet point, fig_h, facing, ground speed), `<name>_preview.mp4` (on grey).
@@ -32,6 +32,10 @@ Several layers can follow each other in one plan (e.g. turn_right at 0–0.6 s, 
 use them for wide/action shots under voice-over; talking close-ups stay talk.py.
 Rebuild: `python -I tools/toon/body.py all` (f5 env; needs ~/.maaran/cache/up/08_turnaround_x2.png – make it with
 `tools/upscale.py assets/2d/source/08_turnaround.png ~/.maaran/cache/up/08_turnaround_x2.png --scale 2`).
+
+Owner review (2026-11-02): "Laugh and stick tap is not good" – v1 laugh only bobbed (open eyes, no laugh face);
+v1 tap moved the stick alone through a still fist. Fixed: laugh face drawn on (eyes painted over by inpainting, crescent
+lids, open mouth); tap lifts fist+stick as one block, the shirt cuff laid back on top.
 
 Lessons: never bend a rigid prop (stick) – rotate it as a sprite; a limb's region must exclude cloth but keep its
 outlines; big motions need the inverse (destination) warp; in profile the arm swing must stay small (it overlaps the

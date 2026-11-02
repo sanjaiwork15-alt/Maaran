@@ -15,9 +15,10 @@ Actions (front = owner's 01_front.png; side = the profile on 08_turnaround.png, 
     walk_front   walking towards the camera, stick in hand (seamless 1.1 s two-step loop)
     walk_side    walking to the left in profile (seamless 1.0 s loop; "speed" in the json = ground speed)
     idle         standing, breathing, a slow weight shift (seamless 4 s loop)
-    laugh        a big belly laugh: shoulders shake, head goes back, body bounces (2.4 s)
+    laugh        a big belly laugh: eyes squeeze shut, mouth open, head back, shoulders bounce (2.4 s)
     bow          a respectful nod-bow (vanakkam) – head and chest dip and come up (1.8 s)
-    tap          lifts the stick and taps it twice on the ground (1.6 s) – add sfx.py "tap"
+    tap          lifts the stick (fist and stick together) and strikes the ground twice, dust puffs (1.6 s) –
+                 add sfx.py "tap" at 0.62 s and 1.22 s
     look         turns his head to look left, then right, then back (3 s) – "what's that?"
     turn         turns from front to profile (facing left) via the 3/4 view (0.6 s) – then continue with walk_side
     turn_right   the same turn to face right – then continue with walk_side flipped
@@ -92,6 +93,12 @@ class Figure:
     def pt(self, x, y):
         return (x * self.K + self.pad, y * self.K + self.pad)
 
+    def moved(self, x, y):
+        """Where source point (x, y) went in the last render (padded up px)."""
+        px, py = self.pt(x, y)
+        dx, dy = self.last
+        return px + float(dx[int(py), int(px)]), py + float(dy[int(py), int(px)])
+
     def field(self, moves):
         dx = np.zeros(self.shape, np.float32)
         dy = np.zeros(self.shape, np.float32)
@@ -117,6 +124,7 @@ class Figure:
         stand = 1 - (np.clip(sum(self.w[k] for k in keep), 0, 1) * 0.8 if keep else 0)
         dx += stand * ((c * X - s * Y) - X + bx * self.K)
         dy += stand * ((s * X + c * Y) - Y + by * self.K)
+        self.last = (dx, dy)
         fx, fy = dx.copy(), dy.copy()                      # destination-space field: d(x) = D(x - d(x))
         for _ in range(5):
             fx, fy = (cv2.remap(dx, self.xx - fx, self.yy - fy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE),
@@ -149,30 +157,34 @@ def front():
 
 
 def front_nostick():
-    """Front figure with the stick below his fist lifted out as a rigid sprite (pivots in the fist)."""
+    """Front figure with his FIST and the whole stick lifted out as one rigid sprite (lifts and strikes together).
+    Behind the fist there is only background (the shirt starts right of it), so lifting it reveals nothing drawn."""
     if "front_ns" not in _FIG:
         f = front()
         rgba = f.img.astype(np.uint8).copy()
         h, w = rgba.shape[:2]
         yy, xx = np.mgrid[0:h, 0:w]
-        poly = np.zeros((h, w), np.uint8)                   # follows the slanted stick, clear of the slipper
-        cv2.fillPoly(poly, [np.array([f.pt(205, 790), f.pt(312, 790), f.pt(257, 1560), f.pt(198, 1560)], np.int32)], 1)
-        lower = poly.astype(bool)
         hsv = cv2.cvtColor(rgba[..., :3], cv2.COLOR_RGB2HSV).astype(np.int32)
-        wood = lower & (((hsv[..., 0] <= 25) & (hsv[..., 1] > 60)) | (hsv[..., 2] < 90)) & (rgba[..., 3] > 20)
-        wood = cv2.dilate(wood.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool) & lower
-        tip = np.zeros((h, w), np.uint8)                    # the tip and its little ground shadow: take everything
+        body = ((((hsv[..., 0] <= 25) & (hsv[..., 1] > 60)) | (hsv[..., 2] < 90)) & (rgba[..., 3] > 20))
+        poly = np.zeros((h, w), np.uint8)
+        cv2.fillPoly(poly, [np.array([f.pt(188, 645), f.pt(334, 645), f.pt(334, 800), f.pt(312, 800), f.pt(257, 1560),
+                                      f.pt(198, 1560), f.pt(188, 800)], np.int32)], 1)
+        part = poly.astype(bool) & body
+        part = cv2.dilate(part.astype(np.uint8), np.ones((7, 7), np.uint8)).astype(bool) & poly.astype(bool) & (rgba[..., 3] > 0)
+        tip = np.zeros((h, w), np.uint8)
         cv2.fillPoly(tip, [np.array([f.pt(190, 1470), f.pt(256, 1470), f.pt(256, 1580), f.pt(190, 1580)], np.int32)], 1)
-        tip = tip.astype(bool) & (rgba[..., 3] > 0)
-        shadow = tip & ~wood                                 # the art's little ground shadow at the tip: drop it
-        stick = rgba.copy()
-        stick[..., 3] = np.where(wood, stick[..., 3], 0)
-        rgba[..., 3] = np.where(wood | shadow, 0, rgba[..., 3])
+        shadow = tip.astype(bool) & (rgba[..., 3] > 0) & ~part   # the art's tiny ground shadow at the tip: drop it
+        sprite = rgba.copy()
+        sprite[..., 3] = np.where(part, sprite[..., 3], 0)
+        # keep the fist itself in the figure too (it hides the seam); only the stick below the fist is removed
+        below = yy > f.pt(0, 790)[1]
+        rgba[..., 3] = np.where((part & below) | shadow, 0, rgba[..., 3])
         g = Figure.__new__(Figure)
         g.__dict__.update(f.__dict__)
         g.img = rgba.astype(np.float32)
-        g.stick = stick.astype(np.float32)
-        g.grip = f.pt(258, 735)
+        g.stick = sprite.astype(np.float32)
+        g.tip = f.pt(228, 1515)
+        g.wrist = f.pt(262, 650)
         _FIG["front_ns"] = g
     return _FIG["front_ns"]
 
@@ -307,14 +319,85 @@ def env(t, a, b, ramp=0.25):
     return min(1.0, max(0.0, (t - a) / ramp)) * min(1.0, max(0.0, (b - t) / ramp))
 
 
+EYES = [(458, 190, 27, 18), (552, 180, 27, 18)]         # front art (source px): centre, half-width, half-height
+MOUTH = [(462, 268), (507, 276), (552, 266)]
+
+
+def laugh_face(f, img, e, open_px):
+    """Happy crescent eyes (skin over the eye, an upward lid arc with a crease) and an open laughing mouth, drawn
+    where the face moved to. e 0..1 fades them in."""
+    if e <= 0.02:
+        return img
+    K = f.K
+    base = img.copy()
+    rgb = np.clip(img[..., :3], 0, 255).astype(np.uint8)
+    hole = np.zeros(img.shape[:2], np.uint8)
+    arcs = []
+    for (x, y, rx, ry) in EYES:
+        cx, cy = f.moved(x, y)
+        RX, RY = rx * K * 1.2, ry * K * 1.45
+        cv2.ellipse(hole, (int(cx), int(cy)), (int(RX), int(RY)), 0, 0, 360, 255, -1)
+        arcs.append((cx, cy, RX, RY))
+    x0, y0, w, h = cv2.boundingRect(hole)
+    pad = int(30 * K)
+    X0, Y0, X1, Y1 = max(0, x0 - pad), max(0, y0 - pad), x0 + w + pad, y0 + h + pad
+    patch = cv2.inpaint(np.ascontiguousarray(rgb[Y0:Y1, X0:X1]), hole[Y0:Y1, X0:X1], 9, cv2.INPAINT_TELEA)
+    filled = rgb.copy()
+    filled[Y0:Y1, X0:X1] = patch
+    a = cv2.GaussianBlur(hole.astype(np.float32) / 255, (0, 0), 2)[..., None] * e
+    out = img.copy()
+    out[..., :3] = img[..., :3] * (1 - a) + filled.astype(np.float32) * a
+    ln = np.zeros(img.shape[:2], np.uint8)                 # closed lids: upward arcs ("^ ^" laughing eyes)
+    for cx, cy, RX, RY in arcs:
+        cv2.ellipse(ln, (int(cx), int(cy + RY * 0.3)), (int(RX * 0.8), int(RY * 0.62)), 0, 198, 342, 255, int(4.5 * K), cv2.LINE_AA)
+    a = (ln.astype(np.float32) / 255)[..., None] * e
+    out[..., :3] = out[..., :3] * (1 - a) + np.array([60, 30, 15], np.float32) * a
+    img = out
+    lay = np.zeros(img.shape[:2] + (4,), np.float32)
+    (lx, ly), (mx, my), (rx_, ry_) = (f.moved(*p) for p in MOUTH)
+    o = open_px * K
+    top, bot = [], []
+    for i in range(21):
+        u = 0.02 + 0.96 * i / 20
+        x = (1 - u) ** 2 * lx + 2 * (1 - u) * u * mx + u ** 2 * rx_
+        y = (1 - u) ** 2 * ly + 2 * (1 - u) * u * my + u ** 2 * ry_
+        top.append((x, y))
+        bot.append((x, y + o * math.sin(math.pi * i / 20) ** 0.7))
+    poly = np.array(top + bot[::-1], np.int32)
+    m = np.zeros(img.shape[:2], np.uint8)
+    cv2.fillPoly(m, [poly], 255, cv2.LINE_AA)
+    a = m.astype(np.float32) / 255
+    col = np.zeros(img.shape[:2] + (3,), np.float32)
+    col[...] = (95, 25, 25)
+    yy = np.arange(img.shape[0], dtype=np.float32)[:, None]
+    teeth = (yy < (ly + my) / 2 + o * 0.3).astype(np.float32)[..., None] * np.ones_like(col)
+    col = col * (1 - teeth) + np.array([250, 246, 236]) * teeth
+    tong = np.zeros(img.shape[:2], np.uint8)
+    cv2.ellipse(tong, (int(mx), int(my + o * 0.85)), (int(abs(rx_ - lx) * 0.25), int(o * 0.35)), 0, 0, 360, 255, -1, cv2.LINE_AA)
+    tg = (tong.astype(np.float32) / 255)[..., None]
+    col = col * (1 - tg) + np.array([205, 95, 95]) * tg
+    edge = cv2.morphologyEx(m, cv2.MORPH_GRADIENT, np.ones((5, 5), np.uint8)).astype(np.float32)[..., None] / 255
+    col = col * (1 - edge) + np.array([60, 20, 10]) * edge
+    lay[..., :3] = lay[..., :3] * (1 - a[..., None]) + col * a[..., None]
+    lay[..., 3] = np.maximum(lay[..., 3], a * 255)
+    lay[..., 3] *= e
+    out = img.copy()
+    paste(out, lay, 0, 0)
+    return out
+
+
 def laugh(t, dur=2.4):
+    """A big belly laugh: head goes back, shoulders bounce in "ho-ho-ho" beats, eyes squeeze shut, mouth open."""
     f = front()
-    e = env(t, 0.1, dur - 0.1, 0.35)
-    shake = math.sin(2 * math.pi * 5.0 * t) * e
-    moves = {"chest": (0, -5 * abs(shake), 0, 500, 900, 1 + 0.01 * abs(shake)),
-             "head": (0, -8 * e - 4 * abs(shake), -4 * e, 500, 330),
-             "arm": (0, -4 * abs(shake), -3 * e, 760, 600)}
-    return f.render(moves, body=(0, -3 * abs(shake), -0.6 * e), keep=["footL", "footR"])
+    e = env(t, 0.05, dur - 0.05, 0.3)
+    beat = abs(math.sin(2 * math.pi * 2.3 * t)) * e          # ~4.6 bounces a second
+    moves = {"chest": (0, -7 * beat, 0, 500, 900, 1 + 0.012 * beat),
+             "head": (0, -10 * e - 5 * beat, -5 * e, 500, 330),
+             "arm": (0, -5 * beat, -2 * e, 760, 600)}
+    img = f.render(moves, body=(0, -3 * beat, -0.5 * e), keep=["footL", "footR"]).astype(np.float32)
+    snap = min(1.0, max(0.0, (e - 0.3) / 0.08))          # eyes snap shut / open in ~2 frames (no ghost fades)
+    img = laugh_face(f, img, snap, (13 + 9 * beat) * e)
+    return np.clip(img, 0, 255).astype(np.uint8)
 
 
 def bow(t, dur=1.8):
@@ -325,18 +408,73 @@ def bow(t, dur=1.8):
     return f.render(moves, keep=["footL", "footR"])
 
 
+def front_tap():
+    """Front figure + a 'hand' region: the fist and the whole stick as one smooth rigid block (pure translation, so
+    nothing bends), fading out under the sleeve hem; the art's little ground shadow at the stick tip is removed."""
+    if "front_tap" not in _FIG:
+        f = front()
+        g = Figure.__new__(Figure)
+        g.__dict__.update(f.__dict__)
+        g.w = dict(f.w)
+        img = f.img.copy()
+        h, w = img.shape[:2]
+        hsv = cv2.cvtColor(img[..., :3].astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.int32)
+        wood = ((hsv[..., 0] <= 25) & (hsv[..., 1] > 60)) | (hsv[..., 2] < 90)
+        tip = np.zeros((h, w), np.uint8)
+        cv2.fillPoly(tip, [np.array([f.pt(190, 1500), f.pt(256, 1500), f.pt(256, 1580), f.pt(190, 1580)], np.int32)], 1)
+        img[..., 3] = np.where(tip.astype(bool) & ~wood & (img[..., 3] > 0), 0, img[..., 3])
+        g.img = img
+        m = np.zeros((h, w), np.float32)
+        cv2.fillPoly(m, [np.array([f.pt(182, 600), f.pt(340, 600), f.pt(340, 700), f.pt(305, 800), f.pt(258, 1590),
+                                   f.pt(190, 1590), f.pt(182, 800)], np.int32)], 1.0)
+        m = cv2.GaussianBlur(m, (0, 0), 2 * f.K)
+        yy, xx = g.yy, g.xx
+        y0, y1 = f.pt(0, 606)[1], f.pt(0, 652)[1]
+        r = np.clip((yy - y0) / (y1 - y0), 0, 1)
+        m *= r * r * (3 - 2 * r)                           # the forearm stretches smoothly; the fist moves as one piece
+        g.w["hand"] = m
+        # the shirt cuff above the fist, laid back on top after the lift (the wrist slides under the sleeve)
+        hh = hsv
+        cream = (hh[..., 0] >= 15) & (hh[..., 0] <= 40) & (hh[..., 1] < 90) & (hh[..., 2] > 150)
+        box = (xx > f.pt(186, 0)[0]) & (xx < f.pt(345, 0)[0]) & (yy > f.pt(0, 560)[1]) & (yy < f.pt(0, 662)[1])
+        cuff = cv2.morphologyEx((cream & box & (img[..., 3] > 200)).astype(np.uint8), cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+        cuff = cv2.dilate(cuff, np.ones((3, 3), np.uint8)).astype(np.float32)
+        layer = img.copy()
+        layer[..., 3] = cv2.GaussianBlur(cuff, (0, 0), 1.0) * 255
+        g.cuff = layer
+        g.tip = f.pt(228, 1515)
+        _FIG["front_tap"] = g
+    return _FIG["front_tap"]
+
+
 def tap(t, dur=1.6):
-    """Tilts the stick out in his fist and taps it down twice (rigid stick sprite; the hand gives a small lift)."""
-    f = front_nostick()
-    lift = 0.0
-    for t0 in (0.25, 0.85):
-        if t0 <= t <= t0 + 0.45:
-            lift = max(lift, math.sin(math.pi * (t - t0) / 0.45))
-    img = f.render({"head": (0, 0, -1.2 * lift, 500, 330)}, keep=["footL", "footR"]).astype(np.float32)
-    M = cv2.getRotationMatrix2D(f.grip, -9 * lift, 1.0)                 # the tip swings out and up
-    M[1, 2] -= 10 * lift * f.K
-    st = cv2.warpAffine(f.stick, M, (img.shape[1], img.shape[0]), flags=cv2.INTER_CUBIC, borderValue=(0, 0, 0, 0))
-    paste(img, np.clip(st, 0, 255), 0, 0)
+    """Lifts the stick (fist and stick rise together, the wrist slides under the sleeve) and strikes the ground
+    twice; a dust puff at each strike, a small nod with it."""
+    f = front_tap()
+    lift, nod, puff = 0.0, 0.0, []
+    for t0 in (0.2, 0.8):
+        u = (t - t0) / 0.42
+        if 0 <= u <= 1:                                   # up slowly (0-0.65), down fast (0.65-1)
+            lift = max(lift, math.sin(math.pi / 2 * u / 0.65) if u < 0.65 else math.cos(math.pi / 2 * (u - 0.65) / 0.35))
+        v = (t - (t0 + 0.42)) / 0.4
+        if 0 <= v <= 1:
+            puff.append(v)
+            nod = max(nod, math.sin(math.pi * v))
+    img = f.render({"hand": (0, -20 * lift, 0, 260, 700), "head": (0, 3 * nod, 0, 500, 330)},
+                   keep=["footL", "footR"]).astype(np.float32)
+    paste(img, f.cuff, 0, 0)
+    tx, ty = f.tip
+    for v in puff:                                        # dust kicked up at the tip
+        lay = np.zeros(img.shape[:2], np.float32)
+        for k, (ox, oy) in enumerate(((-30, -8), (28, -10), (-10, -22), (12, -4), (0, -14))):
+            r = (14 + 46 * v) * f.K * (0.75 + 0.1 * k)
+            cv2.ellipse(lay, (int(tx + ox * f.K * (0.7 + 1.2 * v)), int(ty + oy * f.K * (0.8 + 1.4 * v))), (int(r), int(r * 0.6)),
+                        0, 0, 360, 1.0, -1, cv2.LINE_AA)
+        lay = np.clip(cv2.GaussianBlur(lay, (0, 0), 4 * f.K), 0, 1) * (1 - v) ** 0.8 * 0.9
+        dust = np.zeros_like(img)
+        dust[..., :3] = (190, 140, 95)
+        dust[..., 3] = 255 * lay
+        paste(img, dust, 0, 0)
     return np.clip(img, 0, 255).astype(np.uint8)
 
 
