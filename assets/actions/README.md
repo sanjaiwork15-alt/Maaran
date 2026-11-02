@@ -1,4 +1,15 @@
-# Thatha action library (planned, owner 2026-11-02)
+# Thatha action library (owner 2026-11-02)
+
+**Update (same day): owner – "I want you to code and animate these shots".** No GPU: `tools/toon/body.py` bends the
+owner's ONE front drawing with soft overlapping region weights (feet, veshti hem, free arm, head; the stick stays
+rigid in his hand) and a smooth displacement field solved for the destination (fixed-point inverse) – no cut
+pieces, no visible joints. First action: `walk_front` (seamless 1.1 s two-step cycle). Test:
+`tests/walk_front_courtyard.mp4` (walking towards the camera in the courtyard). Lessons: bending the stick smeared
+it (keep props rigid); a region mask must exclude cloth but keep the limb's outlines; big swings need the inverse
+warp or the outlines ghost.
+
+---
+Original GPU plan (kept for reference):
 
 Owner: no paid GPU, no card ("We'll create some walking, other shots once and use it for future").
 Plan: spend the free GPU time (Modal Starter without a card = $1/month; Lightning AI free tier as the bigger,
