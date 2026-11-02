@@ -9,6 +9,9 @@ tick:    clock ticks, 2 per second.
 rooster: the real cockcrow recording (assets/sound/nature/rooster_distant.wav, CC0), brought close (louder, less
          filtered than the distant one in the ambience).
 tap:     two wooden knocks (a walking stick on the floor).
+clang:   a hoe hitting rock-hard ground (thud + short metallic ring).
+pop:     a daydream bubble bursting (rising whoosh + pop).
+shimmer: a soft, quiet sparkle under a daydream (sound effect, not music).
 Mix the result over the assembled episode: ffmpeg amix (normalize=0).
 """
 import json
@@ -102,7 +105,41 @@ def tap(dur, rng):
     return out
 
 
-KINDS = {"alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap}
+def clang(dur, rng):
+    """A hoe on rock-hard soil: a dull thud plus a short metallic ring."""
+    n = int(max(dur, 0.6) * SR)
+    t = np.arange(n) / SR
+    thud = lp(rng.standard_normal(n), 300) * np.exp(-t / 0.04) * 3
+    ring = sum(np.sin(2 * np.pi * f * t) * np.exp(-t / d) for f, d in ((1250, 0.18), (2730, 0.12), (4100, 0.08)))
+    grit = bp(rng.standard_normal(n), 1500, 6000) * np.exp(-t / 0.05) * 0.6
+    return thud + 0.5 * ring + grit
+
+
+def pop(dur, rng):
+    """A dream bubble bursting: a short rising whoosh, then a soft pop."""
+    n = int(max(dur, 0.7) * SR)
+    t = np.arange(n) / SR
+    w = bp(rng.standard_normal(n), 500, 4000) * np.clip(t / 0.35, 0, 1) ** 2 * (t < 0.4)
+    k = t - 0.4
+    p = np.where(k >= 0, np.sin(2 * np.pi * (500 - 300 * np.clip(k / 0.08, 0, 1)) * k) * np.exp(-np.maximum(k, 0) / 0.03), 0) * 3
+    return 0.6 * w + p
+
+
+def shimmer(dur, rng):
+    """A soft magical shimmer for a daydream: quick high bell notes, very quiet."""
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    out = np.zeros(n)
+    for k, t0 in enumerate(np.arange(0, dur - 0.3, 0.12)):
+        f = (2093, 2637, 3136, 2349, 2794)[k % 5]
+        j = int(t0 * SR)
+        m = min(n - j, int(0.6 * SR))
+        tt = np.arange(m) / SR
+        out[j:j + m] += np.sin(2 * np.pi * f * tt) * np.exp(-tt / 0.15)
+    return out * np.minimum(1, (n - np.arange(n)) / (0.3 * SR))
+
+
+KINDS = {"alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "pop": pop, "shimmer": shimmer}
 
 
 def main():
