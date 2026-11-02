@@ -1,0 +1,18 @@
+{
+ "action": "walk_front",
+ "fps": 25,
+ "frames": 28,
+ "seconds": 1.1,
+ "loop": true,
+ "size": [
+  1184,
+  1696
+ ],
+ "feet": [
+  765,
+  1586
+ ],
+ "fig_h": 1497,
+ "facing": "front",
+ "ground_speed_px_s": 0.0
+}

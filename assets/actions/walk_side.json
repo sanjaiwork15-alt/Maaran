@@ -1,0 +1,18 @@
+{
+ "action": "walk_side",
+ "fps": 25,
+ "frames": 25,
+ "seconds": 1.0,
+ "loop": true,
+ "size": [
+  476,
+  1046
+ ],
+ "feet": [
+  203,
+  942
+ ],
+ "fig_h": 838,
+ "facing": "left",
+ "ground_speed_px_s": 124.0
+}

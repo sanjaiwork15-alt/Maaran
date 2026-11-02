@@ -1,0 +1,17 @@
+{
+ "duration": 1.6,
+ "layers": [
+  {
+   "action": "tap",
+   "path": [
+    [
+     0,
+     540,
+     1700,
+     1150
+    ]
+   ]
+  }
+ ],
+ "bg": "plate.png"
+}

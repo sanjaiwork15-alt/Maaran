@@ -1,0 +1,18 @@
+{
+ "action": "turn_right",
+ "fps": 25,
+ "frames": 15,
+ "seconds": 0.6,
+ "loop": false,
+ "size": [
+  550,
+  800
+ ],
+ "feet": [
+  202,
+  789
+ ],
+ "fig_h": 750,
+ "facing": "profile_right_end",
+ "ground_speed_px_s": 0.0
+}

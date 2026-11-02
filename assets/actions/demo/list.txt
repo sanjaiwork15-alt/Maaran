@@ -1,0 +1,8 @@
+file '/home/user/Maaran/assets/actions/demo/1_walk_front.mp4'
+file '/home/user/Maaran/assets/actions/demo/2_turn.mp4'
+file '/home/user/Maaran/assets/actions/demo/3_walk_side.mp4'
+file '/home/user/Maaran/assets/actions/demo/4_look.mp4'
+file '/home/user/Maaran/assets/actions/demo/5_laugh.mp4'
+file '/home/user/Maaran/assets/actions/demo/6_bow.mp4'
+file '/home/user/Maaran/assets/actions/demo/7_tap.mp4'
+file '/home/user/Maaran/assets/actions/demo/8_idle.mp4'

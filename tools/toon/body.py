@@ -1,17 +1,29 @@
-"""Whole-body actions for Thatha from ONE drawing of the owner, without a GPU (owner 2026-11-02: "code and animate
-these shots"). The drawing is never cut into pieces: soft, overlapping region weights (feet, veshti hem, stick + its
-hand, free arm, head) each get a small motion per frame, and the picture is bent smoothly with a blended displacement
-field (2D linear-blend skinning, like the face warp in talk.py) – so there are no visible joints.
+"""Thatha's whole-body action library, made in code from the owner's drawings – no GPU (owner 2026-11-02: "code and
+animate these shots… create for others and keep it ready to use in future videos").
+
+The drawing is never cut into limb pieces: soft, overlapping region weights (feet, veshti hem, stick + its hand, free
+arm, head, torso) each get a small motion per frame and the picture is bent smoothly with one blended displacement
+field, solved for the destination (fixed-point inverse warp) – so there are no visible joints. Props stay rigid
+(bending the stick smeared it). In the side view the slippers are rigid layers UNDER the veshti (the hem hides the
+ankles) and a darker copy is the far foot.
 
 Usage:
-    python tools/toon/body.py ACTION OUT_DIR [--seconds 4] [--still T]
-ACTION: walk_front – walking towards the camera with his stick (step cycle 1.1 s; feet lift and come forward, the
-        veshti hem swings, the body bobs and sways onto the standing foot, the free arm swings against the stepping
-        leg, the stick lifts and plants with the opposite foot, the head stays steady).
-OUT_DIR gets RGBA PNG frames (25 fps) of the figure on transparency, plus preview.mp4 (on a grey card) – composite
-them onto any location; the walk cycle is a seamless loop (frames 0..N-1 of one cycle, cycle.json).
-Source: assets/2d/up/01_front.png (x2 upscale of the owner's 01_front.png). Region coordinates below are in the
-1024x1536 source pixels.
+    python tools/toon/body.py ACTION [ACTION ...]        # renders assets/actions/<ACTION>.webm (+ _preview.mp4)
+    python tools/toon/body.py all
+    python tools/toon/body.py ACTION --still T OUT.png   # one frame for checking
+Actions (front = owner's 01_front.png; side = the profile on 08_turnaround.png, facing LEFT – flip to walk right):
+    walk_front   walking towards the camera, stick in hand (seamless 1.1 s two-step loop)
+    walk_side    walking to the left in profile (seamless 1.0 s loop; "speed" in the json = ground speed)
+    idle         standing, breathing, a slow weight shift (seamless 4 s loop)
+    laugh        a big belly laugh: shoulders shake, head goes back, body bounces (2.4 s)
+    bow          a respectful nod-bow (vanakkam) – head and chest dip and come up (1.8 s)
+    tap          lifts the stick and taps it twice on the ground (1.6 s) – add sfx.py "tap"
+    look         turns his head to look left, then right, then back (3 s) – "what's that?"
+    turn         turns from front to profile (facing left) via the 3/4 view (0.6 s) – then continue with walk_side
+    turn_right   the same turn to face right – then continue with walk_side flipped
+Outputs are VP9 WebM with alpha at half resolution (figure ~1600 px tall), 25 fps, feet at the bottom centre;
+assets/actions/<ACTION>.json has frames, loop flag, ground speed (px/s at the stored size) and the feet point.
+Place them in a scene with tools/toon/place_action.py.
 """
 import json
 import math
@@ -24,138 +36,402 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
+LIB = ROOT / "assets/actions"
+CACHE = Path.home() / ".maaran/cache"
 FPS = 25
-K = 2.0                                                    # source px -> up px
+STORE = 0.5                                                # stored size = source x2 upscale x 0.5
 
 
-def poly_mask(shape, pts, blur):
-    m = np.zeros(shape, np.float32)
-    cv2.fillPoly(m, [np.array(pts, np.float32).astype(np.int32) * int(K)], 1.0)
-    return cv2.GaussianBlur(m, (0, 0), blur * K) if blur else m
-
-
-def ramp_y(shape, y0, y1):
-    """0 above y0, 1 below y1 (source px)."""
-    yy = np.arange(shape[0], dtype=np.float32)[:, None] / K
-    return np.clip((yy - y0) / (y1 - y0), 0, 1) * np.ones(shape, np.float32)
+def _cut(path, box=None):
+    """Owner's art -> RGBA cut-out (rembg isnet-anime, cached)."""
+    key = CACHE / (Path(path).stem + ("_%d_%d_%d_%d" % tuple(box) if box else "") + "_rgba.png")
+    if key.exists():
+        return np.array(Image.open(key))
+    from rembg import new_session, remove
+    im = Image.open(path).convert("RGB")
+    if box:
+        im = im.crop(box)
+    a = np.array(remove(im, session=new_session("isnet-anime"), only_mask=True)).astype(np.float32)
+    a = np.clip((a - 90) * 2.6, 0, 255).astype(np.uint8)
+    rgba = np.dstack([np.array(im), a])
+    Image.fromarray(rgba).save(key)
+    return rgba
 
 
 class Figure:
-    def __init__(self):
-        cache = Path.home() / ".maaran/cache/front_rgba.png"
-        if cache.exists():
-            rgba = np.array(Image.open(cache))
-        else:
-            from rembg import new_session, remove
-            im = Image.open(ROOT / "assets/2d/up/01_front.png").convert("RGB")
-            a = np.array(remove(im, session=new_session("isnet-anime"), only_mask=True)).astype(np.float32)
-            a = np.clip((a - 90) * 2.6, 0, 255).astype(np.uint8)
-            rgba = np.dstack([np.array(im), a])
-            Image.fromarray(rgba).save(cache)
-        pad = 160                                          # room to move
+    """A drawing + soft regions in SOURCE px (K = up-scale of the image we bend)."""
+
+    def __init__(self, rgba, K, pad, regions, pivot):
+        self.K, self.pad = K, pad
         self.img = cv2.copyMakeBorder(rgba, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=(0, 0, 0, 0)).astype(np.float32)
-        self.pad = pad
         h, w = self.img.shape[:2]
+        self.shape = (h, w)
         self.yy, self.xx = np.mgrid[0:h, 0:w].astype(np.float32)
-        S = (h, w)
-        P = lambda pts: [(x + pad / K, y + pad / K) for x, y in pts]     # noqa: E731
-        # soft regions (source px)
-        self.w = {
-            "footL": poly_mask(S, P([(245, 1380), (455, 1380), (455, 1560), (245, 1560)]), 4),
-            "footR": poly_mask(S, P([(575, 1380), (795, 1380), (795, 1560), (575, 1560)]), 4),
-            "hemL": poly_mask(S, P([(320, 1150), (515, 1150), (515, 1440), (320, 1440)]), 18) * ramp_y(S, 1150 + pad / K, 1400 + pad / K),
-            "hemR": poly_mask(S, P([(515, 1150), (720, 1150), (720, 1440), (515, 1440)]), 18) * ramp_y(S, 1150 + pad / K, 1400 + pad / K),
-            "stick": poly_mask(S, P([(185, 610), (330, 610), (330, 790), (300, 790), (300, 1515), (215, 1515), (215, 790), (185, 790)]), 4),
-            "arm": poly_mask(S, P([(705, 600), (820, 600), (845, 1040), (715, 1040)]), 10) * ramp_y(S, 640 + pad / K, 980 + pad / K),
-            "head": poly_mask(S, P([(320, 0), (680, 0), (680, 330), (320, 330)]), 25),
-        }
-        # the stick region must not drag the shirt/veshti behind it: keep it to wood + hand colours
         hsv = cv2.cvtColor(self.img[..., :3].astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.int32)
-        woodskin = ((hsv[..., 0] <= 25) & (hsv[..., 1] > 70)).astype(np.float32)
-        woodskin = cv2.GaussianBlur(cv2.dilate(woodskin, np.ones((7, 7), np.uint8)), (0, 0), 3)
-        self.w["stick"] *= woodskin
-        cloth = (((hsv[..., 1] < 70) & (hsv[..., 2] > 150)) | ((hsv[..., 0] >= 30) & (hsv[..., 0] <= 90) & (hsv[..., 1] > 60)))
-        cloth = cv2.GaussianBlur(cv2.dilate(cloth.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(np.float32), (0, 0), 3)
-        self.w["arm"] *= 1 - cloth                           # the arm with its outlines swings; shirt/veshti/towel stay
-        self.shape = S
+        self.cloth = (((hsv[..., 1] < 70) & (hsv[..., 2] > 150)) | ((hsv[..., 0] >= 30) & (hsv[..., 0] <= 90) & (hsv[..., 1] > 60)))
+        cl = cv2.dilate(self.cloth.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(np.float32)
+        self.cloth_soft = cv2.GaussianBlur(cl, (0, 0), 3)
+        ws = ((hsv[..., 0] <= 25) & (hsv[..., 1] > 70)).astype(np.float32)
+        self.woodskin = cv2.GaussianBlur(cv2.dilate(ws, np.ones((7, 7), np.uint8)), (0, 0), 3)
+        self.w = {}
+        for name, (pts, blur, ramp, kind) in regions.items():
+            m = np.zeros(self.shape, np.float32)
+            cv2.fillPoly(m, [np.array([self.pt(x, y) for x, y in pts], np.int32)], 1.0)
+            if blur:
+                m = cv2.GaussianBlur(m, (0, 0), blur * K)
+            if ramp:
+                y0, y1 = (self.pt(0, v)[1] for v in ramp)
+                m *= np.clip((self.yy - y0) / (y1 - y0), 0, 1) if y1 > y0 else np.clip((y0 - self.yy) / (y0 - y1), 0, 1)
+            if kind == "limb":
+                m *= 1 - self.cloth_soft                   # the arm with its outlines, never the shirt beside it
+            elif kind == "prop":
+                m *= self.woodskin
+            self.w[name] = m
+        self.pivot = pivot                                 # feet point (source px) for body sway
 
     def pt(self, x, y):
-        return (x + self.pad / K) * K, (y + self.pad / K) * K
+        return (x * self.K + self.pad, y * self.K + self.pad)
 
-    def render(self, moves, body=(0.0, 0.0, 0.0), sway_pivot=(500, 1450)):
-        """moves: {region: (dx, dy, rot_deg, pivot_x, pivot_y, scale)} in source px; body: (dx, dy, rot) for all."""
+    def field(self, moves):
         dx = np.zeros(self.shape, np.float32)
         dy = np.zeros(self.shape, np.float32)
-        for name, (mx, my, rot, px, py, sc) in moves.items():
+        for name, mv in moves.items():
+            mx, my, rot, px, py = mv[:5]
+            sc = mv[5] if len(mv) > 5 else 1.0
             w = self.w[name]
             cx, cy = self.pt(px, py)
             c, s = math.cos(math.radians(rot)), math.sin(math.radians(rot))
             X, Y = self.xx - cx, self.yy - cy
-            tx = (c * X - s * Y) * sc - X + mx * K
-            ty = (s * X + c * Y) * sc - Y + my * K
-            dx += w * tx
-            dy += w * ty
-        bx, by, br = body                                      # whole-body sway / bob about the feet
-        cx, cy = self.pt(*sway_pivot)
+            dx += w * ((c * X - s * Y) * sc - X + mx * self.K)
+            dy += w * ((s * X + c * Y) * sc - Y + my * self.K)
+        return dx, dy
+
+    def render(self, moves, body=(0.0, 0.0, 0.0), keep=None):
+        """moves {region: (dx, dy, rot, px, py[, scale])} in source px; body (dx, dy, rot) about the feet for all
+        pixels except `keep` (a region that stays planted, e.g. the feet)."""
+        dx, dy = self.field(moves)
+        bx, by, br = body
+        cx, cy = self.pt(*self.pivot)
         c, s = math.cos(math.radians(br)), math.sin(math.radians(br))
         X, Y = self.xx - cx, self.yy - cy
-        stand = 1 - np.clip(self.w["footL"] + self.w["footR"], 0, 1) * 0.8   # feet stay put while the body bobs
-        dx += stand * ((c * X - s * Y) - X + bx * K)
-        dy += stand * ((s * X + c * Y) - Y + by * K)
-        # the fields are forward motions of SOURCE pixels; the remap needs them at the DESTINATION: solve
-        # d(x) = D(x - d(x)) by fixed-point iteration (otherwise big swings leave ghost outlines behind)
-        fx, fy = dx.copy(), dy.copy()
+        stand = 1 - (np.clip(sum(self.w[k] for k in keep), 0, 1) * 0.8 if keep else 0)
+        dx += stand * ((c * X - s * Y) - X + bx * self.K)
+        dy += stand * ((s * X + c * Y) - Y + by * self.K)
+        fx, fy = dx.copy(), dy.copy()                      # destination-space field: d(x) = D(x - d(x))
         for _ in range(5):
             fx, fy = (cv2.remap(dx, self.xx - fx, self.yy - fy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE),
                       cv2.remap(dy, self.xx - fx, self.yy - fy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE))
-        dx, dy = fx, fy
-        out = cv2.remap(self.img, self.xx - dx, self.yy - dy, cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT,
+        out = cv2.remap(self.img, self.xx - fx, self.yy - fy, cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT,
                         borderValue=(0, 0, 0, 0))
         return np.clip(out, 0, 255).astype(np.uint8)
 
 
-def walk_front(fig, t, cycle=1.1):
-    """One full cycle = two steps. phase 0: left foot (image left, his right) starts to lift."""
+# ---------------------------------------------------------------- the two figures
+
+_FIG = {}
+
+
+def front():
+    if "front" not in _FIG:
+        rgba = _cut(ROOT / "assets/2d/up/01_front.png")
+        R = {
+            "footL": ([(245, 1380), (455, 1380), (455, 1560), (245, 1560)], 4, None, None),
+            "footR": ([(575, 1380), (795, 1380), (795, 1560), (575, 1560)], 4, None, None),
+            "hemL": ([(320, 1150), (515, 1150), (515, 1440), (320, 1440)], 18, (1150, 1400), None),
+            "hemR": ([(515, 1150), (720, 1150), (720, 1440), (515, 1440)], 18, (1150, 1400), None),
+            "stick": ([(185, 610), (330, 610), (330, 790), (300, 790), (300, 1530), (215, 1530), (215, 790), (185, 790)], 0, None, "prop"),
+            "arm": ([(705, 600), (820, 600), (845, 1040), (715, 1040)], 10, (640, 980), "limb"),
+            "head": ([(320, -20), (680, -20), (680, 330), (320, 330)], 25, None, None),
+            "chest": ([(200, 300), (830, 300), (830, 900), (200, 900)], 40, (900, 420), None),
+        }
+        _FIG["front"] = Figure(rgba, 2.0, 160, R, (500, 1450))
+    return _FIG["front"]
+
+
+def front_nostick():
+    """Front figure with the stick below his fist lifted out as a rigid sprite (pivots in the fist)."""
+    if "front_ns" not in _FIG:
+        f = front()
+        rgba = f.img.astype(np.uint8).copy()
+        h, w = rgba.shape[:2]
+        yy, xx = np.mgrid[0:h, 0:w]
+        poly = np.zeros((h, w), np.uint8)                   # follows the slanted stick, clear of the slipper
+        cv2.fillPoly(poly, [np.array([f.pt(205, 790), f.pt(312, 790), f.pt(257, 1560), f.pt(198, 1560)], np.int32)], 1)
+        lower = poly.astype(bool)
+        hsv = cv2.cvtColor(rgba[..., :3], cv2.COLOR_RGB2HSV).astype(np.int32)
+        wood = lower & (((hsv[..., 0] <= 25) & (hsv[..., 1] > 60)) | (hsv[..., 2] < 90)) & (rgba[..., 3] > 20)
+        wood = cv2.dilate(wood.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool) & lower
+        tip = np.zeros((h, w), np.uint8)                    # the tip and its little ground shadow: take everything
+        cv2.fillPoly(tip, [np.array([f.pt(190, 1470), f.pt(256, 1470), f.pt(256, 1580), f.pt(190, 1580)], np.int32)], 1)
+        tip = tip.astype(bool) & (rgba[..., 3] > 0)
+        shadow = tip & ~wood                                 # the art's little ground shadow at the tip: drop it
+        stick = rgba.copy()
+        stick[..., 3] = np.where(wood, stick[..., 3], 0)
+        rgba[..., 3] = np.where(wood | shadow, 0, rgba[..., 3])
+        g = Figure.__new__(Figure)
+        g.__dict__.update(f.__dict__)
+        g.img = rgba.astype(np.float32)
+        g.stick = stick.astype(np.float32)
+        g.grip = f.pt(258, 735)
+        _FIG["front_ns"] = g
+    return _FIG["front_ns"]
+
+
+SIDE_BOX = (2 * 516, 0, 2 * 832, 1774)                    # the profile on the x2 turnaround (source x 516..832)
+
+
+def side():
+    if "side" not in _FIG:
+        rgba = _cut(CACHE / "up/08_turnaround_x2.png", SIDE_BOX)
+        rgba = rgba.copy()
+        # lift the slipper out as a rigid sprite and erase it from the figure (the hem stays)
+        yy = np.arange(rgba.shape[0])[:, None]
+        foot_zone = (yy > 2 * 792) & (np.arange(rgba.shape[1])[None, :] > 2 * (600 - 516))
+        sprite = rgba.copy()
+        sprite[..., 3] = np.where(foot_zone, sprite[..., 3], 0)
+        rgba[..., 3] = np.where(foot_zone, 0, rgba[..., 3])
+        X0 = 516
+        # the lower stick (below his fist) becomes a rigid sprite that pivots in the hand – warping a thin rigid
+        # prop far leaves a ghost copy behind
+        xx = np.arange(rgba.shape[1])[None, :]
+        lower = (yy > 2 * 470) & (yy < 2 * 860) & (xx > 2 * (528 - X0)) & (xx < 2 * (602 - X0))
+        hsv = cv2.cvtColor(rgba[..., :3], cv2.COLOR_RGB2HSV).astype(np.int32)
+        wood = lower & (((hsv[..., 0] <= 25) & (hsv[..., 1] > 60)) | (hsv[..., 2] < 90))
+        wood = cv2.dilate(wood.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool) & lower
+        stick = rgba.copy()
+        stick[..., 3] = np.where(wood, stick[..., 3], 0)
+        rgba[..., 3] = np.where(wood, 0, rgba[..., 3])
+        R = {
+            "hem": ([(600 - X0, 700), (810 - X0, 700), (810 - X0, 800), (600 - X0, 800)], 10, (700, 790), None),
+            "arm": ([(655 - X0, 360), (750 - X0, 360), (755 - X0, 590), (650 - X0, 590)], 6, (370, 470), "limb"),
+            "head": ([(595 - X0, -20), (800 - X0, -20), (800 - X0, 220), (595 - X0, 220)], 18, None, None),
+        }
+        f = Figure(rgba, 2.0, 160, R, (700 - X0, 860))
+        pad = f.pad
+        sp = cv2.copyMakeBorder(sprite, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=(0, 0, 0, 0))
+        ys, xs = np.nonzero(sp[..., 3] > 10)
+        y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+        f.foot = sp[y0:y1, x0:x1].astype(np.float32)
+        f.foot_xy = (x0, y0)
+        far = f.foot.copy()
+        far[..., :3] *= 0.72
+        f.foot_far = far
+        f.stick = cv2.copyMakeBorder(stick, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=(0, 0, 0, 0)).astype(np.float32)
+        f.grip = f.pt(565 - X0, 445)
+        f.stick_len = (860 - 445) * f.K
+        _FIG["side"] = f
+    return _FIG["side"]
+
+
+def paste(dst, sprite, x, y):
+    """Alpha-composite sprite (float RGBA) onto dst (float RGBA) at integer x, y – the result is premultiplied-correct."""
+    h, w = sprite.shape[:2]
+    H, W = dst.shape[:2]
+    xs, ys = max(0, x), max(0, y)
+    xe, ye = min(W, x + w), min(H, y + h)
+    if xe <= xs or ye <= ys:
+        return
+    s = sprite[ys - y:ye - y, xs - x:xe - x]
+    a = s[..., 3:4] / 255
+    d = dst[ys:ye, xs:xe]
+    da = d[..., 3:4] / 255
+    oa = a + da * (1 - a)
+    rgb = (s[..., :3] * a + d[..., :3] * da * (1 - a)) / np.maximum(oa, 1e-6)
+    dst[ys:ye, xs:xe] = np.dstack([rgb, oa * 255])
+
+
+# ---------------------------------------------------------------- actions (t in seconds -> RGBA frame)
+
+def walk_front(t, cycle=1.1):
+    f = front()
     ph = 2 * math.pi * (t % cycle) / cycle
-    lift_l = max(0.0, math.sin(ph))                             # image-left foot swings in the first half
-    lift_r = max(0.0, -math.sin(ph))
-    bob = -7 * (abs(math.cos(ph)) ** 1.5) + 3                   # highest over the standing foot
-    sway = -6 * math.sin(ph)                                    # weight over the standing foot
-    moves = {
-        "footL": (-4 * lift_l, -42 * lift_l, -6 * lift_l, 350, 1460, 1 + 0.12 * lift_l),
-        "footR": (4 * lift_r, -42 * lift_r, 6 * lift_r, 680, 1460, 1 + 0.12 * lift_r),
-        "hemL": (-6 * lift_l, -24 * lift_l, 0, 420, 1400, 1.0),
-        "hemR": (6 * lift_r, -24 * lift_r, 0, 610, 1400, 1.0),
-        # the stick stays rigid in his hand (bending it smeared the wood); it rides with the body bob
-        # free arm swings against the image-right leg
-        "arm": (0, 0, 6 * math.sin(ph), 760, 600, 1.0),
-        "head": (-0.6 * sway, -0.4 * bob, 0.4 * math.sin(ph), 500, 330, 1.0),
-    }
-    return fig.render(moves, body=(sway, bob, 0.8 * math.sin(ph)))
+    lift_l, lift_r = max(0.0, math.sin(ph)), max(0.0, -math.sin(ph))
+    bob = -7 * (abs(math.cos(ph)) ** 1.5) + 3
+    sway = -6 * math.sin(ph)
+    moves = {"footL": (-4 * lift_l, -42 * lift_l, -6 * lift_l, 350, 1460, 1 + 0.12 * lift_l),
+             "footR": (4 * lift_r, -42 * lift_r, 6 * lift_r, 680, 1460, 1 + 0.12 * lift_r),
+             "hemL": (-6 * lift_l, -24 * lift_l, 0, 420, 1400), "hemR": (6 * lift_r, -24 * lift_r, 0, 610, 1400),
+             "arm": (0, 0, 6 * math.sin(ph), 760, 600), "head": (-0.6 * sway, -0.4 * bob, 0.4 * math.sin(ph), 500, 330)}
+    return f.render(moves, body=(sway, bob, 0.8 * math.sin(ph)), keep=["footL", "footR"])
 
 
-ACTIONS = {"walk_front": (walk_front, 1.1)}
+SIDE_CYCLE, SIDE_STRIDE = 1.0, 62.0                       # s per two steps; foot travel (source px)
+
+
+def walk_side(t, cycle=SIDE_CYCLE):
+    f = side()
+    p = (t % cycle) / cycle
+    S, L = SIDE_STRIDE, 20.0
+
+    def foot(q):                                           # x (forward = -x) and lift for a foot at phase q
+        q %= 1
+        if q < 0.5:                                        # stance: planted, slides back under the body
+            return -S / 2 + S * (q / 0.5), 0.0
+        u = (q - 0.5) / 0.5                                # swing: lifts and comes forward
+        return S / 2 - S * (u * u * (3 - 2 * u)), -L * math.sin(math.pi * u)
+    nx, nl = foot(p)
+    fx, fl = foot(p + 0.5)
+    ph = 2 * math.pi * p
+    bob = 5 * math.cos(2 * ph)                              # lowest at heel strike, twice per cycle
+    moves = {"hem": (0.22 * (nx + fx) / 2 - 3 * math.sin(ph), 0, 0, 700 - 516, 790),
+             "arm": (0, 0, -3.5 * math.sin(ph), 705 - 516, 350),
+             "head": (0, -0.3 * bob, 0.5 * math.sin(2 * ph), 700 - 516, 220)}
+    img = f.render(moves, body=(0, bob, 0)).astype(np.float32)
+    canvas = np.zeros_like(img)
+    X0, Y0 = f.foot_xy
+    K = f.K
+    paste(canvas, f.foot_far, int(X0 + (fx + 8) * K), int(Y0 + (fl - 4) * K))
+    paste(canvas, f.foot, int(X0 + nx * K), int(Y0 + nl * K))
+    paste(canvas, img, 0, 0)                               # the veshti covers the ankles
+    # the stick pivots in his fist: its tip moves with the far foot (planted while that foot is planted) and lifts
+    ang = math.degrees(math.asin(max(-0.4, min(0.4, 0.75 * fx * K / f.stick_len))))
+    gx, gy = f.grip
+    M = cv2.getRotationMatrix2D((gx, gy), ang, 1.0)
+    M[1, 2] += (bob + 0.4 * fl) * K
+    st = cv2.warpAffine(f.stick, M, (img.shape[1], img.shape[0]), flags=cv2.INTER_CUBIC, borderValue=(0, 0, 0, 0))
+    paste(canvas, np.clip(st, 0, 255), 0, 0)
+    return np.clip(canvas, 0, 255).astype(np.uint8)
+
+
+def idle(t, cycle=4.0):
+    f = front()
+    ph = 2 * math.pi * t / cycle
+    breath = math.sin(2 * ph)
+    moves = {"chest": (0, -2.2 * breath, 0, 500, 900, 1 + 0.004 * breath),
+             "head": (0.8 * math.sin(ph), -1.5 * breath, 0.6 * math.sin(ph + 1), 500, 330),
+             "arm": (0, 0, 1.2 * math.sin(ph + 0.7), 760, 600)}
+    return f.render(moves, body=(2.5 * math.sin(ph), 0, 0.35 * math.sin(ph)), keep=["footL", "footR"])
+
+
+def env(t, a, b, ramp=0.25):
+    return min(1.0, max(0.0, (t - a) / ramp)) * min(1.0, max(0.0, (b - t) / ramp))
+
+
+def laugh(t, dur=2.4):
+    f = front()
+    e = env(t, 0.1, dur - 0.1, 0.35)
+    shake = math.sin(2 * math.pi * 5.0 * t) * e
+    moves = {"chest": (0, -5 * abs(shake), 0, 500, 900, 1 + 0.01 * abs(shake)),
+             "head": (0, -8 * e - 4 * abs(shake), -4 * e, 500, 330),
+             "arm": (0, -4 * abs(shake), -3 * e, 760, 600)}
+    return f.render(moves, body=(0, -3 * abs(shake), -0.6 * e), keep=["footL", "footR"])
+
+
+def bow(t, dur=1.8):
+    f = front()
+    u = math.sin(math.pi * min(1.0, max(0.0, (t - 0.15) / (dur - 0.4))))
+    moves = {"head": (0, 26 * u, 0, 500, 330, 1 - 0.02 * u),
+             "chest": (0, 14 * u, 0, 500, 900, 1 - 0.015 * u)}
+    return f.render(moves, keep=["footL", "footR"])
+
+
+def tap(t, dur=1.6):
+    """Tilts the stick out in his fist and taps it down twice (rigid stick sprite; the hand gives a small lift)."""
+    f = front_nostick()
+    lift = 0.0
+    for t0 in (0.25, 0.85):
+        if t0 <= t <= t0 + 0.45:
+            lift = max(lift, math.sin(math.pi * (t - t0) / 0.45))
+    img = f.render({"head": (0, 0, -1.2 * lift, 500, 330)}, keep=["footL", "footR"]).astype(np.float32)
+    M = cv2.getRotationMatrix2D(f.grip, -9 * lift, 1.0)                 # the tip swings out and up
+    M[1, 2] -= 10 * lift * f.K
+    st = cv2.warpAffine(f.stick, M, (img.shape[1], img.shape[0]), flags=cv2.INTER_CUBIC, borderValue=(0, 0, 0, 0))
+    paste(img, np.clip(st, 0, 255), 0, 0)
+    return np.clip(img, 0, 255).astype(np.uint8)
+
+
+def look(t, dur=3.0):
+    f = front()
+    a = 5.0 * math.sin(2 * math.pi * min(1.0, t / dur)) * env(t, 0.05, dur - 0.05, 0.4)
+    return f.render({"head": (-2.2 * a, 0.3 * abs(a), a, 500, 330)}, keep=["footL", "footR"])
+
+
+def turn(t, dur=0.6):
+    """front -> 3/4 -> profile, each drawing scaled to the same height and feet point, cross-faded with a small squash."""
+    if "turn" not in _FIG:
+        fr = front().img
+        q = _cut(CACHE / "up/08_turnaround_x2.png", (2 * 40, 0, 2 * 434, 1774))
+        sd = side()
+        pr = np.zeros_like(sd.img)
+        paste(pr, sd.foot, *sd.foot_xy)
+        paste(pr, sd.img, 0, 0)
+        paste(pr, sd.stick, 0, 0)
+
+        def norm(img):
+            a = img[..., 3] > 20
+            ys, xs = np.nonzero(a)
+            crop = img[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+            h = 1500
+            im = cv2.resize(crop, (round(crop.shape[1] * h / crop.shape[0]), h), interpolation=cv2.INTER_AREA)
+            out = np.zeros((1600, 1100, 4), np.float32)
+            paste(out, im.astype(np.float32), 550 - im.shape[1] // 2, 1580 - h)
+            return out
+        _FIG["turn"] = [norm(fr.astype(np.float32)), norm(q.astype(np.float32)), norm(pr.astype(np.float32))]
+    a, b, c = _FIG["turn"]
+    i = int(t * FPS)
+    img = a if i < 5 else (b if i < 10 else c)              # snap front -> 3/4 -> profile (limited-animation turn)
+    sq = 0.95 if i in (4, 5, 9, 10) else 1.0                # a small squash on the change frames
+    w = img.shape[1]
+    img = cv2.resize(img, (round(w * sq), img.shape[0]), interpolation=cv2.INTER_AREA)
+    out = np.zeros((1600, 1100, 4), np.float32)
+    paste(out, img, 550 - img.shape[1] // 2, 0)
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
+def turn_right(t, dur=0.6):
+    """Like turn, but to his left (image right): the front view stays as drawn, the 3/4 and profile are mirrored –
+    so the stick never jumps hands. Continue with walk_side flipped."""
+    img = turn(t, dur)
+    return img if int(t * FPS) < 5 else np.ascontiguousarray(img[:, ::-1])
+
+
+ACTIONS = {"walk_front": (walk_front, 1.1, True), "walk_side": (walk_side, SIDE_CYCLE, True), "idle": (idle, 4.0, True),
+           "laugh": (laugh, 2.4, False), "bow": (bow, 1.8, False), "tap": (tap, 1.6, False), "look": (look, 3.0, False),
+           "turn": (turn, 0.6, False),
+           "turn_right": (turn_right, 0.6, False)}
+
+
+def build(name):
+    fn, dur, loop = ACTIONS[name]
+    n = round(dur * FPS)
+    frames = [fn(i / FPS) for i in range(n)]
+    h = max(fr.shape[0] for fr in frames)
+    w = max(fr.shape[1] for fr in frames)
+    sw, sh = (round(w * STORE) // 2) * 2, (round(h * STORE) // 2) * 2
+    LIB.mkdir(parents=True, exist_ok=True)
+    ff = subprocess.Popen(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgba",
+                           "-s", f"{sw}x{sh}", "-framerate", str(FPS), "-i", "-", "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p",
+                           "-crf", "22", "-b:v", "0", "-auto-alt-ref", "0", str(LIB / f"{name}.webm")], stdin=subprocess.PIPE)
+    feet = None
+    a0 = frames[0][..., 3] > 40
+    ys0 = np.nonzero(a0.any(axis=1))[0]
+    fig_h = round((ys0.max() - ys0.min()) * STORE)
+    for fr in frames:
+        fr = cv2.resize(fr, (sw, sh), interpolation=cv2.INTER_AREA)
+        if feet is None:
+            ys, xs = np.nonzero(fr[..., 3] > 40)
+            feet = [int(np.median(xs[ys > ys.max() - 6])), int(ys.max())]
+        ff.stdin.write(fr.tobytes())
+    ff.stdin.close()
+    ff.wait()
+    speed = SIDE_STRIDE * 2.0 * STORE * 2 / (SIDE_CYCLE / 2) / 2 if name == "walk_side" else 0.0
+    meta = {"action": name, "fps": FPS, "frames": n, "seconds": dur, "loop": loop, "size": [sw, sh], "feet": feet,
+            "fig_h": fig_h, "facing": "left" if name == "walk_side" else ("profile_left_end" if name == "turn" else ("profile_right_end" if name == "turn_right" else "front")), "ground_speed_px_s": round(speed, 1)}
+    json.dump(meta, open(LIB / f"{name}.json", "w"), indent=1)
+    subprocess.run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-c:v", "libvpx-vp9", "-i", str(LIB / f"{name}.webm"),
+                    "-filter_complex", f"color=c=0x8a8f96:s={sw}x{sh}[bg];[bg][0:v]overlay=shortest=1,scale=540:-2",
+                    "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", str(LIB / f"{name}_preview.mp4")], check=True)
+    print("saved", name, n, "frames", meta["size"])
 
 
 def main():
-    action, out = sys.argv[1], Path(sys.argv[2])
-    secs = float(sys.argv[sys.argv.index("--seconds") + 1]) if "--seconds" in sys.argv else None
-    fn, cycle = ACTIONS[action]
-    out.mkdir(parents=True, exist_ok=True)
-    fig = Figure()
-    if "--still" in sys.argv:
-        t = float(sys.argv[sys.argv.index("--still") + 1])
-        Image.fromarray(fn(fig, t)).save(out / f"still_{t:.2f}.png")
+    args = sys.argv[1:]
+    if "--still" in args:
+        name, t, out = args[0], float(args[args.index("--still") + 1]), args[args.index("--still") + 2]
+        Image.fromarray(ACTIONS[name][0](t)).save(out)
         return
-    n = round((secs or cycle) * FPS)
-    for i in range(n):
-        Image.fromarray(fn(fig, i / FPS)).save(out / f"{i:04d}.png")
-    json.dump({"action": action, "fps": FPS, "frames": n, "cycle_frames": round(cycle * FPS), "pad": fig.pad, "scale": K},
-              open(out / "cycle.json", "w"))
-    subprocess.run(["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-framerate", str(FPS), "-i", str(out / "%04d.png"),
-                    "-filter_complex", "color=c=0x8a8f96:s=2368x3392[bg];[bg][0:v]overlay=shortest=1,scale=720:-2",
-                    "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", str(out / "preview.mp4")], check=True)
-    print("saved", out, n, "frames")
+    for name in (list(ACTIONS) if args == ["all"] else args):
+        build(name)
 
 
 if __name__ == "__main__":

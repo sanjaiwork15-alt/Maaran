@@ -1,0 +1,18 @@
+{
+ "action": "tap",
+ "fps": 25,
+ "frames": 40,
+ "seconds": 1.6,
+ "loop": false,
+ "size": [
+  1184,
+  1696
+ ],
+ "feet": [
+  760,
+  1587
+ ],
+ "fig_h": 1496,
+ "facing": "front",
+ "ground_speed_px_s": 0.0
+}

@@ -32,6 +32,12 @@ rembg (`isnet-anime`), remove props/people with LaMa (`simple-lama-inpainting`, 
 `series/02-thatha-oru-doubt/ep02/final/make_frames.py`. Kitchen plate = Ep 10 kitchen with Thatha removed. New start frames / new places still need an image model
 (see overview "Locations"). Everything else below (voice, cut-aways, assembly) is unchanged.
 
+**Whole-body action library (2026-11-02, owner: walking etc. in code, free):** `assets/actions/` – walk_front,
+walk_side (+flip), turn/turn_right, idle, look, laugh, bow, tap, made by `tools/toon/body.py` from the owner's
+drawings; put them in any scene with `tools/toon/place_action.py PLAN.json OUT.mp4` (see assets/actions/README.md).
+Use them in every new episode for movement in wide shots (walking in/out, turning, laughing, greeting); talking
+close-ups stay talk.py. Owner: no paid GPU and no card.
+
 ## Method used for Groundnut (GPU on Kaggle – not available now)
 | Part | Tool |
 |---|---|
