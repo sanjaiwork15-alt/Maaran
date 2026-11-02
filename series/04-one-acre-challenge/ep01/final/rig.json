@@ -348,5 +348,137 @@
    "image": "frames/up/f_soil.png"
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_proud",
+   "audio": "voice_A.wav",
+   "duration": 8.4,
+   "seed": 700,
+   "brows": [
+    0.9,
+    6.0
+   ],
+   "laugh": [
+    [
+     3.9,
+     0.8
+    ]
+   ]
+  },
+  "C": {
+   "frame": "f_seeds",
+   "audio": "voice_C.wav",
+   "duration": 5.1,
+   "seed": 701,
+   "brows": [
+    0.3,
+    2.4
+   ]
+  },
+  "C2": {
+   "frame": "f_seeds",
+   "audio": "voice_C2.wav",
+   "duration": 1.8,
+   "seed": 702,
+   "brows": [
+    0.2
+   ]
+  },
+  "D": {
+   "frame": "f_proud",
+   "audio": "voice_D.wav",
+   "duration": 2.0,
+   "seed": 703,
+   "nod": [
+    [
+     0.4,
+     0.9
+    ]
+   ]
+  },
+  "E": {
+   "frame": "f_dig",
+   "audio": "voice_E.wav",
+   "duration": 5.3,
+   "seed": 704,
+   "brows": [
+    0.3,
+    1.2
+   ],
+   "shake": [
+    [
+     2.4,
+     0.7
+    ]
+   ]
+  },
+  "F": {
+   "frame": "f_nut",
+   "audio": "voice_F.wav",
+   "duration": 3.9,
+   "seed": 705,
+   "brows": [
+    0.2,
+    2.0
+   ]
+  },
+  "G": {
+   "frame": "f_point",
+   "audio": "voice_G.wav",
+   "duration": 5.4,
+   "seed": 706,
+   "brows": [
+    0.2
+   ],
+   "shake": [
+    [
+     3.7,
+     1.0
+    ]
+   ]
+  },
+  "H": {
+   "frame": "f_soil",
+   "audio": "voice_H.wav",
+   "duration": 10.7,
+   "seed": 707,
+   "brows": [
+    0.7,
+    5.4
+   ]
+  },
+  "I": {
+   "frame": "f_nut",
+   "audio": "voice_I.wav",
+   "duration": 5.3,
+   "seed": 708,
+   "brows": [
+    0.5
+   ]
+  },
+  "J": {
+   "frame": "f_seeds",
+   "audio": "voice_J.wav",
+   "duration": 3.5,
+   "seed": 709,
+   "nod": [
+    [
+     1.6,
+     1.0
+    ]
+   ]
+  },
+  "K": {
+   "frame": "f_soil",
+   "audio": "voice_K.wav",
+   "duration": 4.7,
+   "seed": 710,
+   "nod": [
+    [
+     1.0,
+     0.9
+    ]
+   ]
+  }
+ }
 }
