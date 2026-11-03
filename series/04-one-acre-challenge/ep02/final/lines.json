@@ -3,48 +3,48 @@
   "id": "L1a",
   "tanglish": "Aiyayo pa! Indha mannula vidhaiye valara maatengudhu!",
   "tamil": "ஐயையோ பா! இந்த மண்ணுல விதையே வளர மாட்டேங்குது!",
-  "pause_after": 0.15
+  "pause_after": 0.5
  },
  {
   "id": "L1b",
   "tanglish": "Hmm... Thatha kitta oru idea irukku!",
   "tamil": "ம்ம்... தாத்தா கிட்ட ஒரு ஐடியா இருக்கு!",
-  "pause_after": 0.15
+  "pause_after": 2.6
  },
  {
   "id": "L2",
   "tanglish": "Konjam compost, konjam ilai... idhellam mannula mix pannittaa, namma vayal super-aagidum pa!",
   "tamil": "கொஞ்சம் கம்போஸ்ட், கொஞ்சம் இலை... இதெல்லாம் மண்ணுல மிக்ஸ் பண்ணிட்டா, நம்ம வயல் சூப்பராகிடும் பா!",
-  "pause_after": 0.15
+  "pause_after": 4.6
  },
  {
   "id": "L3",
   "tanglish": "Konjam edhukku pa? Niraiya pottaa, payir innum super-ah valarum!",
   "tamil": "கொஞ்சம் எதுக்கு பா? நிறைய போட்டா, பயிர் இன்னும் சூப்பரா வளரும்!",
-  "pause_after": 0.15
+  "pause_after": 5.0
  },
  {
   "id": "L4",
   "tanglish": "Ada paavi! Mannukku saapadu podren-nu, malaiye uruvaakkittene!",
   "tamil": "அட பாவி! மண்ணுக்கு சாப்பாடு போடறேன்னு, மலையே உருவாக்கிட்டேனே!",
-  "pause_after": 0.15
+  "pause_after": 2.0
  },
  {
   "id": "L5",
   "tanglish": "Compost nalladhu pa! Aana adhu nalla prepare panni, sariyana alavula dhaan poda venum!",
   "tamil": "கம்போஸ்ட் நல்லது பா! ஆனா அது நல்லா ப்ரிப்பேர் பண்ணி, சரியான அளவுல தான் போட வேணும்!",
-  "pause_after": 0.15
+  "pause_after": 4.2
  },
  {
   "id": "L6",
   "tanglish": "Vaazhkaiyilum idhu dhaan pa! Edhuvum alavukku meerinaa nalladhu illa!",
   "tamil": "வாழ்க்கையிலும் இது தான் பா! எதுவும் அளவுக்கு மீறினா நல்லது இல்ல!",
-  "pause_after": 0.15
+  "pause_after": 2.0
  },
  {
   "id": "L7",
   "tanglish": "Aiyayo! Indha chedila enna poochi ukkandhirukku?!",
   "tamil": "ஐயையோ! இந்த செடில என்ன பூச்சி உக்காந்திருக்கு?!",
-  "pause_after": 0.5
+  "pause_after": 3.2
  }
 ]

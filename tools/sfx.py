@@ -9,6 +9,7 @@ tick:    clock ticks, 2 per second.
 rooster: the real cockcrow recording (assets/sound/nature/rooster_distant.wav, CC0), brought close (louder, less
          filtered than the distant one in the ambience).
 tap:     two wooden knocks (a walking stick on the floor).
+knock:   one wooden knock (use one per stick strike).
 clang:   a hoe hitting rock-hard ground (thud + short metallic ring).
 pop:     a daydream bubble bursting (rising whoosh + pop).
 shimmer: a soft, quiet sparkle under a daydream (sound effect, not music).
@@ -105,6 +106,14 @@ def tap(dur, rng):
     return out
 
 
+def knock(dur, rng):
+    """One wooden knock (a stick striking the ground once)."""
+    n = int(0.3 * SR)
+    t = np.arange(n) / SR
+    body = np.sin(2 * np.pi * 190 * t) * np.exp(-t / 0.04) + 0.5 * np.sin(2 * np.pi * 430 * t) * np.exp(-t / 0.02)
+    return 0.8 * body + 0.6 * bp(rng.standard_normal(n), 600, 3200) * np.exp(-t / 0.007)
+
+
 def clang(dur, rng):
     """A hoe on rock-hard soil: a dull thud plus a short metallic ring."""
     n = int(max(dur, 0.6) * SR)
@@ -139,7 +148,7 @@ def shimmer(dur, rng):
     return out * np.minimum(1, (n - np.arange(n)) / (0.3 * SR))
 
 
-KINDS = {"alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "pop": pop, "shimmer": shimmer}
+KINDS = {"alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
 
 
 def main():

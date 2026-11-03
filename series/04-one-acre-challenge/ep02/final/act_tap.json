@@ -1,0 +1,22 @@
+{
+ "bg": "frames/dry_plate.png",
+ "duration": 2.0,
+ "layers": [
+  {
+   "action": "tap",
+   "path": [
+    [
+     0,
+     540,
+     1720,
+     1200
+    ]
+   ],
+   "light": [
+    1.0,
+    0.97,
+    0.92
+   ]
+  }
+ ]
+}

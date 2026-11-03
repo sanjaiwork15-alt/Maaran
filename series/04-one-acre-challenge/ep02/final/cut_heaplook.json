@@ -1,0 +1,10 @@
+{
+ "mode": "heap",
+ "duration": 2.2,
+ "bg": "frames/dry_plate.png",
+ "grow": [
+  -2,
+  -1
+ ],
+ "action": "look"
+}
