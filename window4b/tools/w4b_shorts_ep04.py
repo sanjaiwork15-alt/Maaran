@@ -68,12 +68,12 @@ def extras_audio(mix):
     n = len(b)
     hiss = np.zeros(n); r = np.random.default_rng(5); pos = r.integers(0, n, n // 20); hiss[pos] = r.uniform(-1, 1, len(pos))
     x = np.arange(n) / SR
-    b += gust(n, 0.6, 9.0, -9) + stereo(bp(hiss, 2500, 10000) * np.clip((x - 1.2) / 1.5, 0, 1), 0) * db(-14)
+    b += gust(n, 0.6, 9.0, -3) + stereo(bp(hiss, 2500, 10000) * np.clip((x - 1.2) / 1.5, 0, 1), 0) * db(-14)
     b += stereo(bp(noise(n, "brown"), 20, 90, 3) * np.clip((x - 0.6) / 2.0, 0, 1), 0) * db(-12)
     out[188 * SR:195 * SR] = b
     # 195-213: soft wind; a final gust sweeps over (1.5-9 s), soft gusts, then silence before the end
     n = 18 * SR; x = np.arange(n) / SR
-    c = gust(n, 0.0, 18.0, -26) + gust(n, 1.5, 7.5, -11) + gust(n, 12.5, 3.0, -17)
+    c = gust(n, 0.0, 18.0, -16) + gust(n, 1.5, 7.5, -2) + gust(n, 12.5, 3.0, -7)
     c *= np.clip((16.2 - x) / 0.8, 0, 1)[:, None]
     out[195 * SR:213 * SR] = c
     return out
