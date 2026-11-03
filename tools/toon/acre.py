@@ -500,8 +500,8 @@ def scene_bug(t, cfg):
     looks around (no labels)."""
     g = [f'<defs><radialGradient id="bb" cx="0.5" cy="0.4" r="0.8"><stop offset="0" stop-color="#d9efb0"/>'
          f'<stop offset="1" stop-color="#7fae5a"/></radialGradient></defs><rect width="{W}" height="{H}" fill="url(#bb)"/>']
-    g.append(f'<path d="M 540,1950 Q 520,1450 545,930" stroke="#2f5a1a" stroke-width="48" fill="none" stroke-linecap="round"/>'
-             f'<path d="M 540,1950 Q 520,1450 545,930" stroke="#4f7d2a" stroke-width="36" fill="none" stroke-linecap="round"/>')
+    g.append(f'<path d="M 540,1950 Q 520,1450 560,835" stroke="#2f5a1a" stroke-width="48" fill="none" stroke-linecap="round"/>'
+             f'<path d="M 540,1950 Q 520,1450 560,835" stroke="#4f7d2a" stroke-width="36" fill="none" stroke-linecap="round"/>')
     for (cx, cy, ang, sc) in ((330, 880, -20, 2.6), (765, 860, 18, 2.6), (370, 1380, -35, 2.0), (705, 1360, 30, 2.0)):
         g.append(f'<g transform="translate({cx} {cy}) rotate({ang}) scale({sc})"><path d="M -110,0 Q 0,-70 110,0 Q 0,70 -110,0 Z" '
                  f'fill="#5fa83a" stroke="#2f5a1a" stroke-width="4"/><path d="M -100,0 Q 0,-8 100,0" stroke="#3f7a26" stroke-width="4" fill="none"/>'
@@ -509,7 +509,7 @@ def scene_bug(t, cfg):
     # the caterpillar on the top-right leaf (segments, little feet, head that lifts and turns)
     lift = 0.5 + 0.5 * math.sin(t * 2.2)
     look = math.sin(t * 1.3) * 12
-    bx, by = 640, 820
+    bx, by = 545, 805
     for k in range(7):
         x = bx + k * 46
         y = by - 9 * math.sin(k * 0.9 + t * 4)

@@ -206,4 +206,6 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   Thatha only, 50–60 s, cliffhanger endings): `series/04-one-acre-challenge/`. Ep 1 ("Indha Mannu Enna Verukkudha?!",
   dry one-acre field): done without GPU, waiting for review (`ep01/final/thatha_acre01.mp4`, 66.2 s – the script's
   16 lines are 84 s of speech, voice sped 1.25x, every line kept; owner may want shorter scripts or a 60 s cut).
-- Next: wait for the owner's One-Acre Ep 2 script (or Day 5).
+- One-Acre Ep 2 ("Thatha's Secret Soil Formula", compost heap): done without GPU, waiting for review
+  (`series/04-one-acre-challenge/ep02/final/thatha_acre02.mp4`, 55.0 s, natural voice speed).
+- Next: wait for the owner's One-Acre Ep 3 script (the caterpillar cliffhanger).
