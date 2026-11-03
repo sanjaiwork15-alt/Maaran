@@ -42,6 +42,9 @@ SIGNAL = (470, 640)
 LAMPS = [(468, 556), (603, 598), (1033, 648), (1352, 547)]
 SUN = (1303, 316)
 GAP = (1060, 270)                # where a building shows through a gap in the dust (Scene 3)
+# Extra beats for the Shorts (w4b_ep04_extras.py sets this): world time = EXTRA["world"] + lt * rate, and
+# any of density / wind / coat / sand may be overridden as functions of the local time lt (G["lt"]).
+EXTRA = {}
 
 
 def ease(x):
@@ -85,6 +88,8 @@ def gustiness(t):
 
 def density(t):
     """Dust optical density for the whole city (far things count more, see depth)."""
+    if "density" in EXTRA:
+        return EXTRA["density"](G["lt"])
     base = interp(t, [0, 20, 30, 38, 40, 42.5, 64, 70, 82, 87, 89, 114, 116, 140, 150, 160, 180],
                   [0.0, 0.05, 0.3, 0.6, 0.8, 3.6, 3.6, 3.0, 2.6, 1.2, 0.9, 1.4, 3.2, 3.2, 1.5, 0.85, 0.8])
     if 89 <= t < 114:                       # storm waves, Week 2 -> Month 1
@@ -95,6 +100,8 @@ def density(t):
 
 
 def wind(t):
+    if "wind" in EXTRA:
+        return EXTRA["wind"](G["lt"])
     return interp(t, [0, 18, 26, 38, 41, 64, 82, 88, 114, 140, 150, 160, 176, 177.5, 180],
                   [0.1, 0.12, 0.4, 0.8, 1.0, 1.0, 0.85, 0.5, 0.75, 0.6, 0.35, 0.15, 0.15, 0.6, 0.0])
 
@@ -113,10 +120,14 @@ def ambient(t):
 
 
 def sand_level(t):
+    if "sand" in EXTRA:
+        return EXTRA["sand"](G["lt"])
     return interp(t, [0, 65, 88, 102, 114, 140, 152, 165, 180], [-9, -9, 0.25, 0.8, 1.3, 2.2, 2.6, 2.9, 3.0])
 
 
 def coat(t):
+    if "coat" in EXTRA:
+        return EXTRA["coat"](G["lt"])
     return interp(t, [0, 42, 64, 88, 114, 140, 180], [0, 0.08, 0.2, 0.35, 0.5, 0.65, 0.7])
 
 
@@ -248,6 +259,11 @@ def haze(city, t):
     if 51.5 < t < 55.5:     # a gap opens: a building shows for a moment, then the next wall sweeps across
         g = ramp(t, 51.5, 52.5) * (1 - ramp(t, 53.8, 55.0))
         dens = dens * (1 - 0.72 * g * G["gap"] * (1 - G["sky"]))
+    if "front" in EXTRA:         # a wave of dust sweeping across the view
+        fx, k, d_ = EXTRA["front"](G["lt"])
+        side = np.clip((fx * G["W"] - G["xx"]) * d_ / (170 * G["sc"]), 0, 1) if d_ > 0 else \
+            np.clip((G["xx"] - fx * G["W"]) / (170 * G["sc"]), 0, 1)
+        dens = dens + k * side * (0.6 + 0.8 * turb) * np.maximum(G["depth"], 0.5)
     a = 1 - np.exp(-dens)
     col = dust_col(t) * (0.85 + 0.3 * turb[..., None])
     return city * (1 - a[..., None]) + col * a[..., None]
@@ -381,6 +397,9 @@ def text(frame, t):
 
 
 def render(t):
+    if EXTRA:
+        G["lt"] = t - EXTRA.get("t0", 0.0)
+        t = EXTRA["world"] + G["lt"] * EXTRA.get("rate", 1.0)
     city = G["city_img"].copy()
     height = G["height"].copy()
     G["float_mask"] = np.zeros(height.shape, np.float32)
@@ -407,8 +426,10 @@ def render(t):
     city = glass(city, t)
     f = room(city, t)
     f = text(f, t)
-    if t > DURATION - 2.5:
+    if t > DURATION - 2.5 and not EXTRA:
         f = f * ease((DURATION - t) / 2.5)
+    if "fade_at" in EXTRA:
+        f = f * (1 - ramp(G["lt"], EXTRA["fade_at"], EXTRA["fade_at"] + 1.5))
     return (np.clip(f, 0, 1) * 255).astype(np.uint8)
 
 
