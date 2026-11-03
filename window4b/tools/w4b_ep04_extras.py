@@ -18,7 +18,7 @@ import w4b_ep04 as M  # noqa: E402
 ip = lambda xs, ys: (lambda lt: float(np.interp(lt, xs, ys)))
 
 BEATS = {
-    "short1_end": (8.0, dict(world=60.0, rate=1.0, density=ip([0, 3.0, 8], [3.6, 0.85, 0.75]),
+    "short1_end": (8.0, dict(world=56.5, rate=1.0, density=ip([0, 3.0, 8], [3.6, 0.85, 0.75]),
                              wind=ip([0, 3, 8], [1.0, 0.35, 0.3]), coat=lambda lt: 0.6,
                              sand=lambda lt: 0.9)),
     "short2_end": (7.0, dict(world=150.0, rate=1.0, wind=ip([0, 0.8, 2.0, 7], [0.35, 0.4, 1.0, 1.0]),
