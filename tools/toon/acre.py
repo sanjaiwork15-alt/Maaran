@@ -6,6 +6,7 @@ TIMING.json: {"mode": ..., "duration": 4, "fps": 25, "camera": [[t, cy, h], ...]
 car:     daydream: a cloud-edged dream bubble – a shiny red car, bundles of rupee notes piled up, gold coins
          raining – with Thatha (the action library's "laugh" clip) beside it; at "pop" (s) the bubble bursts
          (shrinks to a point + white flash) and the real dry field ("bg") is left.
+heap:    the dry field: a giant compost mound grows as clumps pour onto it; Thatha (library clip) admires it.
 tree:    daydream: a money tree – rupee notes for leaves, swaying, notes drifting down – Thatha laughing beside it;
          "pop" as above.
 strike:  close-up of cracked, rock-hard soil: the hoe blade comes down and bounces off (dust, chips, sparks) at
@@ -183,6 +184,83 @@ class Dream:
         return img
 
 
+def mound(cx, base, w, h, seed=3):
+    """A huge rounded heap of dark compost: smooth dome, lumpy edge, lit from the upper left, crumbs, straw bits,
+    steam wisps on top (fresh compost is warm)."""
+    rng = np.random.default_rng(seed)
+    pts = []
+    for k in range(41):
+        u = k / 40
+        x = cx - w / 2 + w * u
+        y = base - h * (1 - (2 * u - 1) ** 2) ** 0.55 + rng.normal(0, 3)
+        pts.append((x, y))
+    d = f"M {pts[0][0]:.0f},{base + 6} " + " ".join(f"L {x:.0f},{y:.0f}" for x, y in pts) + f" L {pts[-1][0]:.0f},{base + 6} Z"
+    g = [f'<ellipse cx="{cx}" cy="{base + 4}" rx="{w * 0.58:.0f}" ry="{h * 0.08:.0f}" fill="#2a1408" fill-opacity="0.4"/>',
+         f'<defs><radialGradient id="mg" cx="0.35" cy="0.25" r="0.85"><stop offset="0" stop-color="#7a5230"/>'
+         f'<stop offset="0.55" stop-color="#4a2c18"/><stop offset="1" stop-color="#2a170a"/></radialGradient></defs>'
+         f'<clipPath id="m"><path d="{d}"/></clipPath><path d="{d}" fill="url(#mg)" stroke="#1e0f06" stroke-width="5" stroke-linejoin="round"/>',
+         '<g clip-path="url(#m)">']
+    for _ in range(int(w * h / 500)):                       # crumbs and lumps
+        x, y = rng.uniform(cx - w / 2, cx + w / 2), rng.uniform(base - h, base)
+        r = rng.uniform(3, 10)
+        g.append(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{r:.0f}" ry="{r * 0.7:.0f}" fill="{rng.choice(["#3a2212", "#5e3a20", "#6b4526", "#2e1a0c", "#86603a"])}" fill-opacity="0.85"/>')
+    for _ in range(int(w * h / 2500)):                      # straw and leaf bits
+        x, y = rng.uniform(cx - w / 2, cx + w / 2), rng.uniform(base - h, base)
+        a = rng.uniform(0, 180)
+        col = rng.choice(["#c9a24a", "#a8873a", "#8a6a2a", "#6f8a3a"])
+        g.append(f'<rect x="{x:.0f}" y="{y:.0f}" width="{rng.uniform(10, 22):.0f}" height="3" fill="{col}" transform="rotate({a:.0f} {x:.0f} {y:.0f})"/>')
+    g.append('</g>')
+    for k in range(3):
+        x = cx - 50 + k * 50
+        g.append(f'<path d="M {x},{base - h - 6:.0f} q 14,-22 0,-44 q -14,-22 0,-44" stroke="#ffffff" stroke-width="7" fill="none" '
+                 f'stroke-opacity="0.55" stroke-linecap="round"/>')
+    return "".join(g)
+
+
+class Heap:
+    """heap: the dry field (bg) – a giant compost mound grows as clumps pour down onto it ("grow": [t0, t1]),
+    Thatha (action library clip, default "laugh") beside it admiring it."""
+
+    def __init__(self, cfg, base):
+        self.cfg = cfg
+        self.bg = np.array(Image.open(base / cfg["bg"]).convert("RGB").resize((W, H), Image.LANCZOS)).astype(np.float32)
+        self.meta, self.fig = frames_of(cfg.get("action", "laugh"))
+
+    def frame(self, t):
+        cfg = self.cfg
+        g0, g1 = cfg.get("grow", [0.0, 1.6])
+        u = ease((t - g0) / (g1 - g0))
+        cx, base, w, h = cfg.get("mound", [690, 1640, 760, 720])
+        body = ""
+        if u > 0.01:
+            body += mound(cx, base, w * (0.45 + 0.55 * u), h * u, seed=6)
+        if t < g1 + 0.2:                                       # clumps raining down onto the heap
+            rng = np.random.default_rng(9)
+            for k in range(18):
+                tk = g0 + rng.uniform(0, g1 - g0)
+                v = (t - tk) / 0.45
+                if 0 <= v <= 1:
+                    x = cx + rng.normal(0, w * 0.15)
+                    y = -60 + (base - h * u - (-60)) * v * v
+                    r = rng.uniform(18, 34)
+                    body += f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{r:.0f}" ry="{r * 0.75:.0f}" fill="#3a2212" stroke="#1e0f06" stroke-width="3"/>'
+        img = over(self.bg, svg_rgba(body)) if body else self.bg.copy()
+        fr = self.fig[int(t * 25) % len(self.fig)]
+        x, y, hh = cfg.get("fig", [250, 1690, 1000])
+        sc = hh / self.meta["fig_h"]
+        spr = cv2.resize(fr, (round(fr.shape[1] * sc), round(fr.shape[0] * sc)), interpolation=cv2.INTER_AREA).astype(np.float32)
+        ax, ay = self.meta["feet"][0] * sc, self.meta["feet"][1] * sc
+        sh = np.zeros((H, W), np.float32)
+        cv2.ellipse(sh, (int(x), int(y)), (int(hh * 0.16), int(hh * 0.022)), 0, 0, 360, 1, -1)
+        img *= 1 - 0.38 * cv2.GaussianBlur(sh, (0, 0), hh * 0.01)[..., None]
+        x0, y0 = int(x - ax), int(y - ay)
+        xs, ys, xe, ye = max(0, x0), max(0, y0), min(W, x0 + spr.shape[1]), min(H, y0 + spr.shape[0])
+        s = spr[ys - y0:ye - y0, xs - x0:xe - x0]
+        a = s[..., 3:4] / 255
+        img[ys:ye, xs:xe] = img[ys:ye, xs:xe] * (1 - a) + s[..., :3] * a
+        return img
+
+
 # ---------------------------------------------------------------- close-ups of the dry ground
 
 def cracked_ground(seed=7, tone=1.0):
@@ -352,7 +430,8 @@ def main():
     fps = cfg.get("fps", 25)
     n = round(cfg["duration"] * fps)
     cams = cfg.get("camera", [[0, H / 2, H]])
-    dream = Dream(cfg, cfg_path.parent) if cfg["mode"] in ("car", "tree") else None
+    dream = Dream(cfg, cfg_path.parent) if cfg["mode"] in ("car", "tree") else (
+        Heap(cfg, cfg_path.parent) if cfg["mode"] == "heap" else None)
     still = cfg.get("still")
     ff = None if still is not None else subprocess.Popen(
         ["ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
