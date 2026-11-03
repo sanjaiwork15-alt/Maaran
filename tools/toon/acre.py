@@ -420,7 +420,115 @@ def scene_section(t, cfg):
     return "".join(g)
 
 
-SCENES = {"strike": scene_strike, "seed": scene_seed, "section": scene_section}
+def leaf_bit(x, y, ang, s=1.0, col="#b8892f"):
+    return (f'<g transform="translate({x:.0f} {y:.0f}) rotate({ang:.0f}) scale({s:.2f})"><path d="M -40,0 Q 0,-26 40,0 Q 0,26 -40,0 Z" '
+            f'fill="{col}" stroke="#6a4a14" stroke-width="4"/><line x1="-36" y1="0" x2="36" y2="0" stroke="#6a4a14" stroke-width="3"/></g>')
+
+
+def clod(x, y, r, col="#3a2212"):
+    return f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{r:.0f}" ry="{r * 0.75:.0f}" fill="{col}" stroke="#1e0f06" stroke-width="3"/>'
+
+
+def scene_recipe(t, cfg):
+    """Thatha's 'secret recipe': compost and dry leaves drop onto the dry patch, then get stirred in a swirl."""
+    g = [cracked_ground(11)]
+    rng = np.random.default_rng(5)
+    cx, cy = 540, 1050
+    items = []
+    for k in range(30):
+        tk = 0.1 + k * 0.07
+        kind = "leaf" if k % 3 == 2 else "clod"
+        ang0 = rng.uniform(0, 2 * math.pi)
+        rad = rng.uniform(20, 300)
+        items.append((tk, kind, ang0, rad, rng.uniform(30, 52), rng.uniform(0, 180)))
+    stir = ease((t - 2.2) / 0.5)
+    spin = max(0.0, t - 2.2) * 3.2
+    if stir > 0:                                              # a stirring stick sweeps round
+        a = spin
+        g.append(f'<ellipse cx="{cx}" cy="{cy}" rx="{260 * stir:.0f}" ry="{170 * stir:.0f}" fill="#4a2c18" fill-opacity="{0.35 * stir:.2f}"/>')
+    for tk, kind, a0, rad, r, rot in items:
+        v = (t - tk) / 0.35
+        if v < 0:
+            continue
+        a = a0 + spin * (1 - rad / 300)
+        x = cx + math.cos(a) * rad * (1 - 0.3 * stir)
+        y = cy + math.sin(a) * rad * 0.62 * (1 - 0.3 * stir)
+        if v < 1:
+            y = -80 + (y + 80) * v * v
+        g.append(leaf_bit(x, y, rot + spin * 40, 1.9) if kind == "leaf" else clod(x, y, r))
+    if stir > 0:
+        a = spin
+        sx, sy = cx + math.cos(a) * 140, cy + math.sin(a) * 90
+        g.append(f'<line x1="{sx:.0f}" y1="{sy:.0f}" x2="{sx + 120:.0f}" y2="{sy - 1100:.0f}" stroke="#8a5a2b" stroke-width="34" stroke-linecap="round"/>'
+                 f'<line x1="{sx:.0f}" y1="{sy:.0f}" x2="{sx + 120:.0f}" y2="{sy - 1100:.0f}" stroke="{OUT}" stroke-width="40" stroke-linecap="round" opacity="0.25"/>')
+    return "".join(g)
+
+
+def scene_spread(t, cfg):
+    """The right way: a thin, even layer of mature compost sprinkled over the cracked soil, then worked in – the
+    soil turns dark and crumbly, the cracks close."""
+    rng = np.random.default_rng(8)
+    sprinkle = ease((t - 0.2) / 1.6)
+    mix = ease((t - 2.1) / 1.4)
+    g = [cracked_ground(13)]
+    if mix > 0:                                               # worked-in soil: dark, crumbly, no cracks
+        g.append(f'<rect width="{W}" height="{H}" fill="#5a3a22" fill-opacity="{mix:.2f}"/>')
+        r2 = np.random.default_rng(3)
+        for _ in range(int(500 * mix)):
+            x, y, r = r2.uniform(0, W), r2.uniform(0, H), r2.uniform(5, 16)
+            g.append(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{r:.0f}" ry="{r * 0.75:.0f}" fill="{r2.choice(["#6b4526", "#3e2614", "#7a5232"])}"/>')
+    n = int(900 * sprinkle * (1 - mix))
+    for k in range(n):                                        # crumbs of compost, evenly spread
+        x, y = rng.uniform(0, W), rng.uniform(0, H)
+        r = rng.uniform(4, 9)
+        g.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r:.0f}" fill="{rng.choice(["#2e1a0c", "#3a2212", "#4a2c18"])}"/>')
+    if 0 < sprinkle < 1:                                      # falling stream from the top
+        for k in range(30):
+            x = 120 + (k * 37 + t * 900) % 840
+            y = (k * 113 + t * 1600) % 1700
+            g.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="6" fill="#2e1a0c"/>')
+    if 0 < mix < 1:                                           # a small hand-rake passes over
+        x = -200 + 1500 * mix
+        g.append(f'<g transform="translate({x:.0f} 1100) rotate(-20)"><rect x="-15" y="-1200" width="30" height="1150" fill="#8a5a2b" stroke="{OUT}" stroke-width="6"/>'
+                 f'<rect x="-120" y="-60" width="240" height="30" rx="8" fill="#6d757c" stroke="#2c3238" stroke-width="6"/>'
+                 + "".join(f'<rect x="{-110 + k * 44}" y="-34" width="14" height="70" fill="#8b949c" stroke="#2c3238" stroke-width="4"/>' for k in range(6)) + '</g>')
+    return "".join(g)
+
+
+def scene_bug(t, cfg):
+    """Cliffhanger: a young groundnut leaf close-up; a little green caterpillar sits on it – it lifts its head and
+    looks around (no labels)."""
+    g = [f'<defs><radialGradient id="bb" cx="0.5" cy="0.4" r="0.8"><stop offset="0" stop-color="#d9efb0"/>'
+         f'<stop offset="1" stop-color="#7fae5a"/></radialGradient></defs><rect width="{W}" height="{H}" fill="url(#bb)"/>']
+    g.append(f'<path d="M 540,1950 Q 520,1450 545,930" stroke="#2f5a1a" stroke-width="48" fill="none" stroke-linecap="round"/>'
+             f'<path d="M 540,1950 Q 520,1450 545,930" stroke="#4f7d2a" stroke-width="36" fill="none" stroke-linecap="round"/>')
+    for (cx, cy, ang, sc) in ((330, 880, -20, 2.6), (765, 860, 18, 2.6), (370, 1380, -35, 2.0), (705, 1360, 30, 2.0)):
+        g.append(f'<g transform="translate({cx} {cy}) rotate({ang}) scale({sc})"><path d="M -110,0 Q 0,-70 110,0 Q 0,70 -110,0 Z" '
+                 f'fill="#5fa83a" stroke="#2f5a1a" stroke-width="4"/><path d="M -100,0 Q 0,-8 100,0" stroke="#3f7a26" stroke-width="4" fill="none"/>'
+                 + "".join(f'<path d="M {-60 + 30 * k},{-4 + k % 2} q 14,-20 26,-30" stroke="#3f7a26" stroke-width="3" fill="none"/>' for k in range(5)) + '</g>')
+    # the caterpillar on the top-right leaf (segments, little feet, head that lifts and turns)
+    lift = 0.5 + 0.5 * math.sin(t * 2.2)
+    look = math.sin(t * 1.3) * 12
+    bx, by = 640, 820
+    for k in range(7):
+        x = bx + k * 46
+        y = by - 9 * math.sin(k * 0.9 + t * 4)
+        g.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="34" fill="#7cc242" stroke="#2f5a1a" stroke-width="5"/>'
+                 f'<circle cx="{x - 9:.0f}" cy="{y - 12:.0f}" r="9" fill="#bfe88a"/>'
+                 f'<line x1="{x:.0f}" y1="{y + 28:.0f}" x2="{x:.0f}" y2="{y + 46:.0f}" stroke="#2f5a1a" stroke-width="7" stroke-linecap="round"/>')
+    hx, hy = bx - 46, by - 26 - 30 * lift
+    g.append(f'<circle cx="{hx:.0f}" cy="{hy:.0f}" r="42" fill="#8fd04e" stroke="#2f5a1a" stroke-width="5"/>'
+             f'<circle cx="{hx - 14 + look * 0.4:.0f}" cy="{hy - 6:.0f}" r="13" fill="#fff" stroke="#222" stroke-width="3"/>'
+             f'<circle cx="{hx + 14 + look * 0.4:.0f}" cy="{hy - 6:.0f}" r="13" fill="#fff" stroke="#222" stroke-width="3"/>'
+             f'<circle cx="{hx - 13 + look * 0.8:.0f}" cy="{hy - 4:.0f}" r="6" fill="#111"/><circle cx="{hx + 15 + look * 0.8:.0f}" cy="{hy - 4:.0f}" r="6" fill="#111"/>'
+             f'<path d="M {hx - 14:.0f},{hy - 38:.0f} q -8,-34 -26,-42 M {hx + 14:.0f},{hy - 38:.0f} q 8,-34 26,-42" stroke="#2f5a1a" stroke-width="5" fill="none"/>'
+             f'<path d="M {hx - 12:.0f},{hy + 16:.0f} q 12,9 24,0" stroke="#2f5a1a" stroke-width="4" fill="none"/>')
+    g.append(f'<path d="M 700,860 q 20,30 40,10 q 10,-10 0,-20" fill="#c9a24a" stroke="#6a4a14" stroke-width="3" opacity="0.9"/>')   # a nibbled edge
+    return "".join(g)
+
+
+SCENES = {"strike": scene_strike, "seed": scene_seed, "section": scene_section, "recipe": scene_recipe,
+          "spread": scene_spread, "bug": scene_bug}
 
 
 def main():
