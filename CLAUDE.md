@@ -208,4 +208,11 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   16 lines are 84 s of speech, voice sped 1.25x, every line kept; owner may want shorter scripts or a 60 s cut).
 - One-Acre Ep 2 ("Thatha's Secret Soil Formula", compost heap): done without GPU, waiting for review
   (`series/04-one-acre-challenge/ep02/final/thatha_acre02.mp4`, 55.0 s, natural voice speed).
-- Next: wait for the owner's One-Acre Ep 3 script (the caterpillar cliffhanger).
+- Series 05 Diwali specials (owner 2026-11-04; Thatha only, festival evening, `series/05-diwali/spNN/final/`).
+  Special 1 ("Thatha's Diwali Gift Aasai!"): done without GPU, waiting for review
+  (`series/05-diwali/sp01/final/thatha_diwali01.mp4`, 49.6 s). New: `tools/toon/diwali.py` (dusk grade, decorations,
+  talk.py `"lights"` overlay, dream / savings / list / bike / silhouette-ride cut-aways, `fireworks()`), Diwali reels in
+  phone.py, `tools/trim_pauses.py`, sfx flick/pencil/bell/boom/crackle, edit.json `"rooster": false`. Lessons: hand-sheet
+  drawings pasted as loose arms look like floating sleeves, and a code-drawn colour rider looks like a puppet – use
+  props in his own frames and a silhouette (his real side outline) for actions the owner's art doesn't cover.
+- Next: Diwali special 2 (owner will paste the script), then One-Acre Ep 3 (the caterpillar cliffhanger).
