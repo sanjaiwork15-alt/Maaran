@@ -1,0 +1,426 @@
+{
+ "frames": {
+  "f_chair": {
+   "mouth": [
+    [
+     307,
+     590
+    ],
+    [
+     332,
+     594
+    ],
+    [
+     362,
+     583
+    ]
+   ],
+   "chin": 622,
+   "beard": [
+    262,
+    405
+   ],
+   "eyes": [
+    [
+     295,
+     545,
+     15,
+     10
+    ],
+    [
+     354,
+     529,
+     14,
+     10
+    ]
+   ],
+   "brows": [
+    [
+     287,
+     517
+    ],
+    [
+     350,
+     501
+    ]
+   ],
+   "pivot": [
+    335,
+    655
+   ],
+   "head": [
+    330,
+    530,
+    100,
+    130
+   ],
+   "hands": [
+    [
+     252,
+     905
+    ]
+   ],
+   "jaw": 9,
+   "image": "frames/up/f_chair.png"
+  },
+  "f_warm": {
+   "mouth": [
+    [
+     307,
+     590
+    ],
+    [
+     332,
+     594
+    ],
+    [
+     362,
+     583
+    ]
+   ],
+   "chin": 622,
+   "beard": [
+    262,
+    405
+   ],
+   "eyes": [
+    [
+     295,
+     545,
+     15,
+     10
+    ],
+    [
+     354,
+     529,
+     14,
+     10
+    ]
+   ],
+   "brows": [
+    [
+     287,
+     517
+    ],
+    [
+     350,
+     501
+    ]
+   ],
+   "pivot": [
+    335,
+    655
+   ],
+   "head": [
+    330,
+    530,
+    100,
+    130
+   ],
+   "hands": [
+    [
+     252,
+     905
+    ]
+   ],
+   "jaw": 9,
+   "image": "frames/up/f_warm.png"
+  },
+  "f_old": {
+   "mouth": [
+    [
+     307,
+     590
+    ],
+    [
+     332,
+     594
+    ],
+    [
+     362,
+     583
+    ]
+   ],
+   "chin": 622,
+   "beard": [
+    262,
+    405
+   ],
+   "eyes": [
+    [
+     295,
+     545,
+     15,
+     10
+    ],
+    [
+     354,
+     529,
+     14,
+     10
+    ]
+   ],
+   "brows": [
+    [
+     287,
+     517
+    ],
+    [
+     350,
+     501
+    ]
+   ],
+   "pivot": [
+    335,
+    655
+   ],
+   "head": [
+    330,
+    530,
+    100,
+    130
+   ],
+   "hands": [
+    [
+     252,
+     905
+    ]
+   ],
+   "jaw": 9,
+   "image": "frames/up/f_old.png"
+  },
+  "f_tin": {
+   "mouth": [
+    [
+     307,
+     590
+    ],
+    [
+     332,
+     594
+    ],
+    [
+     362,
+     583
+    ]
+   ],
+   "chin": 622,
+   "beard": [
+    262,
+    405
+   ],
+   "eyes": [
+    [
+     295,
+     545,
+     15,
+     10
+    ],
+    [
+     354,
+     529,
+     14,
+     10
+    ]
+   ],
+   "brows": [
+    [
+     287,
+     517
+    ],
+    [
+     350,
+     501
+    ]
+   ],
+   "pivot": [
+    335,
+    655
+   ],
+   "head": [
+    330,
+    530,
+    100,
+    130
+   ],
+   "hands": [
+    [
+     252,
+     905
+    ]
+   ],
+   "jaw": 9,
+   "image": "frames/up/f_tin.png"
+  },
+  "f_bag": {
+   "mouth": [
+    [
+     325,
+     346
+    ],
+    [
+     355,
+     348
+    ],
+    [
+     390,
+     342
+    ]
+   ],
+   "chin": 402,
+   "beard": [
+    270,
+    430
+   ],
+   "eyes": [
+    [
+     321,
+     290,
+     17,
+     10
+    ],
+    [
+     388,
+     284,
+     16,
+     10
+    ]
+   ],
+   "brows": [
+    [
+     315,
+     259
+    ],
+    [
+     390,
+     250
+    ]
+   ],
+   "pivot": [
+    355,
+    440
+   ],
+   "head": [
+    355,
+    285,
+    105,
+    135
+   ],
+   "hands": [],
+   "grin": true,
+   "image": "frames/up/f_bag.png"
+  }
+ },
+ "shots": {
+  "A": {
+   "frame": "f_chair",
+   "audio": "voice_A.wav",
+   "duration": 9.0,
+   "seed": 900,
+   "brows": [
+    1.8,
+    5.6
+   ],
+   "shake": [
+    [
+     1.7,
+     0.8
+    ]
+   ],
+   "lights": {
+    "mask": "frames/f_chair_mask.png",
+    "fireworks": true
+   }
+  },
+  "B": {
+   "frame": "f_old",
+   "audio": "voice_B.wav",
+   "duration": 6.0,
+   "seed": 901,
+   "gaze": [
+    [
+     0.0,
+     2.8,
+     -3,
+     4
+    ]
+   ],
+   "lights": {
+    "mask": "frames/f_old_mask.png",
+    "fireworks": false
+   }
+  },
+  "C": {
+   "frame": "f_tin",
+   "audio": "voice_C.wav",
+   "duration": 8.0,
+   "seed": 902,
+   "gaze": [
+    [
+     0.0,
+     1.6,
+     0,
+     4
+    ]
+   ],
+   "shake": [
+    [
+     3.0,
+     0.9
+    ]
+   ],
+   "lights": {
+    "mask": "frames/f_tin_mask.png",
+    "fireworks": false
+   }
+  },
+  "D": {
+   "frame": "f_warm",
+   "audio": "voice_D.wav",
+   "duration": 8.0,
+   "seed": 903,
+   "brows": [
+    2.2,
+    4.4
+   ],
+   "nod": [
+    [
+     5.6,
+     1.0
+    ]
+   ],
+   "lights": {
+    "mask": "frames/f_warm_mask.png",
+    "fireworks": true
+   }
+  },
+  "E": {
+   "frame": "f_bag",
+   "audio": "voice_E.wav",
+   "duration": 3.6,
+   "seed": 904,
+   "nod": [
+    [
+     1.7,
+     0.9
+    ]
+   ],
+   "lights": {
+    "mask": "frames/f_bag_mask.png",
+    "fireworks": true,
+    "lanterns": [
+     [
+      80,
+      555,
+      92
+     ],
+     [
+      650,
+      555,
+      92
+     ]
+    ]
+   }
+  }
+ }
+}

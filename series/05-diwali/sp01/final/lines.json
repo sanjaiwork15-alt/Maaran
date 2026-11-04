@@ -1,0 +1,38 @@
+[
+ {
+  "id": "L1",
+  "tanglish": "Aiyayo pa! Indha office-la velai paakkuravangalukku enna enna Diwali gift kudukkuraanga!",
+  "tamil": "ஐயையோ பா! இந்த ஆபீஸ்ல வேலை பாக்குறவங்களுக்கு என்ன என்ன தீபாவளி கிஃப்ட் குடுக்குறாங்க!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L2",
+  "tanglish": "Enakkum oru iPhone kidaichaa... oorukke video call panni kaattalaam pa!",
+  "tamil": "எனக்கும் ஒரு ஐஃபோன் கிடைச்சா... ஊருக்கே வீடியோ கால் பண்ணி காட்டலாம் பா!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L3",
+  "tanglish": "Hmm... Namma vivasaayi-ku Diwali gift kudukka company edhuvum illaye pa!",
+  "tamil": "ம்ம்... நம்ம விவசாயிக்கு தீபாவளி கிஃப்ட் குடுக்க கம்பெனி எதுவும் இல்லையே பா!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L4",
+  "tanglish": "Adada! Indha panatha enakkaaga selavu panradhukku badhila... pasanga Diwali sandhoshathukku selavu pannalaame!",
+  "tamil": "அடடா! இந்த பணத்த எனக்காக செலவு பண்றதுக்கு பதிலா... பசங்க தீபாவளி சந்தோஷத்துக்கு செலவு பண்ணலாமே!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L5",
+  "tanglish": "Indha Diwali-ku pasicha vayithukku saappaadu... chinna pasangalukku sweets! Thatha plan ready!",
+  "tamil": "இந்த தீபாவளிக்கு பசிச்ச வயித்துக்கு சாப்பாடு... சின்ன பசங்களுக்கு ஸ்வீட்ஸ்! தாத்தா பிளான் ரெடி!",
+  "pause_after": 0.15
+ },
+ {
+  "id": "L6",
+  "tanglish": "Indha varusham en Diwali gift... mathavanga mugathula varra sirippu dhaan pa!",
+  "tamil": "இந்த வருஷம் என் தீபாவளி கிஃப்ட்... மத்தவங்க முகத்துல வர்ற சிரிப்பு தான் பா!",
+  "pause_after": 0.5
+ }
+]

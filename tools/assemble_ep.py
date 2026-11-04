@@ -118,6 +118,7 @@ def main():
     py = sys.executable
     subprocess.run([py, str(ROOT / "tools/ambience.py"), str(tmp / "amb.wav"), str(total + 1),
                     "--seed", str(cfg.get("ambience_seed", 3))] +
+                   (["--no-rooster"] if cfg.get("rooster") is False else []) +
                    (["--rain", ",".join(f"{a}:{b}" for a, b in cfg["rain"])] if cfg.get("rain") else []) +
                    (["--thunder", ",".join(str(v) for v in cfg["thunder"])] if cfg.get("thunder") else []) +
                    (["--night", ",".join(f"{a}:{b}" for a, b in cfg["night"])] if cfg.get("night") else []), check=True)

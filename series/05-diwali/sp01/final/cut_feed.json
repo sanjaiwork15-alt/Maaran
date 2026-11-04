@@ -1,0 +1,12 @@
+{
+ "mode": "feed",
+ "duration": 5.6,
+ "bg": "frames/dusk_plate.png",
+ "reels": [
+  "gphone",
+  "suitcase",
+  "fryer",
+  "hamper"
+ ],
+ "each": 1.6
+}

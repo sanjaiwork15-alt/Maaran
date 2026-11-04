@@ -1,0 +1,9 @@
+{
+ "mode": "feed",
+ "duration": 2.4,
+ "bg": "frames/dusk_plate.png",
+ "reels": [
+  "sweets"
+ ],
+ "each": 3.0
+}

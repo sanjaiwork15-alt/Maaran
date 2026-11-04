@@ -27,6 +27,7 @@ pupils (720-px units; the head turns a little with them), "shake": [[t0, dur], .
 "inhale": [[t0, dur], ...] a slow deep breath through the nose – eyes close, brows lift, head rises a little,
 "rain": {"rate": 0.6, "ground": 700} falling rain + splashes, "scent": {"to": [x, y], "from": [x0, x1, y]} golden
 specks drifting from the soil to his nose (both in tools/toon/rain.py, Doubt Ep 8),
+"lights": {"mask": "frames/f_x_mask.png", "fireworks": true} Diwali lights on the decorated house (tools/toon/diwali.py),
 "brows": [t, ...] extra eyebrow lifts, "jaw": max mouth opening (default 12.5;
 frame "no_blink": true for art whose eyes are already shut; 6 for frames marked "grin": true, whose art already shows an open smile – only the jaw moves there).
 """
@@ -43,6 +44,7 @@ import soundfile as sf
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ants import draw_cv as draw_ants  # noqa: E402
 from rain import draw_rain, draw_scent  # noqa: E402
+from diwali import draw_lights  # noqa: E402
 
 W, H, FPS, K = 1080, 1920, 25, 1.5       # K: rig coords (720x1280) -> output pixels
 OUTLINE = (36, 22, 20)                   # BGR of the art's dark brown outline
@@ -364,6 +366,9 @@ def main():
             draw_scent(frame, t, shot["scent"], K)
         if "rain" in shot:
             draw_rain(frame, t, shot["rain"], K)
+        if "lights" in shot:                                 # Diwali bulbs, diyas, lanterns, fireworks (Diwali sp 1)
+            lp = shot["lights"]
+            draw_lights(frame, t, {**lp, "mask": str(base / lp["mask"])} if lp.get("mask") else lp, K)
         ff.stdin.write(frame.tobytes())
     ff.stdin.close()
     ff.wait()

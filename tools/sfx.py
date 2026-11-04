@@ -13,6 +13,11 @@ knock:   one wooden knock (use one per stick strike).
 clang:   a hoe hitting rock-hard ground (thud + short metallic ring).
 pop:     a daydream bubble bursting (rising whoosh + pop).
 shimmer: a soft, quiet sparkle under a daydream (sound effect, not music).
+flick:   a banknote flicked onto a pile (counting money).
+pencil:  a pencil scratching on paper for "dur" seconds.
+bell:    a bicycle bell, one "tring" (two quick strikes on a steel dome).
+boom:    a distant Diwali rocket bursting: a soft thump and a crackle tail.
+crackle: far-off firecrackers for "dur" seconds (random pops), a festival-evening bed.
 Mix the result over the assembled episode: ffmpeg amix (normalize=0).
 """
 import json
@@ -148,7 +153,56 @@ def shimmer(dur, rng):
     return out * np.minimum(1, (n - np.arange(n)) / (0.3 * SR))
 
 
-KINDS = {"alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
+def flick(dur, rng):
+    n = int(0.12 * SR)
+    t = np.arange(n) / SR
+    return bp(rng.standard_normal(n), 1800, 7000) * np.exp(-t / 0.018) + 0.4 * lp(rng.standard_normal(n), 400) * np.exp(-t / 0.01)
+
+
+def pencil(dur, rng):
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    strokes = 0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 3.2 * t + 2 * np.sin(2 * np.pi * 0.7 * t)))
+    grain = bp(rng.standard_normal(n), 1500, 6000) * (0.6 + 0.4 * rng.random(n) ** 4)
+    return lp(strokes, 30) * grain * np.minimum(1, (n - np.arange(n)) / (0.05 * SR))
+
+
+def bell(dur, rng):
+    n = int(0.9 * SR)
+    t = np.arange(n) / SR
+    out = np.zeros(n)
+    for t0 in (0.0, 0.07):
+        k = t - t0
+        on = k >= 0
+        ring = sum(a * np.sin(2 * np.pi * f * k) * np.exp(-np.maximum(k, 0) / d) for f, a, d in ((2380, 1.0, 0.35), (3410, 0.6, 0.22), (5520, 0.35, 0.12)))
+        out += np.where(on, ring, 0) * (1 + 0.3 * np.sin(2 * np.pi * 26 * t))
+    return out
+
+
+def boom(dur, rng):
+    n = int(2.0 * SR)
+    t = np.arange(n) / SR
+    thump = lp(rng.standard_normal(n), 140) * np.exp(-t / 0.12) * 4
+    crack = np.zeros(n)
+    for _ in range(40):
+        j = int(rng.uniform(0.08, 1.4) * SR)
+        m = int(0.02 * SR)
+        crack[j:j + m] += bp(rng.standard_normal(m), 1500, 6000) * np.exp(-np.arange(m) / (0.004 * SR)) * rng.uniform(0.2, 1)
+    return thump + 0.5 * crack * np.exp(-t / 0.9)
+
+
+def crackle(dur, rng):
+    n = int(dur * SR)
+    out = np.zeros(n)
+    for _ in range(int(dur * 2.5)):
+        j = int(rng.uniform(0, dur - 0.2) * SR)
+        m = int(0.08 * SR)
+        k = np.arange(m) / SR
+        out[j:j + m] += lp(rng.standard_normal(m), rng.uniform(600, 1500)) * np.exp(-k / 0.015) * rng.uniform(0.2, 1)
+    return out
+
+
+KINDS = {"flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
 
 
 def main():

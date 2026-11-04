@@ -103,7 +103,105 @@ def reel_dog(u):
                       for x in (-110, -50, 50, 110)) + '</g></g>')
 
 
-REELS = {"cat": reel_cat, "cricket": reel_cricket, "dosa": reel_dosa, "dog": reel_dog}
+def _sparkles(u, n=10, seed=1):
+    rng = np.random.default_rng(seed)
+    g = ""
+    for k in range(n):
+        x, y, ph = rng.uniform(40, SW - 40), rng.uniform(80, SH * 0.7), rng.uniform(0, 6.3)
+        r = 14 + 10 * math.sin(u * 9 + ph)
+        if r > 6:
+            g += (f'<path d="M {x:.0f},{y - r:.0f} L {x + r * 0.25:.0f},{y:.0f} L {x:.0f},{y + r:.0f} L {x - r * 0.25:.0f},{y:.0f} Z '
+                  f'M {x - r:.0f},{y:.0f} L {x:.0f},{y + r * 0.25:.0f} L {x + r:.0f},{y:.0f} L {x:.0f},{y - r * 0.25:.0f} Z" fill="#fff6b0"/>')
+    return g
+
+
+def _unbox(u, item, box_col, bg):
+    """Generic unboxing: a gift box (ribbon), the lid flies off, the item rises out with sparkles."""
+    p = (u * 1.0) % 1
+    lid = min(1, max(0, (p - 0.2) / 0.2))
+    rise = min(1, max(0, (p - 0.35) / 0.3))
+    rise = rise * rise * (3 - 2 * rise)
+    bx, by = SW / 2, SH * 0.78
+    g = f'<rect width="{SW}" height="{SH}" fill="{bg}"/>' + _sparkles(u, 8, 3)
+    g += f'<g transform="translate(0 {-rise * SH * 0.33:.0f})">{item}</g>'
+    g += (f'<rect x="{bx - 200}" y="{by - 170}" width="400" height="300" rx="14" fill="{box_col}" stroke="#222" stroke-width="6"/>'
+          f'<rect x="{bx - 22}" y="{by - 170}" width="44" height="300" fill="#ffd54f" stroke="#222" stroke-width="4"/>')
+    lx, ly, la = bx - 260 * lid, by - 200 - 260 * lid, -40 * lid
+    g += (f'<g transform="rotate({la:.0f} {lx:.0f} {ly:.0f})"><rect x="{lx - 215:.0f}" y="{ly - 30:.0f}" width="430" height="60" rx="12" fill="{box_col}" '
+          f'stroke="#222" stroke-width="6"/><rect x="{lx - 22:.0f}" y="{ly - 30:.0f}" width="44" height="60" fill="#ffd54f" stroke="#222" stroke-width="4"/>'
+          f'<path d="M {lx:.0f},{ly - 30:.0f} q -60,-70 -90,-10 q 40,20 90,10 q 60,-70 90,-10 q -40,20 -90,10" fill="#ffd54f" stroke="#222" stroke-width="4"/></g>')
+    return g
+
+
+def reel_gphone(u):
+    item = (f'<g transform="translate({SW / 2} {SH * 0.62})"><rect x="-95" y="-190" width="190" height="380" rx="30" fill="#2b2f36" '
+            f'stroke="#111" stroke-width="7"/><rect x="-80" y="-172" width="160" height="344" rx="20" fill="#6aa8ff"/>'
+            f'<path d="M -80,60 Q 0,-40 80,40 L 80,172 L -80,172 Z" fill="#9b6bff" opacity="0.8"/>'
+            f'<path d="M -50,-160 L 30,-160" stroke="#ffffff" stroke-width="8" opacity="0.5" stroke-linecap="round"/></g>')
+    return _unbox(u, item, "#e53935", "#2a1b4d")
+
+
+def reel_suitcase(u):
+    item = (f'<g transform="translate({SW / 2} {SH * 0.6})"><rect x="-150" y="-200" width="300" height="380" rx="34" fill="#1e88e5" '
+            f'stroke="#0d3c73" stroke-width="8"/>' + "".join(f'<line x1="{x}" y1="-190" x2="{x}" y2="170" stroke="#1565c0" stroke-width="10"/>' for x in (-70, 0, 70)) +
+            f'<rect x="-50" y="-260" width="100" height="70" rx="16" fill="none" stroke="#0d3c73" stroke-width="16"/>'
+            f'<circle cx="-110" cy="195" r="20" fill="#333"/><circle cx="110" cy="195" r="20" fill="#333"/></g>')
+    return _unbox(u + 0.13, item, "#43a047", "#3b1f2b")
+
+
+def reel_fryer(u):
+    item = (f'<g transform="translate({SW / 2} {SH * 0.6})"><path d="M -150,-220 Q 0,-260 150,-220 L 170,170 Q 0,200 -170,170 Z" fill="#37474f" '
+            f'stroke="#111" stroke-width="8"/><rect x="-120" y="-40" width="240" height="170" rx="24" fill="#263238" stroke="#111" stroke-width="6"/>'
+            f'<rect x="-50" y="10" width="100" height="22" rx="10" fill="#90a4ae"/><circle cx="0" cy="-140" r="38" fill="#263238" stroke="#90a4ae" stroke-width="6"/>'
+            f'<circle cx="0" cy="-140" r="10" fill="#ff7043"/></g>')
+    return _unbox(u + 0.27, item, "#8e24aa", "#1f2b3b")
+
+
+def reel_hamper(u):
+    t = u * 6
+    g = f'<rect width="{SW}" height="{SH}" fill="#4a1d2e"/>' + _sparkles(u, 10, 5)
+    cx, cy = SW / 2, SH * 0.66
+    g += (f'<path d="M {cx - 280},{cy - 60} L {cx + 280},{cy - 60} L {cx + 220},{cy + 240} L {cx - 220},{cy + 240} Z" fill="#c68a3a" stroke="#5a3a12" stroke-width="7"/>'
+          + "".join(f'<line x1="{cx - 260 + k * 52}" y1="{cy - 50}" x2="{cx - 210 + k * 42}" y2="{cy + 235}" stroke="#8a5a20" stroke-width="5"/>' for k in range(11)))
+    for k, (dx, dy, col, w, h) in enumerate(((-170, -160, "#e53935", 120, 160), (-30, -200, "#fbc02d", 110, 200), (110, -150, "#43a047", 120, 150),
+                                             (200, -110, "#1e88e5", 80, 110), (-230, -90, "#ff7043", 80, 90))):
+        bob = 6 * math.sin(t + k)
+        g += f'<rect x="{cx + dx - w / 2:.0f}" y="{cy + dy - h / 2 + bob:.0f}" width="{w}" height="{h}" rx="10" fill="{col}" stroke="#222" stroke-width="5"/>'
+    g += f'<path d="M {cx - 290},{cy - 60} Q {cx},{cy + 40} {cx + 290},{cy - 60}" stroke="#d81b60" stroke-width="22" fill="none"/>'
+    return g
+
+
+def reel_sweets(u):
+    """A Diwali sweet-box ad: the box opens on laddus, jalebis and barfi; diyas glow; sparkles (no text)."""
+    p = u % 1
+    lid = min(1, max(0, (p - 0.1) / 0.25))
+    g = (f'<rect width="{SW}" height="{SH}" fill="#5a1630"/>'
+         f'<circle cx="{SW / 2}" cy="{SH * 0.5}" r="{420 + 20 * math.sin(u * 6):.0f}" fill="#ffb347" opacity="0.18"/>' + _sparkles(u, 12, 7))
+    cx, cy = SW / 2, SH * 0.6
+    g += f'<rect x="{cx - 300}" y="{cy - 170}" width="600" height="360" rx="20" fill="#f9a825" stroke="#6d3a00" stroke-width="8"/>'
+    g += f'<rect x="{cx - 270}" y="{cy - 140}" width="540" height="300" rx="12" fill="#fff3d6"/>'
+    for i in range(3):                                       # laddus
+        g += f'<circle cx="{cx - 190 + i * 70}" cy="{cy - 60}" r="34" fill="#f6a623" stroke="#b86e00" stroke-width="4"/>'
+        g += "".join(f'<circle cx="{cx - 200 + i * 70 + dx}" cy="{cy - 66 + dy}" r="4" fill="#fde3a7"/>' for dx, dy in ((0, 0), (14, 8), (-6, 12)))
+    for i in range(2):                                       # jalebis
+        x0, y0 = cx + 90 + i * 100, cy - 60
+        g += f'<path d="M {x0},{y0} m -30,0 a 30,30 0 1,0 60,0 a 20,20 0 1,0 -40,0 a 10,10 0 1,0 20,0" stroke="#ff8f00" stroke-width="12" fill="none"/>'
+    for i in range(4):                                       # barfi
+        g += f'<rect x="{cx - 230 + i * 120}" y="{cy + 40}" width="90" height="70" rx="8" fill="#fff8e1" stroke="#c8a96e" stroke-width="4"/>'
+        g += f'<rect x="{cx - 222 + i * 120}" y="{cy + 48}" width="74" height="10" fill="#c0c0c0" opacity="0.8"/>'
+    ly = cy - 200 - 330 * lid
+    g += (f'<g opacity="{1 - 0.6 * lid:.2f}" transform="rotate({-8 * lid:.0f} {cx} {ly + 30:.0f})"><rect x="{cx - 310}" y="{ly:.0f}" width="620" height="60" rx="14" '
+          f'fill="#e65100" stroke="#6d3a00" stroke-width="8"/><path d="M {cx - 40},{ly:.0f} l 40,-40 l 40,40 Z" fill="#ffd54f"/></g>')
+    for i, x in enumerate((140, SW - 140)):                  # diyas
+        fl = 1 + 0.15 * math.sin(u * 30 + i)
+        g += (f'<path d="M {x - 60},{SH * 0.9} Q {x},{SH * 0.9 + 60} {x + 60},{SH * 0.9} Z" fill="#b5532a" stroke="#5a2410" stroke-width="5"/>'
+              f'<path d="M {x},{SH * 0.9 - 70 * fl:.0f} Q {x + 20},{SH * 0.9 - 20} {x},{SH * 0.9} Q {x - 20},{SH * 0.9 - 20} {x},{SH * 0.9 - 70 * fl:.0f} Z" fill="#ffb300"/>'
+              f'<circle cx="{x}" cy="{SH * 0.9 - 30}" r="60" fill="#ffcc80" opacity="0.25"/>')
+    return g
+
+
+REELS = {"gphone": reel_gphone, "suitcase": reel_suitcase, "fryer": reel_fryer, "hamper": reel_hamper,
+         "sweets": reel_sweets, "cat": reel_cat, "cricket": reel_cricket, "dosa": reel_dosa, "dog": reel_dog}
 
 
 def ui(u, liked):
