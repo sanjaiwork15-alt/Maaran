@@ -1,0 +1,18 @@
+[
+ {"id": "L1", "tanglish": "Aaha! Ella saamaanum vaangiyaachu pa! Ippo samayal velai aarambikkalaam!",
+  "tamil": "ஆஹா! எல்லா சாமானும் வாங்கியாச்சு பா! இப்போ சமையல் வேலை ஆரம்பிக்கலாம்!", "pause_after": 0.15},
+ {"id": "L2", "tanglish": "Indha saappaadu vayiru niraiya mattum illa pa... manasum sandhoshamaa niraiyanum!",
+  "tamil": "இந்த சாப்பாடு வயிறு நிறைய மட்டும் இல்ல பா... மனசும் சந்தோஷமா நிறையணும்!", "pause_after": 0.15},
+ {"id": "L3", "tanglish": "Ovvoru parcel-layum konjam saappaadu... niraiya anbu!",
+  "tamil": "ஒவ்வொரு பார்சல்லயும் கொஞ்சம் சாப்பாடு... நிறைய அன்பு!", "pause_after": 0.15},
+ {"id": "L4", "tanglish": "Ennaala mudinja chinna udhavi dhaan pa... aana yaarukkaavadhu adhu periya sandhoshamaa irukkalaam!",
+  "tamil": "என்னால முடிஞ்ச சின்ன உதவி தான் பா... ஆனா யாருக்காவது அது பெரிய சந்தோஷமா இருக்கலாம்!", "pause_after": 0.15},
+ {"id": "L5", "tanglish": "Innikku enakku pudhu phone illa... periya gift-um illa... aana manasu romba niraivaa irukku pa!",
+  "tamil": "இன்னிக்கு எனக்கு புது ஃபோன் இல்ல... பெரிய கிஃப்ட்டும் இல்ல... ஆனா மனசு ரொம்ப நிறைவா இருக்கு பா!", "pause_after": 0.15},
+ {"id": "L6", "tanglish": "Diwali-na namma mattum sandhoshamaa irukkuradhu illa pa... nammaala mudinja alavukku mathavangalaiyum sandhoshappaduthuradhu!",
+  "tamil": "தீபாவளின்னா நம்ம மட்டும் சந்தோஷமா இருக்குறது இல்ல பா... நம்மால முடிஞ்ச அளவுக்கு மத்தவங்களையும் சந்தோஷப்படுத்துறது!", "pause_after": 0.15},
+ {"id": "L7", "tanglish": "Seri pa... unga office-la indha Diwali enna gift kuduthaanga? iPhone-ah, suitcase-ah, air fryer-ah? Comment-la sollunga!",
+  "tamil": "சரி பா... உங்க ஆபீஸ்ல இந்த தீபாவளி என்ன கிஃப்ட் குடுத்தாங்க? ஐஃபோனா, சூட்கேஸா, ஏர் ஃப்ரையரா? கமெண்ட்ல சொல்லுங்க!", "pause_after": 0.15},
+ {"id": "L8", "tanglish": "Iniya Deepavali Nalvaazhthukkal!",
+  "tamil": "இனிய தீபாவளி நல்வாழ்த்துக்கள்!", "pause_after": 0.5}
+]
