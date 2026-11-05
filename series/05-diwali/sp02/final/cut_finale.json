@@ -1,0 +1,1 @@
+{"mode": "finale", "duration": 6.0, "bg": "/home/user/Maaran/series/05-diwali/sp01/final/frames/dusk_plate.png", "lights": {}, "fireworks": [[300, 250, 0.0, 0], [780, 330, 0.6, 3], [540, 150, 1.2, 1], [200, 430, 1.8, 4], [880, 180, 2.4, 2], [450, 380, 3.0, 5]], "fw_mask_y": 780, "camera": [[0, 1000, 1500], [6, 960, 1920]], "fw_scale": 1.3}

@@ -187,7 +187,10 @@ def draw_lights(img, t, prm, K=1.5, rgb_order="bgr"):
     def visible(x, y):
         return m is None or not (0 <= int(y) < m.shape[0] and 0 <= int(x) < m.shape[1]) or m[int(y), int(x)] < 60
 
-    for i, (x, y) in enumerate(BULBS):
+    bulbs_on = prm.get("bulbs_on")                          # time the string lights switch on (default: always on)
+    for i, (x, y) in enumerate(prm.get("bulbs", BULBS) if prm.get("bulbs", True) else []):
+        if bulbs_on is not None and t < bulbs_on + 0.004 * i:
+            continue
         X, Y = (x * sc + sx) * K, (y * sc + sy + 6) * K
         if not visible(X, Y):
             continue
@@ -195,18 +198,28 @@ def draw_lights(img, t, prm, K=1.5, rgb_order="bgr"):
         col = BULB[i % len(BULB)]
         cv2.circle(img, (int(X), int(Y)), max(2, int(3.2 * K * sc)), C(tuple(int(c * (0.6 + 0.4 * on)) for c in col)), -1, cv2.LINE_AA)
         _glow(img, X, Y, 16 * K * sc, C(col), 0.35 * on)
-    for i, (x, y) in enumerate(DIYAS):
-        s = (1.0 if y < 870 else 1.2) * sc
+    diyas = [(d[0], d[1], d[2] if len(d) > 2 else (1.0 if d[1] < 870 else 1.2)) for d in prm.get("diyas", DIYAS)]
+    lit = prm.get("lit")                                    # [t0, step]: diya i is lit at t0 + i * step (Diwali sp 2)
+    for i, (x, y, s0) in enumerate(diyas):
+        s = s0 * sc
+        flare = 1.0
+        if lit:
+            u = t - (lit[0] + i * lit[1])
+            if u < 0:
+                continue
+            flare = 1 + 0.8 * math.exp(-u / 0.12)
         X, Y = (x * sc + sx) * K, (y * sc + sy - 9 * s) * K
         if not visible(X, Y + 6 * K):
             continue
-        fl = 1 + 0.18 * math.sin(t * 13 + i * 2.3) + 0.1 * math.sin(t * 29 + i)
+        fl = (1 + 0.18 * math.sin(t * 13 + i * 2.3) + 0.1 * math.sin(t * 29 + i)) * flare
         h = 11 * K * s * fl
         pts = np.array([[X - 4 * K * s, Y], [X, Y - h], [X + 4 * K * s, Y], [X, Y + 3 * K * s]], np.int32)
         cv2.fillConvexPoly(img, pts, C((255, 170, 30)), cv2.LINE_AA)
         cv2.circle(img, (int(X), int(Y - 2 * K * s)), max(1, int(2 * K * s)), C((255, 245, 200)), -1, cv2.LINE_AA)
         _glow(img, X, Y - 4 * K * s, 34 * K * s, C((255, 160, 60)), 0.45 * fl)
     for i, (x, hook, ln) in enumerate(prm.get("lanterns", LANTERNS)):
+        if bulbs_on is not None and t < bulbs_on:
+            continue
         X, Y = (x * sc + sx) * K, ((hook + ln) * sc + sy) * K
         if visible(X, Y):
             _glow(img, X, Y, 60 * K * sc, C((255, 140, 40)), 0.32 + 0.08 * math.sin(t * 2 + i))
@@ -581,6 +594,8 @@ class Silhouette:
         gy = self.gy
         yy = np.arange(H, dtype=np.float32)[:, None, None]
         top, mid, low = np.array([22, 16, 60]), np.array([120, 50, 110]), np.array([255, 150, 80])
+        if self.cfg.get("sky") == "sunset":                         # late afternoon (Diwali sp 2: the delivery ride)
+            top, mid, low = np.array([70, 60, 140]), np.array([235, 120, 95]), np.array([255, 200, 110])
         u = np.clip(yy / gy, 0, 1)
         img = np.where(u < 0.6, top + (mid - top) * (u / 0.6), mid + (low - mid) * ((u - 0.6) / 0.4)) * np.ones((1, W, 1))
         img = img.astype(np.float32)
@@ -639,10 +654,19 @@ class Silhouette:
         g.append(f'<path d="M {Pp(700, 1420)[0]:.1f},{Pp(700, 1420)[1]:.1f} L {Pp(1000, 1420)[0]:.1f},{Pp(1000, 1420)[1]:.1f}" stroke-width="{16 * K:.1f}"/>')
         g.append(f'<path d="M {RA[0] - r * 1.05:.1f},{RA[1] - r * 0.3:.1f} A {r * 1.08:.1f} {r * 1.08:.1f} 0 0 1 {RA[0] + r * 1.05:.1f},{RA[1] - r * 0.3:.1f}" stroke-width="{12 * K:.1f}"/>')
         g.append('</g>')
+        if self.cfg.get("cargo"):                                  # food parcels tied on the rear carrier
+            for k, (dx, w, h) in enumerate(((720, 150, 120), (880, 140, 150), (800, 120, 90))):
+                y0 = 1420 - (h if k < 2 else 120 + h)
+                g.append(f'<rect x="{Pp(dx - w / 2, y0)[0]:.1f}" y="{Pp(dx, y0)[1]:.1f}" width="{w * K:.1f}" height="{h * K:.1f}" rx="{8 * K:.1f}" fill="{col}"/>')
+            return "".join(g) + self.legs(t, K, Pp, BB, cr, col)
         bx, by = Pp(150, 1110)                                     # the bag on the handlebar
         g.append(f'<g transform="translate({bx:.1f} {by:.1f}) rotate({4 * math.sin(t * 3):.1f}) scale({0.55 * K:.3f})">'
                  f'<path d="M -70,110 Q -60,-30 0,-14 Q 60,-30 70,110" stroke="{col}" stroke-width="18" fill="none"/>'
                  f'<path d="M -150,100 Q 0,84 150,100 Q 190,320 160,520 Q 0,560 -160,520 Q -190,320 -150,100 Z" fill="{col}"/></g>')
+        return "".join(g) + self.legs(t, K, Pp, BB, cr, col)
+
+    def legs(self, t, K, Pp, BB, cr, col):
+        g = []
         hip = Pp(600, 1300)
         a_, b_ = 330 * K, 330 * K
         for k, ph in ((0, math.pi), (1, 0.0)):                    # far leg first, near leg last

@@ -34,6 +34,7 @@ KITCHEN = ROOT / "series/02-thatha-oru-doubt/ep02/final/frames/kitchen_plate.png
 SP1 = ROOT / "series/05-diwali/sp01/final/frames"
 sys.path.insert(0, str(ROOT / "tools/toon"))
 import diwali as D  # noqa: E402
+from feast import laddu, leaf_parcel, oil_can, rice_sack, snack_pack, sweet_box, table, tiffin, veg_basket  # noqa: E402,F401
 
 W, H = 720, 1280
 WOOD, WOOD_D, WOOD_L, OUTL = "#8a5a2b", "#6b4220", "#b07a44", "#3e2410"
@@ -59,79 +60,6 @@ def cutout(seg, rgb):
 
 
 # ---------------------------------------------------------------- props (720 coords)
-
-def table(x0, x1, top, legs_to=1280, depth=46):
-    return (f'<rect x="{x0 + 18}" y="{top + depth}" width="30" height="{legs_to - top - depth}" fill="{WOOD_D}" stroke="{OUTL}" stroke-width="5"/>'
-            f'<rect x="{x1 - 48}" y="{top + depth}" width="30" height="{legs_to - top - depth}" fill="{WOOD_D}" stroke="{OUTL}" stroke-width="5"/>'
-            f'<path d="M {x0 + 20},{top} L {x1 - 20},{top} L {x1},{top + 24} L {x0},{top + 24} Z" fill="{WOOD_L}" stroke="{OUTL}" stroke-width="5"/>'
-            f'<rect x="{x0}" y="{top + 24}" width="{x1 - x0}" height="{depth - 10}" rx="4" fill="{WOOD}" stroke="{OUTL}" stroke-width="5"/>'
-            f'<line x1="{x0 + 10}" y1="{top + 34}" x2="{x1 - 10}" y2="{top + 34}" stroke="{WOOD_L}" stroke-width="3" opacity="0.6"/>')
-
-
-def rice_sack(x, y, s=1.0):
-    return (f'<g transform="translate({x} {y}) scale({s})"><path d="M -60,0 Q -72,-80 -48,-130 L 48,-130 Q 72,-80 60,0 Z" fill="#e8dcb5" stroke="#6b5a2a" stroke-width="5"/>'
-            '<path d="M -48,-130 Q 0,-150 48,-130 Q 0,-118 -48,-130" fill="#fbf7ec" stroke="#6b5a2a" stroke-width="4"/>'
-            + "".join(f'<ellipse cx="{-30 + k * 12}" cy="{-134 + (k % 2) * 4}" rx="4" ry="2.5" fill="#fff"/>' for k in range(6)) +
-            '<path d="M -40,-60 L 40,-60 M -42,-40 L 42,-40" stroke="#c9a85a" stroke-width="5"/>'
-            '<circle cx="0" cy="-88" r="15" fill="#3e8e41"/><path d="M -8,-88 q 8,-14 16,0 q -8,10 -16,0" fill="#e8dcb5"/></g>')
-
-
-def veg_basket(x, y, s=1.0):
-    return (f'<g transform="translate({x} {y}) scale({s})">'
-            '<ellipse cx="-30" cy="-62" rx="26" ry="20" fill="#e53935" stroke="#7a0a0a" stroke-width="4"/>'
-            '<path d="M -40,-80 l 10,8 l 10,-8" stroke="#2e7d32" stroke-width="4" fill="none"/>'
-            '<path d="M 0,-60 Q 20,-110 55,-100 Q 40,-62 0,-60 Z" fill="#6a1b9a" stroke="#2a0a3a" stroke-width="4"/>'
-            '<path d="M 52,-100 l 10,-12" stroke="#2e7d32" stroke-width="6"/>'
-            '<path d="M -10,-70 L 20,-140 L 30,-136 L 6,-66 Z" fill="#fb8c00" stroke="#8a3a00" stroke-width="3"/>'
-            '<path d="M 22,-140 l -8,-16 M 24,-140 l 4,-18 M 26,-139 l 12,-12" stroke="#2e7d32" stroke-width="4"/>'
-            '<ellipse cx="30" cy="-58" rx="22" ry="16" fill="#8bc34a" stroke="#33691e" stroke-width="4"/>'
-            '<path d="M -70,-50 L 70,-50 L 56,0 L -56,0 Z" fill="#c8a05a" stroke="#5a3a10" stroke-width="5"/>'
-            + "".join(f'<line x1="{-60 + k * 20}" y1="-48" x2="{-50 + k * 17}" y2="-2" stroke="#8a6a30" stroke-width="3"/>' for k in range(7)) +
-            '<path d="M -64,-30 L 64,-30" stroke="#8a6a30" stroke-width="3"/></g>')
-
-
-def sweet_box(x, y, s=1.0, open_=True):
-    lad = "".join(f'<circle cx="{-36 + k * 24}" cy="-40" r="12" fill="#f6a623" stroke="#b86e00" stroke-width="3"/>' for k in range(4)) if open_ else ""
-    return (f'<g transform="translate({x} {y}) scale({s})">{lad}'
-            '<rect x="-56" y="-36" width="112" height="36" rx="4" fill="#e53935" stroke="#7a0a0a" stroke-width="4"/>'
-            '<rect x="-56" y="-24" width="112" height="10" fill="#ffd54f"/></g>')
-
-
-def snack_pack(x, y, s=1.0, col="#1e88e5"):
-    return (f'<g transform="translate({x} {y}) scale({s})"><path d="M -30,0 L -34,-90 L -24,-98 L 24,-98 L 34,-90 L 30,0 Z" fill="{col}" stroke="#0d2c53" stroke-width="4"/>'
-            '<path d="M -34,-90 L 34,-90" stroke="#ffffff" stroke-width="3" stroke-dasharray="4 4"/>'
-            '<circle cx="0" cy="-48" r="16" fill="#ffd54f" stroke="#a67c00" stroke-width="3"/>'
-            '<circle cx="0" cy="-48" r="7" fill="none" stroke="#a67c00" stroke-width="3"/></g>')
-
-
-def oil_can(x, y, s=1.0):
-    return (f'<g transform="translate({x} {y}) scale({s})"><rect x="-32" y="-96" width="64" height="96" rx="6" fill="#ffca28" stroke="#6d5200" stroke-width="4"/>'
-            '<rect x="-12" y="-114" width="24" height="20" fill="#e53935" stroke="#6d5200" stroke-width="3"/>'
-            '<path d="M -18,-46 q 18,-28 36,0 q -18,26 -36,0" fill="#ff8f00"/></g>')
-
-
-def tiffin(x, y, s=1.0):
-    """A three-tier steel tiffin carrier."""
-    g = f'<g transform="translate({x} {y}) scale({s})">'
-    for k in range(3):
-        yy = -k * 34
-        g += (f'<rect x="-34" y="{yy - 34}" width="68" height="34" rx="6" fill="#c9cdd2" stroke="#5a6068" stroke-width="4"/>'
-              f'<line x1="-32" y1="{yy - 6}" x2="32" y2="{yy - 6}" stroke="#8a9096" stroke-width="3"/>')
-    g += ('<path d="M -40,-100 L -40,-20 M 40,-100 L 40,-20" stroke="#7d848c" stroke-width="6"/>'
-          '<path d="M -40,-100 Q 0,-150 40,-100" stroke="#7d848c" stroke-width="7" fill="none"/>'
-          '<rect x="-36" y="-110" width="72" height="10" rx="4" fill="#aeb4ba" stroke="#5a6068" stroke-width="3"/></g>')
-    return g
-
-
-def leaf_parcel(x, y, s=1.0):
-    """A banana-leaf food parcel tied with string, a small sweet box on top."""
-    return (f'<g transform="translate({x} {y}) scale({s})"><path d="M -54,0 Q -60,-40 -50,-62 L 50,-62 Q 60,-40 54,0 Z" fill="#43a047" stroke="#1b5e20" stroke-width="4"/>'
-            '<path d="M -50,-62 Q 0,-78 50,-62 Q 0,-50 -50,-62" fill="#66bb6a" stroke="#1b5e20" stroke-width="3"/>'
-            '<path d="M -20,-62 L -22,0 M 20,-62 L 22,0 M -54,-30 L 54,-30" stroke="#d7c08a" stroke-width="4"/>'
-            '<path d="M -6,-72 q 6,-14 12,0" stroke="#d7c08a" stroke-width="4" fill="none"/>'
-            '<rect x="-26" y="-100" width="52" height="26" rx="3" fill="#e53935" stroke="#7a0a0a" stroke-width="3"/>'
-            '<rect x="-26" y="-92" width="52" height="7" fill="#ffd54f"/></g>')
-
 
 def grocery_table():
     g = table(430, 715, 905)
@@ -273,8 +201,10 @@ def f_kpack(seg):
     save("f_kpack", out, mask)
 
 
-def home_plate(golden=True):
+def home_plate(golden=True, tint_walls=True):
     home = load(SRC / "07_home.png")
+    if not tint_walls:
+        return np.clip(home * np.array([1.08, 0.95, 0.78]) + np.array([14, 6, 0]), 0, 255)
     hsv = cv2.cvtColor(home.astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.float32)
     wall = (hsv[..., 1] < 50) & (hsv[..., 2] > 170)                        # whitewashed walls -> pale sky blue
     m = cv2.GaussianBlur(wall.astype(np.float32), (0, 0), 1.0)[..., None]
@@ -308,6 +238,8 @@ def bunting(y=548):
 
 def f_khome(seg):
     plate = home_plate()
+    Image.fromarray(np.clip(over(plate, svg(bunting() + signboard(598, 900))), 0, 255).astype(np.uint8)).save(FR / "khome_empty.png")
+    Image.fromarray(np.clip(home_plate(tint_walls=False), 0, 255).astype(np.uint8)).save(FR / "home_golden.png")
     g = bunting()
     for k, x in enumerate((300, 362, 424)):                                 # the parcels he left on the step
         g += tiffin(x, 905, 0.6) if k == 1 else leaf_parcel(x, 905, 0.6)
@@ -318,13 +250,6 @@ def f_khome(seg):
     out, mask = place(over(plate, sh), lay, 1040, 190, 1245)
     save("f_khome", out, mask)
     Image.fromarray(np.clip(plate, 0, 255).astype(np.uint8)).save(FR / "khome_plate.png")
-
-
-def laddu(x, y, r):
-    rng = np.random.default_rng(int(x * 7 + y))
-    dots = "".join(f'<circle cx="{x + rng.uniform(-r * .6, r * .6):.1f}" cy="{y + rng.uniform(-r * .6, r * .6):.1f}" r="{r * 0.09:.1f}" fill="#d9851a"/>' for _ in range(7))
-    return (f'<circle cx="{x}" cy="{y}" r="{r}" fill="#f7a92c" stroke="#a8620a" stroke-width="{max(1.5, r * 0.1):.1f}"/>{dots}'
-            f'<circle cx="{x - r * 0.35:.1f}" cy="{y - r * 0.35:.1f}" r="{r * 0.22:.1f}" fill="#ffd27a" opacity="0.8"/>')
 
 
 def f_sweet(seg):
@@ -352,7 +277,9 @@ def f_sweet(seg):
     # his fingers back on top of the laddu at his lips
     fing = (yy > 470) & (yy < 520) & (xx > 255) & (xx < 300) & (hsv[..., 0] <= 18) & (hsv[..., 1] > 90) & (hsv[..., 2] > 110) & (a > 200)
     out[fing] = rgb[fing]
-    out = D.dusk(np.clip(out, 0, 255).astype(np.uint8), 300).astype(np.float32)
+    dk = D.dusk(np.clip(out, 0, 255).astype(np.uint8), 300).astype(np.float32)
+    m = cv2.GaussianBlur(a / 255, (0, 0), 1.0)[..., None]                    # milder dusk light on Thatha himself
+    out = dk * (1 - m) + (out * np.array([0.84, 0.8, 0.88]) + np.array([12, 6, 10])) * m
     g = "".join(D.diya(x, 1135, 1.3) for x in (70, 150, 590, 660))
     out = over(out, svg(g))
     save("f_sweet", np.clip(out, 0, 255).astype(np.uint8), a.astype(np.uint8))
@@ -393,7 +320,7 @@ def f_diya(seg):
     YY, XX = np.mgrid[0:H, 0:W]
     glow = np.exp(-(((XX - px) / 280) ** 2 + ((YY - py) / 320) ** 2))[..., None]
     m = canvas[..., 3:4] / 255
-    out = out * (1 + glow * m * np.array([0.35, 0.18, -0.05])) + glow * np.array([40, 22, 0]) * 0.5
+    out = out * (1 + glow * m * np.array([0.2, 0.1, -0.03])) + glow * np.array([30, 16, 0]) * 0.4
     save("f_diya", np.clip(out, 0, 255).astype(np.uint8), canvas[..., 3].astype(np.uint8))
     print("diya flame at", round(px), round(py))
 
