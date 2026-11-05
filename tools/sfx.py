@@ -18,6 +18,8 @@ pencil:  a pencil scratching on paper for "dur" seconds.
 bell:    a bicycle bell, one "tring" (two quick strikes on a steel dome).
 boom:    a distant Diwali rocket bursting: a soft thump and a crackle tail.
 crackle: far-off firecrackers for "dur" seconds (random pops), a festival-evening bed.
+simmer:  a pot simmering on the fire for "dur" seconds (soft bubbling blubs + fire hiss).
+clink:   a steel lid set on a steel box (short bright ring).
 Mix the result over the assembled episode: ffmpeg amix (normalize=0).
 """
 import json
@@ -202,7 +204,26 @@ def crackle(dur, rng):
     return out
 
 
-KINDS = {"flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
+def simmer(dur, rng):
+    n = int(dur * SR)
+    out = bp(rng.standard_normal(n), 2000, 7000) * 0.05
+    for _ in range(int(dur * 9)):
+        j = int(rng.uniform(0, dur - 0.1) * SR)
+        m = int(0.06 * SR)
+        k = np.arange(m) / SR
+        f = rng.uniform(180, 420)
+        out[j:j + m] += np.sin(2 * np.pi * (f + 900 * k) * k) * np.exp(-k / 0.015) * rng.uniform(0.3, 1)
+    return out * np.minimum(1, np.arange(n) / (0.1 * SR)) * np.minimum(1, (n - np.arange(n)) / (0.1 * SR))
+
+
+def clink(dur, rng):
+    n = int(0.5 * SR)
+    t = np.arange(n) / SR
+    return sum(a * np.sin(2 * np.pi * f * t) * np.exp(-t / d) for f, a, d in ((1850, 1.0, 0.12), (3120, 0.6, 0.08), (4870, 0.4, 0.05))) \
+        + 0.5 * bp(rng.standard_normal(n), 2000, 8000) * np.exp(-t / 0.005)
+
+
+KINDS = {"simmer": simmer, "clink": clink, "flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
 
 
 def main():

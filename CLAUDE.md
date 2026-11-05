@@ -215,4 +215,11 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   phone.py, `tools/trim_pauses.py`, sfx flick/pencil/bell/boom/crackle, edit.json `"rooster": false`. Lessons: hand-sheet
   drawings pasted as loose arms look like floating sleeves, and a code-drawn colour rider looks like a puppet – use
   props in his own frames and a silhouette (his real side outline) for actions the owner's art doesn't cover.
-- Next: Diwali special 2 (owner will paste the script), then One-Acre Ep 3 (the caterpillar cliffhanger).
+- Diwali Special 2 ("Thatha's Gift of Happiness!" – cook, pack, deliver to a children's home, diyas, moral + CTA):
+  done without GPU, waiting for review (`series/05-diwali/sp02/final/thatha_diwali02.mp4`, 60.0 s). New:
+  `tools/toon/feast.py` (food/parcel props + unpack, cook rice/sambar/curry/sweet, pack, load, entrance, lamps, finale),
+  silhouette `"cargo"`/`"sunset"`, draw_lights `lit`/`bulbs_on`/`diyas` overrides, sfx simmer/clink. The end card
+  "Iniya Deepavali Nalvaazhthukkal!" is spoken (no on-screen text); the signboard in the scene reads CHILDREN'S HOME as
+  the script asked (a prop in the world, not a caption). Groundnut frames reused with their nuts repainted (sambar,
+  laddus, a clay lamp) so the groundnut props don't repeat.
+- Next: One-Acre Ep 3 (the caterpillar cliffhanger) – wait for the owner's script.

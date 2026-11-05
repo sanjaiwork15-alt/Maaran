@@ -349,5 +349,133 @@
    "image": "frames/up/f_diya.png"
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_kbag",
+   "audio": "voice_A.wav",
+   "duration": 3.2,
+   "seed": 920,
+   "brows": [
+    0.4
+   ]
+  },
+  "B": {
+   "frame": "f_kcook",
+   "audio": "voice_B.wav",
+   "duration": 6.8,
+   "seed": 921,
+   "brows": [
+    2.0
+   ],
+   "nod": [
+    [
+     4.4,
+     0.8
+    ]
+   ]
+  },
+  "C": {
+   "frame": "f_kpack",
+   "audio": "voice_C.wav",
+   "duration": 2.6,
+   "seed": 922,
+   "nod": [
+    [
+     1.3,
+     0.8
+    ]
+   ]
+  },
+  "D": {
+   "frame": "f_khome",
+   "audio": "voice_D.wav",
+   "duration": 3.4,
+   "seed": 923,
+   "brows": [
+    0.6
+   ]
+  },
+  "E": {
+   "frame": "f_sweet",
+   "audio": "voice_E.wav",
+   "duration": 5.4,
+   "seed": 924,
+   "nod": [
+    [
+     4.0,
+     0.9
+    ]
+   ],
+   "lights": {
+    "mask": "frames/f_sweet_mask.png",
+    "bulbs": false,
+    "lanterns": [],
+    "diyas": [
+     [
+      70,
+      1135,
+      1.3
+     ],
+     [
+      150,
+      1135,
+      1.3
+     ],
+     [
+      590,
+      1135,
+      1.3
+     ],
+     [
+      660,
+      1135,
+      1.3
+     ]
+    ]
+   }
+  },
+  "F": {
+   "frame": "f_diya",
+   "audio": "voice_F.wav",
+   "duration": 17.4,
+   "seed": 925,
+   "brows": [
+    1.2,
+    9.4,
+    13.0
+   ],
+   "shake": [
+    [
+     1.7,
+     0.8
+    ]
+   ],
+   "nod": [
+    [
+     7.4,
+     0.9
+    ],
+    [
+     15.4,
+     0.8
+    ]
+   ],
+   "lights": {
+    "mask": "frames/f_diya_mask.png",
+    "fireworks": true,
+    "lanterns": [
+     [
+      80,
+      555,
+      92
+     ],
+     [
+      650,
+      555,
+      92
+     ]
+    ]
+   }
+  }
+ }
 }
