@@ -1,0 +1,16 @@
+[
+ {"id": "L1", "tanglish": "Aiyayo pa! Vaanam ippadi iruttaagudhe! Mazhai vara maadhiri irukke!",
+  "tamil": "ஐயையோ பா! வானம் இப்படி இருட்டாகுதே! மழை வர மாதிரி இருக்கே!", "pause_after": 0.15},
+ {"id": "L2", "tanglish": "Ada mazhaiye! Methuvaa vaa pa! En payirai konjam vittudu!",
+  "tamil": "அட மழையே! மெதுவா வா பா! என் பயிரை கொஞ்சம் விட்டுடு!", "pause_after": 0.15},
+ {"id": "L3", "tanglish": "Aiyaiyo! Payirum saanjiduchu, Thatha-vum saanjittaan! Idhu enna sodhanai pa?!",
+  "tamil": "ஐயையோ! பயிரும் சாஞ்சிடுச்சு, தாத்தாவும் சாஞ்சிட்டான்! இது என்ன சோதனை பா?!", "pause_after": 0.15},
+ {"id": "L4", "tanglish": "Hmm... indha pakkam thanni vadinjiduchu! Andha pakkam mattum yen theengi nikkudhu pa?",
+  "tamil": "ம்ம்... இந்த பக்கம் தண்ணி வடிஞ்சிடுச்சு! அந்த பக்கம் மட்டும் ஏன் தேங்கி நிக்குது பா?", "pause_after": 0.15},
+ {"id": "L5", "tanglish": "Mazhaiya namma nirutha mudiyaadhu pa! Aana vayal-la thanni vadiyura vazhiya munnaadiye thittam podalaam!",
+  "tamil": "மழைய நம்ம நிறுத்த முடியாது பா! ஆனா வயல்ல தண்ணி வடியுற வழிய முன்னாடியே திட்டம் போடலாம்!", "pause_after": 0.15},
+ {"id": "L6", "tanglish": "Vaazhkaiyilum idhu dhaan pa! Ella kashtathayum thadukka mudiyaadhu... aana manasu thalaraama marubadiyum muyarchi pannanum!",
+  "tamil": "வாழ்க்கையிலும் இது தான் பா! எல்லா கஷ்டத்தையும் தடுக்க முடியாது... ஆனா மனசு தளராம மறுபடியும் முயற்சி பண்ணணும்!", "pause_after": 0.15},
+ {"id": "L7", "tanglish": "Aiyayo! Payir damage aayiduchu... kaiyila vidhaiyum konjam dhaan irukku! Ippo enna pannradhu pa?!",
+  "tamil": "ஐயையோ! பயிர் டேமேஜ் ஆயிடுச்சு... கையில விதையும் கொஞ்சம் தான் இருக்கு! இப்போ என்ன பண்றது பா?!", "pause_after": 0.5}
+]
