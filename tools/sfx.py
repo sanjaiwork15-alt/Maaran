@@ -21,6 +21,7 @@ crackle: far-off firecrackers for "dur" seconds (random pops), a festival-evenin
 simmer:  a pot simmering on the fire for "dur" seconds (soft bubbling blubs + fire hiss).
 clink:   a steel lid set on a steel box (short bright ring).
 gush:    water rushing out of a hose for "dur" seconds (swells in, fades out).
+bleat:   a goat's "meh-eh-eh" (a buzzy, wobbling voice ~500 Hz).
 wind:    a gusty wind for "dur" seconds (howling band-passed noise that swells and drops).
 squelch: a foot sucked in / pulled out of sticky mud (a wet, falling slurp).
 Mix the result over the assembled episode: ffmpeg amix (normalize=0).
@@ -249,7 +250,17 @@ def wind(dur, rng):
     return x * env * np.minimum(1, t / 0.8) * np.minimum(1, (dur - t) / 0.6)
 
 
-KINDS = {"wind": wind, "gush": gush, "squelch": squelch, "simmer": simmer, "clink": clink, "flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
+def bleat(dur, rng):
+    n = int(0.9 * SR)
+    t = np.arange(n) / SR
+    f0 = 480 + 60 * np.sin(2 * np.pi * 7.5 * t) * np.minimum(1, t / 0.15) - 80 * t
+    ph = 2 * np.pi * np.cumsum(f0) / SR
+    x = sum(np.sin(k * ph) / k ** 0.7 for k in range(1, 12))
+    x = bp(x, 400, 3200) * (1 + 0.6 * np.sign(np.sin(2 * np.pi * 7.5 * t)))
+    return x * np.minimum(1, t / 0.04) * np.minimum(1, (0.9 - t) / 0.2)
+
+
+KINDS = {"bleat": bleat, "wind": wind, "gush": gush, "squelch": squelch, "simmer": simmer, "clink": clink, "flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
 
 
 def main():

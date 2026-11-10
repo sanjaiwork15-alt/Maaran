@@ -1,0 +1,16 @@
+[
+ {"id": "L1", "tanglish": "Aiyayo pa! Vidhaiyum konjam dhaan irukku... ippo enna pannradhu?!",
+  "tamil": "ஐயையோ பா! விதையும் கொஞ்சம் தான் இருக்கு... இப்போ என்ன பண்றது?!", "pause_after": 0.15},
+ {"id": "L2", "tanglish": "Ella idathulayum vidhaiya thoovittaa... enga mulaichaalum enakku laabam dhaane pa!",
+  "tamil": "எல்லா இடத்துலயும் விதைய தூவிட்டா... எங்க முளைச்சாலும் எனக்கு லாபம் தானே பா!", "pause_after": 0.15},
+ {"id": "L3", "tanglish": "Aana... thanni theengura idathula vidhai pottaa, marubadiyum waste aagidume pa!",
+  "tamil": "ஆனா... தண்ணி தேங்குற இடத்துல விதை போட்டா, மறுபடியும் வேஸ்ட் ஆகிடுமே பா!", "pause_after": 0.15},
+ {"id": "L4", "tanglish": "Indha idathula mann nalla irukku! Meedhi vidhaiya inga mattum nallaa nadalaam!",
+  "tamil": "இந்த இடத்துல மண் நல்லா இருக்கு! மீதி விதைய இங்க மட்டும் நல்லா நடலாம்!", "pause_after": 0.15},
+ {"id": "L5", "tanglish": "Vidhai konjam dhaan irukku... adhanaala ovvoru vidhaiyum mukkiyam pa!",
+  "tamil": "விதை கொஞ்சம் தான் இருக்கு... அதனால ஒவ்வொரு விதையும் முக்கியம் பா!", "pause_after": 0.15},
+ {"id": "L6", "tanglish": "Vaazhkaiyilum idhu dhaan pa! Irukkura vaaippai sariyaa payanpaduthinaa, chinna muyarchiyum periya maatratha tharum!",
+  "tamil": "வாழ்க்கையிலும் இது தான் பா! இருக்குற வாய்ப்பை சரியா பயன்படுத்தினா, சின்ன முயற்சியும் பெரிய மாற்றத்த தரும்!", "pause_after": 0.15},
+ {"id": "L7", "tanglish": "Aaha! Vidhai mulaichiduchu pa! Aana... andha aadu enga irundhu vandhuchu?!",
+  "tamil": "ஆஹா! விதை முளைச்சிடுச்சு பா! ஆனா... அந்த ஆடு எங்க இருந்து வந்துச்சு?!", "pause_after": 0.5}
+]
