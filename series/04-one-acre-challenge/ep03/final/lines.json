@@ -1,0 +1,16 @@
+[
+ {"id": "L1", "tanglish": "Aiyayo pa! En chedila poochi! Ada... en vayalukku yaaru indha villain-ah anuppunadhu?!",
+  "tamil": "ஐயையோ பா! என் செடில பூச்சி! அட... என் வயலுக்கு யாரு இந்த வில்லன அனுப்புனது?!", "pause_after": 0.15},
+ {"id": "L2", "tanglish": "Indha oru poochiya vittaa, motha vayalaiyum saaptudum! Thatha summa vida maattaan!",
+  "tamil": "இந்த ஒரு பூச்சிய விட்டா, மொத்த வயலையும் சாப்டுடும்! தாத்தா சும்மா விட மாட்டான்!", "pause_after": 0.15},
+ {"id": "L3", "tanglish": "Dei, oru nimisham! Andha poochi enna pannudhu? Innoru poochiya saaptudhe pa!",
+  "tamil": "டேய், ஒரு நிமிஷம்! அந்த பூச்சி என்ன பண்ணுது? இன்னொரு பூச்சிய சாப்டுதே பா!", "pause_after": 0.15},
+ {"id": "L4", "tanglish": "Ada paavi! Naan enemy-nu nenachen... idhu namma pakkam velai paakkudha?!",
+  "tamil": "அட பாவி! நான் எனிமின்னு நெனச்சேன்... இது நம்ம பக்கம் வேலை பாக்குதா?!", "pause_after": 0.15},
+ {"id": "L5", "tanglish": "Ellaa poochiyum payirukku kedudhal illa pa! Sila poochigal theengu seyyura poochigala saaptu help pannum!",
+  "tamil": "எல்லா பூச்சியும் பயிருக்கு கெடுதல் இல்ல பா! சில பூச்சிகள் தீங்கு செய்யுற பூச்சிகள சாப்டு ஹெல்ப் பண்ணும்!", "pause_after": 0.15},
+ {"id": "L6", "tanglish": "Vaazhkaiyilum idhu dhaan pa! Yaaraiyum purinjukkaama avasaramaa enemy-nu mudivu panna koodaadhu!",
+  "tamil": "வாழ்க்கையிலும் இது தான் பா! யாரையும் புரிஞ்சுக்காம அவசரமா எனிமின்னு முடிவு பண்ண கூடாது!", "pause_after": 0.15},
+ {"id": "L7", "tanglish": "Seri pa... ippo chedikku thanni oothalaam! Aana... indha vayal yen kulam maadhiri irukku?!",
+  "tamil": "சரி பா... இப்போ செடிக்கு தண்ணி ஊத்தலாம்! ஆனா... இந்த வயல் ஏன் குளம் மாதிரி இருக்கு?!", "pause_after": 0.5}
+]
