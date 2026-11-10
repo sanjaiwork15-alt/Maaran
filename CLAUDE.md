@@ -231,4 +231,10 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   done without GPU, waiting for review (`series/04-one-acre-challenge/ep04/final/thatha_acre04.mp4`, 55.6 s). New:
   `tools/toon/water.py` (valve, flood, grow daydream, mud/slipper close-ups from the 01_front feet, wobble, compare
   cross-section), sfx gush/squelch, freeze-frame ending (stare shot + held last frame).
-- Next: One-Acre Ep 5 (fertiliser – "uram podanuma?") – wait for the owner's script.
+- One-Acre Ep 5 ("Thatha's Crop That Promised Crores!" – dragon-fruit dream, no market; plan first; storm cliffhanger;
+  the owner skipped the fertiliser teaser): done without GPU, waiting for review
+  (`series/04-one-acre-challenge/ep05/final/thatha_acre05.mp4`, 56.4 s). New: `tools/toon/fortune.py` (magazine, cash
+  and tractor daydreams, dragon-fruit field fill, notebook plan table, storm sky roll-in, wind gust that lifts his towel),
+  sfx wind, edit.json "thunder". Voice + ESRGAN together on 4 CPUs: ~19 min per line – pause the upscales (kill -STOP)
+  until the voice is done.
+- Next: One-Acre Ep 6 (the storm) – wait for the owner's script.
