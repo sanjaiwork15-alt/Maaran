@@ -1,0 +1,16 @@
+[
+ {"id": "L1", "tanglish": "Indha payira valathaa latcha latchama sambaadhikkalaam-nu kelvi patten pa! Inime naanum panakaaran dhaan!",
+  "tamil": "இந்த பயிர வளர்த்தா லட்சம் லட்சமா சம்பாதிக்கலாம்னு கேள்வி பட்டேன் பா! இனிமே நானும் பணக்காரன் தான்!", "pause_after": 0.15},
+ {"id": "L2", "tanglish": "En oru acre nilathulayum indha payiraiye podaporen! Appuram panam ennai thedi varum!",
+  "tamil": "என் ஒரு ஏக்கர் நிலத்துலயும் இந்த பயிரையே போடப்போறேன்! அப்புறம் பணம் என்னை தேடி வரும்!", "pause_after": 0.15},
+ {"id": "L3", "tanglish": "Harvest vandha udane car vaanguven... appuram periya tractor! Aaha... Thatha life vera level!",
+  "tamil": "ஹார்வெஸ்ட் வந்த உடனே கார் வாங்குவேன்... அப்புறம் பெரிய டிராக்டர்! ஆஹா... தாத்தா லைஃப் வேற லெவல்!", "pause_after": 0.15},
+ {"id": "L4", "tanglish": "Aana oru chinna doubt pa... indha payirai vaanga yaaru varuvaanga? Market enga irukku?",
+  "tamil": "ஆனா ஒரு சின்ன டவுட் பா... இந்த பயிரை வாங்க யாரு வருவாங்க? மார்க்கெட் எங்க இருக்கு?", "pause_after": 0.15},
+ {"id": "L5", "tanglish": "Payir select pannradhukku munnaadi, market demand, selavu, mannukku etha payir-nu ellathayum paakkanum!",
+  "tamil": "பயிர் செலக்ட் பண்றதுக்கு முன்னாடி, மார்க்கெட் டிமாண்ட், செலவு, மண்ணுக்கு ஏத்த பயிர்னு எல்லாத்தையும் பாக்கணும்!", "pause_after": 0.15},
+ {"id": "L6", "tanglish": "Vaazhkaiyilum idhu dhaan pa! Periya kanavu kaanradhu thappilla... aana sariyana thittam illaama edhuvum saadhikka mudiyadhu!",
+  "tamil": "வாழ்க்கையிலும் இது தான் பா! பெரிய கனவு காண்றது தப்பில்ல... ஆனா சரியான திட்டம் இல்லாம எதுவும் சாதிக்க முடியாது!", "pause_after": 0.15},
+ {"id": "L7", "tanglish": "Seri pa, indha murai plan panni dhaan velaiya aarambikkaporen! Aana... indha vaanam yen ippadi iruttaagudhu?!",
+  "tamil": "சரி பா, இந்த முறை பிளான் பண்ணி தான் வேலைய ஆரம்பிக்கப்போறேன்! ஆனா... இந்த வானம் ஏன் இப்படி இருட்டாகுது?!", "pause_after": 0.5}
+]

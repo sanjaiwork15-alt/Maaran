@@ -21,6 +21,7 @@ crackle: far-off firecrackers for "dur" seconds (random pops), a festival-evenin
 simmer:  a pot simmering on the fire for "dur" seconds (soft bubbling blubs + fire hiss).
 clink:   a steel lid set on a steel box (short bright ring).
 gush:    water rushing out of a hose for "dur" seconds (swells in, fades out).
+wind:    a gusty wind for "dur" seconds (howling band-passed noise that swells and drops).
 squelch: a foot sucked in / pulled out of sticky mud (a wet, falling slurp).
 Mix the result over the assembled episode: ffmpeg amix (normalize=0).
 """
@@ -240,7 +241,15 @@ def squelch(dur, rng):
     return 0.8 * body + 0.6 * lp(rng.standard_normal(n), 900) * np.exp(-t / 0.06)
 
 
-KINDS = {"gush": gush, "squelch": squelch, "simmer": simmer, "clink": clink, "flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
+def wind(dur, rng):
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    env = 0.55 + 0.45 * np.sin(2 * np.pi * 0.35 * t + 1.3) * np.sin(2 * np.pi * 0.13 * t + 0.4)
+    x = bp(rng.standard_normal(n), 250, 1400) + 0.6 * lp(rng.standard_normal(n), 220)
+    return x * env * np.minimum(1, t / 0.8) * np.minimum(1, (dur - t) / 0.6)
+
+
+KINDS = {"wind": wind, "gush": gush, "squelch": squelch, "simmer": simmer, "clink": clink, "flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
 
 
 def main():
