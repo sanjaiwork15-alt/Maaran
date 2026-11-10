@@ -1,0 +1,16 @@
+[
+ {"id": "L1", "tanglish": "Ada paavi! Mannu kaanjirukku... payirukku nalla thanni oothanum pa!",
+  "tamil": "அட பாவி! மண்ணு காஞ்சிருக்கு... பயிருக்கு நல்லா தண்ணி ஊத்தணும் பா!", "pause_after": 0.15},
+ {"id": "L2", "tanglish": "Konjam thanni edhukku pa? Nalla niraiya oothinaa, payir joraa valarum!",
+  "tamil": "கொஞ்சம் தண்ணி எதுக்கு பா? நல்லா நிறைய ஊத்துனா, பயிர் ஜோரா வளரும்!", "pause_after": 0.15},
+ {"id": "L3", "tanglish": "Aiyayo! En kaal mannukkulla maattikichu pa! Payirukku thanni oothunen... naaney payir maadhiri nattuttaane!",
+  "tamil": "ஐயையோ! என் கால் மண்ணுக்குள்ள மாட்டிக்கிச்சு பா! பயிருக்கு தண்ணி ஊத்துனேன்... நானே பயிர் மாதிரி நட்டுட்டேனே!", "pause_after": 0.15},
+ {"id": "L4", "tanglish": "Ada! Sila edathula thanni theengi nikkudhu... payirukku ivlo thanni thevaiyaa pa?",
+  "tamil": "அட! சில எடத்துல தண்ணி தேங்கி நிக்குது... பயிருக்கு இவ்ளோ தண்ணி தேவையா பா?", "pause_after": 0.15},
+ {"id": "L5", "tanglish": "Payirukku thanni mukkiyam pa! Aana evlo venum-nu mannaiyum payiraiyum poruthu dhaan mudivu pannanum!",
+  "tamil": "பயிருக்கு தண்ணி முக்கியம் பா! ஆனா எவ்ளோ வேணும்னு மண்ணையும் பயிரையும் பொறுத்து தான் முடிவு பண்ணணும்!", "pause_after": 0.15},
+ {"id": "L6", "tanglish": "Vaazhkaiyilum idhu dhaan pa! Nalladhu-nu ninaichu alavukku meeri senjaalum, adhu kedudhalaa maaridum!",
+  "tamil": "வாழ்க்கையிலும் இது தான் பா! நல்லதுன்னு நினைச்சு அளவுக்கு மீறி செஞ்சாலும், அது கெடுதலா மாறிடும்!", "pause_after": 0.15},
+ {"id": "L7", "tanglish": "Seri pa, thanni problem mudinjiduchu! Aana indha payirukku uram podanuma? Adhuvum konjam yosikkanum!",
+  "tamil": "சரி பா, தண்ணி பிராப்ளம் முடிஞ்சிடுச்சு! ஆனா இந்த பயிருக்கு உரம் போடணுமா? அதுவும் கொஞ்சம் யோசிக்கணும்!", "pause_after": 0.5}
+]
