@@ -237,4 +237,9 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   and tractor daydreams, dragon-fruit field fill, notebook plan table, storm sky roll-in, wind gust that lifts his towel),
   sfx wind, edit.json "thunder". Voice + ESRGAN together on 4 CPUs: ~19 min per line – pause the upscales (kill -STOP)
   until the voice is done.
-- Next: One-Acre Ep 6 (the storm) – wait for the owner's script.
+- One-Acre Ep 6 ("The Day Everything Went Wrong!" – storm, banana-leaf umbrella, haystack fall, drainage lesson; seed
+  cliffhanger): done without GPU, waiting for review (`series/04-one-acre-challenge/ep06/final/thatha_acre06.mp4`, 54.4 s).
+  New: `tools/toon/storm.py` (downpour, banana-leaf shield, plants bending, feet slip, drain vs pond, drainage plan,
+  near-empty seed pouch), `relight()` in ep06 make_frames (storm / after-rain grade for any approved frame), talk.py
+  `"rain"` on stormy shots, edit.json `"rain"` curve + thunder.
+- Next: One-Acre Ep 7 (only a few seeds left) – wait for the owner's script.
