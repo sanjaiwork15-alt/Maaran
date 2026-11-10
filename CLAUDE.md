@@ -222,4 +222,9 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   "Iniya Deepavali Nalvaazhthukkal!" is spoken (no on-screen text); the signboard in the scene reads CHILDREN'S HOME as
   the script asked (a prop in the world, not a caption). Groundnut frames reused with their nuts repainted (sambar,
   laddus, a clay lamp) so the groundnut props don't repeat.
-- Next: One-Acre Ep 3 (the caterpillar cliffhanger) – wait for the owner's script.
+- One-Acre Ep 3 ("Thatha's War Against Every Insect!" – the ladybird is a friend; waterlog cliffhanger): done without
+  GPU, waiting for review (`series/04-one-acre-challenge/ep03/final/thatha_acre03.mp4`, 55.2 s). New: `tools/toon/bugs.py`
+  (brinjal plants / field rows, ladybird, larva, aphids, hand sprayer; spot, aim, eat, waterlog cut-aways); the field is
+  now rich dark soil with young brinjal (new crop – no groundnut props); frames from the owner's 04_poses sheet (bending,
+  arms crossed) placed on the field plate.
+- Next: One-Acre Ep 4 (the waterlogged field) – wait for the owner's script.

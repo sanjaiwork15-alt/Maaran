@@ -523,5 +523,120 @@
    "image": "frames/up/f_inspect2.png"
   }
  },
- "shots": {}
+ "shots": {
+  "A": {
+   "frame": "f_inspect",
+   "audio": "voice_A.wav",
+   "duration": 2.8,
+   "seed": 995,
+   "brows": [
+    1.4
+   ]
+  },
+  "B": {
+   "frame": "f_point",
+   "audio": "voice_B.wav",
+   "duration": 3.4,
+   "seed": 996,
+   "brows": [
+    0.3,
+    1.6
+   ],
+   "shake": [
+    [
+     2.0,
+     0.7
+    ]
+   ]
+  },
+  "C": {
+   "frame": "f_spray",
+   "audio": "voice_C.wav",
+   "duration": 5.6,
+   "seed": 997,
+   "brows": [
+    0.8,
+    3.4
+   ]
+  },
+  "D": {
+   "frame": "f_point",
+   "audio": "voice_D.wav",
+   "duration": 2.2,
+   "seed": 998,
+   "brows": [
+    0.4
+   ]
+  },
+  "E": {
+   "frame": "f_bend",
+   "audio": "voice_E.wav",
+   "duration": 4.4,
+   "seed": 999,
+   "brows": [
+    2.4
+   ]
+  },
+  "F": {
+   "frame": "f_inspect2",
+   "audio": "voice_F.wav",
+   "duration": 8.2,
+   "seed": 1000,
+   "nod": [
+    [
+     6.6,
+     0.8
+    ]
+   ]
+  },
+  "G": {
+   "frame": "f_moral",
+   "audio": "voice_G.wav",
+   "duration": 7.6,
+   "seed": 1001,
+   "brows": [
+    0.8,
+    5.6
+   ]
+  },
+  "H": {
+   "frame": "f_cross",
+   "audio": "voice_H.wav",
+   "duration": 2.4,
+   "seed": 1002,
+   "nod": [
+    [
+     1.4,
+     0.9
+    ]
+   ]
+  },
+  "I": {
+   "frame": "f_water",
+   "audio": "voice_I.wav",
+   "duration": 2.0,
+   "seed": 1003,
+   "brows": [
+    0.4
+   ]
+  },
+  "J": {
+   "frame": "f_huh",
+   "audio": "voice_J.wav",
+   "duration": 3.8,
+   "seed": 1004,
+   "gaze": [
+    [
+     0.4,
+     2.0,
+     -6,
+     0
+    ]
+   ],
+   "brows": [
+    1.0,
+    2.6
+   ]
+  }
+ }
 }
