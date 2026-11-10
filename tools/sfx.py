@@ -20,6 +20,8 @@ boom:    a distant Diwali rocket bursting: a soft thump and a crackle tail.
 crackle: far-off firecrackers for "dur" seconds (random pops), a festival-evening bed.
 simmer:  a pot simmering on the fire for "dur" seconds (soft bubbling blubs + fire hiss).
 clink:   a steel lid set on a steel box (short bright ring).
+gush:    water rushing out of a hose for "dur" seconds (swells in, fades out).
+squelch: a foot sucked in / pulled out of sticky mud (a wet, falling slurp).
 Mix the result over the assembled episode: ffmpeg amix (normalize=0).
 """
 import json
@@ -223,7 +225,22 @@ def clink(dur, rng):
         + 0.5 * bp(rng.standard_normal(n), 2000, 8000) * np.exp(-t / 0.005)
 
 
-KINDS = {"simmer": simmer, "clink": clink, "flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
+def gush(dur, rng):
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    x = bp(rng.standard_normal(n), 400, 5000) * (0.8 + 0.2 * np.sin(2 * np.pi * 3.1 * t)) + 0.4 * bp(rng.standard_normal(n), 100, 600)
+    return x * np.minimum(1, t / 0.25) * np.minimum(1, (dur - t) / 0.4)
+
+
+def squelch(dur, rng):
+    n = int(0.45 * SR)
+    t = np.arange(n) / SR
+    f = 420 * np.exp(-t / 0.12) + 90
+    body = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.1)
+    return 0.8 * body + 0.6 * lp(rng.standard_normal(n), 900) * np.exp(-t / 0.06)
+
+
+KINDS = {"gush": gush, "squelch": squelch, "simmer": simmer, "clink": clink, "flick": flick, "pencil": pencil, "bell": bell, "boom": boom, "crackle": crackle, "alarm": alarm, "snore": snore, "tick": tick, "rooster": rooster, "tap": tap, "clang": clang, "knock": knock, "pop": pop, "shimmer": shimmer}
 
 
 def main():

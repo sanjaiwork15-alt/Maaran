@@ -227,4 +227,8 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   (brinjal plants / field rows, ladybird, larva, aphids, hand sprayer; spot, aim, eat, waterlog cut-aways); the field is
   now rich dark soil with young brinjal (new crop – no groundnut props); frames from the owner's 04_poses sheet (bending,
   arms crossed) placed on the field plate.
-- Next: One-Acre Ep 4 (the waterlogged field) – wait for the owner's script.
+- One-Acre Ep 4 ("Thatha's Water Kingdom!" – overwatering, stuck in mud, waterlogging lesson; fertiliser cliffhanger):
+  done without GPU, waiting for review (`series/04-one-acre-challenge/ep04/final/thatha_acre04.mp4`, 55.6 s). New:
+  `tools/toon/water.py` (valve, flood, grow daydream, mud/slipper close-ups from the 01_front feet, wobble, compare
+  cross-section), sfx gush/squelch, freeze-frame ending (stare shot + held last frame).
+- Next: One-Acre Ep 5 (fertiliser – "uram podanuma?") – wait for the owner's script.
