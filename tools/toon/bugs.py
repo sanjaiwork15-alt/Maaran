@@ -217,6 +217,8 @@ class Waterlog:
         cv2.ellipse(mask, (300, 1300), (230, 120), 8, 0, 360, 1, -1)
         cv2.ellipse(mask, (820, 1560), (260, 150), 0, 0, 360, 1, -1)
         self.mask = cv2.GaussianBlur(mask, (0, 0), 14)
+        rim = cv2.GaussianBlur(cv2.dilate(mask, np.ones((31, 31), np.uint8)) - mask, (0, 0), 8)
+        im *= (1 - 0.35 * rim[..., None])                      # wet, dark mud round the edge
         sky = im[:hz][::-1]
         ref = cv2.resize(sky, (W, H - hz))
         self.refl = np.zeros_like(im)
@@ -234,13 +236,17 @@ class Waterlog:
         img = self.bg * (1 - m) + refl * m
         g = []
         for k, (x, y, s) in enumerate(self.drown):              # young plants standing in the water, only tops showing
-            g.append(f'<g opacity="0.95">{brinjal(x, y, s, k, 2 * math.sin(t + k))}</g>')
-            g.append(f'<rect x="{x - 90 * s:.0f}" y="{y - 120 * s:.0f}" width="{180 * s:.0f}" height="{130 * s:.0f}" fill="none"/>')
+            g.append(brinjal(x, y, s, k, 2 * math.sin(t + k)))
         lay = svg_rgba("".join(g))
-        cut = np.zeros((H, W), np.float32)                      # water hides the lower stems
+        wl = np.zeros((H, W), np.float32)                      # each plant's waterline: below it the stem is under water
+        yy = np.arange(H, dtype=np.float32)[:, None]
         for x, y, s in self.drown:
-            cut[int(y - 110 * s):int(y + 10), int(x - 100 * s):int(x + 100 * s)] = 1
-        lay[..., 3] *= 1 - cut * self.mask
+            line = y - 95 * s
+            band = np.clip((yy - line) / 6, 0, 1) * np.ones((1, W), np.float32)
+            col = np.zeros((1, W), np.float32)
+            col[0, max(0, int(x - 110 * s)):int(x + 110 * s)] = 1
+            wl = np.maximum(wl, band * cv2.GaussianBlur(col, (0, 0), 6))
+        lay[..., 3] *= 1 - np.clip(wl * self.mask * 1.3, 0, 1)
         img = over(img, lay)
         w = []
         for k in range(10):                                       # ripples and bubbles

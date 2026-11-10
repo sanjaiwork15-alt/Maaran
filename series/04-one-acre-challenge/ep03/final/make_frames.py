@@ -10,6 +10,9 @@ f_spray:    Groundnut Ep 8 f_pod_s3 – the groundnut pod in his raised fist bec
 f_moral:    Groundnut Ep 1 f5_cliff_s3 – standing, open palm held out, explaining to the camera (the moral)
 f_huh:      Groundnut Ep 2 f_hook_s3 – glancing sideways, palm raised (the seeds in it removed): "why is it a pond?!"
 f_water:    Groundnut Ep 4 f_water_s8 – kneeling with the watering can, finger up; the sprout is a young brinjal
+f_bend:     the owner's poses sheet (04_poses, 2nd) – bending low, a brinjal leaf with the ladybird lying in his cupped hand
+            (the soil in it removed): examining the leaves
+f_cross:    the owner's poses sheet (4th) – arms crossed, thoughtful (the moral)
 grown_plate.png: the owner's empty field (05_field_vertical) with rich soil and plant rows (library actions, waterlog)
 *_mask.png: Thatha's silhouette.
 """
@@ -168,6 +171,64 @@ def f_water(seg):
     save("f_water", out, a)
 
 
+def sheet_figure(seg, x0, x1, clean=None):
+    """One figure from the owner's poses sheet (1774x887, white background) as RGBA; clean = (x0, y0, x1, y1) in sheet
+    coords inpainted first (a prop to remove)."""
+    sh = np.array(Image.open(ROOT / "assets/2d/source/04_poses.png").convert("RGB")).astype(np.float32)
+    if clean:
+        cx0, cy0, cx1, cy1 = clean
+        hsv = cv2.cvtColor(sh.astype(np.uint8), cv2.COLOR_RGB2HSV).astype(int)
+        yy, xx = np.mgrid[0:sh.shape[0], 0:sh.shape[1]]
+        soil = (xx > cx0) & (xx < cx1) & (yy > cy0) & (yy < cy1) & (hsv[..., 2] < 170) & ((hsv[..., 0] <= 12) | (hsv[..., 0] >= 165)) & (hsv[..., 1] > 80)
+        hole = cv2.dilate(soil.astype(np.uint8), np.ones((7, 7), np.uint8))
+        from simple_lama_inpainting import SimpleLama
+        import torch
+        _load = torch.jit.load
+        torch.jit.load = lambda f, map_location=None, **k: _load(f, map_location="cpu", **k)
+        fixed = np.array(SimpleLama()(Image.fromarray(sh.astype(np.uint8)), Image.fromarray(hole * 255)).convert("RGB")
+                         .resize((sh.shape[1], sh.shape[0]))).astype(np.float32)
+        torch.jit.load = _load
+        sh = sh * (1 - hole[..., None]) + fixed * hole[..., None]
+    crop = sh[:, x0:x1]
+    a = np.clip((np.array(remove(Image.fromarray(crop.astype(np.uint8)), session=seg, only_mask=True)).astype(np.float32) - 90) * 2.6, 0, 255)
+    ys, xs = np.nonzero(a > 30)
+    return np.dstack([crop, a])[ys.min():ys.max() + 1, xs.min():xs.max() + 1], (x0 + xs.min(), ys.min())
+
+
+def on_field(lay, height, cx, bottom):
+    plate = np.array(Image.open(FR / "grown_plate.png").convert("RGB")).astype(np.float32)
+    sc = height / lay.shape[0]
+    lay = cv2.resize(lay, (round(lay.shape[1] * sc), round(height)), interpolation=cv2.INTER_CUBIC)
+    can = np.zeros((H, W, 4), np.float32)
+    x0, y0 = round(cx - lay.shape[1] / 2), round(bottom - height)
+    xs, xe = max(0, x0), min(W, x0 + lay.shape[1])
+    can[y0:y0 + lay.shape[0], xs:xe] = lay[:, xs - x0:xe - x0]
+    sh = svg(f'<ellipse cx="{cx}" cy="{bottom - 6}" rx="{lay.shape[1] * 0.42:.0f}" ry="20" fill="#000" fill-opacity="0.3"/>')
+    out = over(over(plate, sh), can)
+    return out, can[..., 3] / 255, sc, (x0, y0)
+
+
+def f_bend(seg):
+    lay, org = sheet_figure(seg, 494, 912, clean=(838, 524, 902, 580))
+    out, a, sc, (x0, y0) = on_field(lay, 1000, 380, 1240)
+    hx, hy = x0 + (865 - org[0]) * sc, y0 + (500 - org[1]) * sc            # his cupped hand
+    rgb = out.copy()
+    from bugs import leaf
+    out = over(out, svg(leaf(hx + 62, hy - 2, 192, 0.62, "#4f9a35") + leaf(hx - 58, hy - 14, -12, 0.6, "#5aa83c")
+                        + ladybird(hx - 4, hy - 22, 0.3, -60)))
+    hsv = cv2.cvtColor(np.clip(rgb, 0, 255).astype(np.uint8), cv2.COLOR_RGB2HSV).astype(int)
+    yy, xx = np.mgrid[0:H, 0:W]
+    fing = (np.hypot(xx - hx, yy - hy) < 70) & (xx > hx + 18) & (hsv[..., 0] <= 22) & (hsv[..., 1] > 70) & (a > 0.5)
+    save("f_bend", out, a)
+    print("hand at", round(hx), round(hy))
+
+
+def f_cross(seg):
+    lay, org = sheet_figure(seg, 1420, 1774)
+    out, a, sc, _ = on_field(lay, 1040, 360, 1245)
+    save("f_cross", out, a)
+
+
 def grown_plate():
     rgb = np.array(Image.open(ROOT / "assets/2d/source/05_field_vertical.png").convert("RGB").resize((W, H), Image.LANCZOS)).astype(np.float32)
     hz = ep1.horizon_of(rgb.astype(np.uint8))
@@ -185,6 +246,9 @@ def main():
             fn(seg)
     if not only or "grown_plate" in only:
         grown_plate()
+    for name, fn in (("f_bend", f_bend), ("f_cross", f_cross)):
+        if not only or name in only:
+            fn(seg)
 
 
 if __name__ == "__main__":
