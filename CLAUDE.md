@@ -242,4 +242,8 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   New: `tools/toon/storm.py` (downpour, banana-leaf shield, plants bending, feet slip, drain vs pond, drainage plan,
   near-empty seed pouch), `relight()` in ep06 make_frames (storm / after-rain grade for any approved frame), talk.py
   `"rain"` on stormy shots, edit.json `"rain"` curve + thunder.
-- Next: One-Acre Ep 7 (only a few seeds left) – wait for the owner's script.
+- One-Acre Ep 7 ("Thatha's Last Chance!" – scatter all seeds?; sow the few left on a well-drained patch; sprouts; goat
+  cliffhanger): done without GPU, waiting for review (`series/04-one-acre-challenge/ep07/final/thatha_acre07.mp4`, 54.2 s).
+  New: `tools/toon/sow.py` (scatter, seeds sinking in a puddle, careful sowing, sprout time-lapse, goat), sfx bleat;
+  reused Ep 4's `cut_compare.mp4` directly from its folder in edit.json.
+- Next: One-Acre Ep 8 (the goat) – wait for the owner's script.
