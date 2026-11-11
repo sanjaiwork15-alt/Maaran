@@ -246,4 +246,10 @@ Done in Ep 2: voice at `--speed 1.1` at the source + short pauses; hook split ov
   cliffhanger): done without GPU, waiting for review (`series/04-one-acre-challenge/ep07/final/thatha_acre07.mp4`, 54.2 s).
   New: `tools/toon/sow.py` (scatter, seeds sinking in a puddle, careful sowing, sprout time-lapse, goat), sfx bleat;
   reused Ep 4's `cut_compare.mp4` directly from its folder in edit.json.
-- Next: One-Acre Ep 8 (the goat) – wait for the owner's script.
+- One-Acre Ep 8 – series finale ("Thatha's Biggest Harvest!" – goat chased off, stick-and-rope fence, patient tending,
+  brinjal harvest, notebook accounts + saved seeds, moral, a new dream on an empty plot): done without GPU, waiting for review
+  (`series/04-one-acre-challenge/ep08/final/thatha_acre08.mp4`, 56.2 s). New: `tools/toon/finale.py` (goat leaves, fence,
+  tending time-lapse, picking into a basket, ledger, dream plot beyond; props brinjal_fruit / fruiting_brinjal / basket /
+  fence). Careful: `tools/toon/harvest.py` is Groundnut Ep 8's pod close-up – don't overwrite it. **Series 04 is complete
+  (8 episodes).**
+- Next: wait for the owner's next series or script.
