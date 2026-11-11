@@ -1,0 +1,16 @@
+[
+ {"id": "L1", "tanglish": "Adei aadu! Adhu en kadaisi payiru pa! Unakku vera edam kidaikkalaiyaa?!",
+  "tamil": "அடேய் ஆடு! அது என் கடைசி பயிரு பா! உனக்கு வேற இடம் கிடைக்கலையா?!", "pause_after": 0.15},
+ {"id": "L2", "tanglish": "Payira valarkkuradhu mattum podhaadhu pa... adha paadhukaakkavum theriyanum!",
+  "tamil": "பயிர வளர்க்குறது மட்டும் போதாது பா... அத பாதுகாக்கவும் தெரியணும்!", "pause_after": 0.15},
+ {"id": "L3", "tanglish": "Indha murai avasarapadala pa! Dhinamum konjam gavanichaa, payir nallaa valarum!",
+  "tamil": "இந்த முறை அவசரப்படல பா! தினமும் கொஞ்சம் கவனிச்சா, பயிர் நல்லா வளரும்!", "pause_after": 0.15},
+ {"id": "L4", "tanglish": "Aaha! En oru acre vayalum veen pogala pa! Namma uzhaippukku palan kidaichiduchu!",
+  "tamil": "ஆஹா! என் ஒரு ஏக்கர் வயலும் வீண் போகல பா! நம்ம உழைப்புக்கு பலன் கிடைச்சிடுச்சு!", "pause_after": 0.15},
+ {"id": "L5", "tanglish": "Indha murai mannaiyum purinjukitten, selavaiyum kanakku potten! Adutha murai innum nallaa seyyalaam!",
+  "tamil": "இந்த முறை மண்ணையும் புரிஞ்சுகிட்டேன், செலவையும் கணக்கு போட்டேன்! அடுத்த முறை இன்னும் நல்லா செய்யலாம்!", "pause_after": 0.15},
+ {"id": "L6", "tanglish": "Vettri-na panam mattum illa pa! Namma thappugalilirundhu kathukittu, vidaama muyarchi panradhu dhaan unmaiyaana vettri!",
+  "tamil": "வெற்றின்னா பணம் மட்டும் இல்ல பா! நம்ம தப்புகளிலிருந்து கத்துக்கிட்டு, விடாம முயற்சி பண்றது தான் உண்மையான வெற்றி!", "pause_after": 0.15},
+ {"id": "L7", "tanglish": "Oru acre-la kathukitten pa... adutha season-la innum pudhusaa muyarchi pannalaamaa?!",
+  "tamil": "ஒரு ஏக்கர்ல கத்துக்கிட்டேன் பா... அடுத்த சீசன்ல இன்னும் புதுசா முயற்சி பண்ணலாமா?!", "pause_after": 0.5}
+]
